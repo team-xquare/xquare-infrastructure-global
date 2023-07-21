@@ -7,7 +7,7 @@ terraform {
     }
   }
   cloud {
-    hostname = "app.terraform.io"
+    hostname     = "app.terraform.io"
     organization = "xquare"
     workspaces {
       name = "xquare-global"
@@ -16,5 +16,5 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-northeast-2"
+  region = local.region
 }
