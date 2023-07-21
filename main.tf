@@ -9,13 +9,13 @@ module "stag_ecr" {
 }
 
 module "prod_ecr" {
-  source = "github.com/team-xquare/xquare-infrastructure-module.git//modules/ecr?ref=v0.0.4"
+  source      = "github.com/team-xquare/xquare-infrastructure-module.git//modules/ecr?ref=v0.0.4"
 
-  for_each   = toset(local.prod_ecr_names)
-  name       = each.key
+  for_each    = toset(local.prod_ecr_names)
+  name        = each.key
 
-  image_list = local.prod_tag_limit
-  tag_prefix = local.prod_tag_prefix
+  image_limit = local.prod_tag_limit
+  tag_prefix  = local.prod_tag_prefix
 }
 
 module "vpc" {
