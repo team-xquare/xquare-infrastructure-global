@@ -1,7 +1,7 @@
 module "stag_ecr" {
   source      = "github.com/team-xquare/xquare-infrastructure-module.git//modules/ecr?ref=v0.0.4"
 
-  for_each    = toset(local.stag_ecr_names)
+  for_each    = local.stag_ecr_names
   name        = each.key
 
   image_limit = local.stag_tag_limit
@@ -11,7 +11,7 @@ module "stag_ecr" {
 module "prod_ecr" {
   source      = "github.com/team-xquare/xquare-infrastructure-module.git//modules/ecr?ref=v0.0.4"
 
-  for_each    = toset(local.prod_ecr_names)
+  for_each    = local.prod_ecr_names
   name        = each.key
 
   image_limit = local.prod_tag_limit
