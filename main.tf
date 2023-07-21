@@ -4,6 +4,6 @@ module "ecr" {
   for_each    = var.stag_ecr
   name        = each.key
 
-  image_limit = var.stag_ecr.image_limit
-  tag_prefix  = var.stag_ecr.tag_prefix
+  image_limit = each.value.image_limit
+  tag_prefix  = each.value.tag_prefix
 }
