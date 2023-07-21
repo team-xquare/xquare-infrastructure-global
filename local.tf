@@ -21,6 +21,7 @@ locals {
     "school-meal-fe",
     "xbridge-test-fe",
   ]
+  region = "ap-northeast-2"
 }
 
 locals {
