@@ -20,6 +20,7 @@ locals {
     "feed-fe",
     "school-meal-fe",
     "xbridge-test-fe",
+    # ECR_REPOSITORY_NAME
   ]
   region = "ap-northeast-2"
 }
