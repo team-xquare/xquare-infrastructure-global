@@ -5,14 +5,14 @@ on:
     types: [add_ecr]
 
 jobs:
-  env:
-    TF_IN_AUTOMATION: true
-    TF_CLOUD_ORGANIZATION: "xquare"
-    TF_WORKSPACE: "xquare-global"
-    CONFIG_DIRECTORY: "./"
-    REPOSITORY_NAME: ${{ github.event.client_payload.service_name }}-${{ github.event.client_payload.service_type }}
-
   add_ecr:
+    env:
+      TF_IN_AUTOMATION: true
+      TF_CLOUD_ORGANIZATION: "xquare"
+      TF_WORKSPACE: "xquare-global"
+      CONFIG_DIRECTORY: "./"
+      REPOSITORY_NAME: ${{ github.event.client_payload.service_name }}-${{ github.event.client_payload.service_type }}
+
     if: ${{ github.event.client_payload.repository_name }}
     runs-on: ubuntu-latest
 
@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Add ecr
+        shell: bash
         run: |
           location=$(grep -n "# ECR_REPOSITORY_NAME" local.tf | cut -d ":" -f 1)
           if [ -n "$location" ]; then
@@ -29,6 +30,7 @@ jobs:
 
       - name: Terraform import
         if: ${{ github.event.client_payload.environment }} == 'prod' || ${{ github.event.client_payload.environment }} == 'stag'
+        shell: bash
         run: |
           terraform init
           terraform import 'module.${{ github.event.client_payload.environment }}_ecr["${{ env.REPOSITORY_NAME }}"].aws_ecr_repository.repo' ${{ github.event.client_payload.repository_name }}
