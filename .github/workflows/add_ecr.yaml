@@ -1,0 +1,45 @@
+name: Modify local.tf
+
+on:
+  repository_dispatch:
+    types: [add_ecr]
+
+jobs:
+  env:
+    TF_IN_AUTOMATION: true
+    TF_CLOUD_ORGANIZATION: "xquare"
+    TF_WORKSPACE: "xquare-global"
+    CONFIG_DIRECTORY: "./"
+    REPOSITORY_NAME: ${{ github.event.client_payload.service_name }}-${{ github.event.client_payload.service_type }}
+
+  add_ecr:
+    if: ${{ github.event.client_payload.repository_name }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Add ecr
+        run: |
+          location=$(grep -n "# ECR_REPOSITORY_NAME" local.tf | cut -d ":" -f 1)
+          if [ -n "$location" ]; then
+            sed -i "${location}s|.*|&\n    \"${{ env.REPOSITORY_NAME }}\",|" local.tf
+          fi
+
+      - name: Terraform import
+        if: ${{ github.event.client_payload.environment }} == 'prod' || ${{ github.event.client_payload.environment }} == 'stag'
+        run: |
+          terraform init
+          terraform import 'module.${{ github.event.client_payload.environment }}_ecr["${{ env.REPOSITORY_NAME }}"].aws_ecr_repository.repo' ${{ github.event.client_payload.repository_name }}
+
+      - name: Commit withh new ECR
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "🔀 :: ecr repository [${{ env.REPOSITORY_NAME }}] 추가"
+          branch: main
+          commit_options: '--no-verify --signoff'
+          repository: .
+          commit_user_name: XQUARE GitOps Bot
+          commit_user_email: teamxquare@gmail.com
+          commit_author: XQUARE GitOps Bot <teamxquare@gmail.com>
