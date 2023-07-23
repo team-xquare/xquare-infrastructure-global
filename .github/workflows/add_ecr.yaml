@@ -31,6 +31,21 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Configure Terraform
+        env:
+          TF_CLI_CONFIG_FILE: "${GITHUB_WORKSPACE}/.terraform.d/credentials.tfrc.json"
+        shell: bash
+        run: |
+          credentials_json='{
+            "credentials": {
+              "app.terraform.io": {
+                "token": "${{ secrets.TF_API_TOKEN }}"
+              }
+            }
+          }'
+          echo "$credentials_json" > $TF_CLI_CONFIG_FILE
+          chmod 600 $TF_CLI_CONFIG_FILE
+
       - name: Terraform import
         if: ${{ github.event.client_payload.environment }} == 'prod' || ${{ github.event.client_payload.environment }} == 'stag'
         shell: bash
