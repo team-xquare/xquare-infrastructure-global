@@ -55,3 +55,5 @@ jobs:
           commit_user_name: XQUARE GitOps Bot
           commit_user_email: teamxquare@gmail.com
           commit_author: XQUARE GitOps Bot <teamxquare@gmail.com>
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
