@@ -11,7 +11,6 @@ jobs:
       TF_CLOUD_ORGANIZATION: "xquare"
       TF_WORKSPACE: "xquare-global"
       CONFIG_DIRECTORY: "./"
-      REPOSITORY_NAME: ${{ github.event.client_payload.service_name }}-${{ github.event.client_payload.service_type }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -27,7 +26,7 @@ jobs:
         run: |
           location=$(grep -n "# ECR_REPOSITORY_NAME" local.tf | cut -d ":" -f 1)
           if [ -n "$location" ]; then
-            sed -i "${location}s|.*|&\n    \"${{ env.REPOSITORY_NAME }}\",|" local.tf
+            sed -i "${location}s|.*|&\n    \"${{ github.event.client_payload.repository_name }}\",|" local.tf
           fi
 
       - name: Set up Terraform
@@ -43,12 +42,12 @@ jobs:
         if: ${{ github.event.client_payload.environment }} == 'prod' || ${{ github.event.client_payload.environment }} == 'stag'
         shell: bash
         run: |
-          terraform import 'module.${{ github.event.client_payload.environment }}_ecr["${{ env.REPOSITORY_NAME }}"].aws_ecr_repository.repo' ${{ github.event.client_payload.repository_name }}
+          terraform import 'module.${{ github.event.client_payload.environment }}_ecr["${{ github.event.client_payload.repository_name }}"].aws_ecr_repository.repo' ${{ github.event.client_payload.repository_name }}
 
       - name: Commit withh new ECR
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "🔀 :: ecr repository [${{ env.REPOSITORY_NAME }}] 추가"
+          commit_message: "🔀 :: ecr repository [${{ github.event.client_payload.repository_name }}] 추가"
           branch: main
           file_pattern: 'local.tf'
           push_options: '--force'
