@@ -41,7 +41,7 @@ jobs:
         if: ${{ github.event.client_payload.environment }} == 'prod' || ${{ github.event.client_payload.environment }} == 'stag'
         shell: bash
         run: |
-          terraform import 'module.${{ github.event.client_payload.environment }}_ecr["${{ env.REPOSITORY_NAME }}"].aws_ecr_repository.repo' ${{ github.event.client_payload.repository_name }}
+          terraform import 'module.${{ github.event.client_payload.environment }}_ecr["${{ env.REPOSITORY_NAME }}"].aws_ecr_repository.repo' ${{ github.event.client_payload.repository_name }} -lock=false
 
       - name: Commit withh new ECR
         uses: stefanzweifel/git-auto-commit-action@v4
