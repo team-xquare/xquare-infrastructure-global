@@ -1,24 +1,24 @@
 locals {
   name_prefix = "xquare"
   ecr_names = [
+    "test-be-prod",
+    "test-be-stag",
     # ECR_REPOSITORY_NAME
   ]
   region = "ap-northeast-2"
 }
 
 locals {
-  stag_ecr_names = {
-    for name in local.ecr_names :
-    name => name if slice(name, -5, -1) == "-stag"
-  }
+  stag_ecr_names  = toset([
+    for name in local.ecr_names : name if endswith(name, "-stag")
+  ])
   stag_tag_prefix = "stag-"
   stag_tag_limit  = 5
 
-  prod_ecr_names  = {
-    for name in local.ecr_names :
-    name => name if slice(name, -5, -1) == "-prod"
-  }
-  prod_tag_prefix = "v"
+  prod_ecr_names  = toset([
+    for name in local.ecr_names : name if endswith(name, "-prod")
+  ])
+  prod_tag_prefix = "prod-"
   prod_tag_limit  = 5
 }
 
