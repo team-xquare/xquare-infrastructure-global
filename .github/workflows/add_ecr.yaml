@@ -12,6 +12,8 @@ jobs:
       TF_WORKSPACE: "xquare-global"
       CONFIG_DIRECTORY: "./"
       REPOSITORY_NAME: ${{ github.event.client_payload.service_name }}-${{ github.event.client_payload.service_type }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     if: ${{ github.event.client_payload.repository_name }}
     runs-on: ubuntu-latest
