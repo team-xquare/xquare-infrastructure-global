@@ -1,8 +1,6 @@
 locals {
   name_prefix = "xquare"
   ecr_names = [
-    "test-be-prod",
-    "test-be-stag",
     # ECR_REPOSITORY_NAME
   ]
   region = "ap-northeast-2"
