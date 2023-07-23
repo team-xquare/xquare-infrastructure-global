@@ -28,6 +28,9 @@ jobs:
             sed -i "${location}s|.*|&\n    \"${{ env.REPOSITORY_NAME }}\",|" local.tf
           fi
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
       - name: Terraform import
         if: ${{ github.event.client_payload.environment }} == 'prod' || ${{ github.event.client_payload.environment }} == 'stag'
         shell: bash
