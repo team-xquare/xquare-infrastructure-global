@@ -2,6 +2,7 @@ locals {
   name_prefix = "xquare"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "report-be-stag",
     "schedule-be-stag",
     "authority-be-stag",
     "timetable-be-stag",
