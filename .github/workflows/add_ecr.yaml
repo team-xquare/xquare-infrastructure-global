@@ -30,29 +30,17 @@ jobs:
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Configure Terraform
-        env:
-          TF_CLI_CONFIG_FILE: "${GITHUB_WORKSPACE}/.terraform.d/credentials.tfrc.json"
+      - name: Terraform init
         shell: bash
-        run: |
-          mkdir -p "${GITHUB_WORKSPACE}/.terraform.d"
-          touch $TF_CLI_CONFIG_FILE
-          credentials_json='{
-            "credentials": {
-              "app.terraform.io": {
-                "token": "${{ secrets.TF_API_TOKEN }}"
-              }
-            }
-          }'
-          echo "$credentials_json" > $TF_CLI_CONFIG_FILE
-          chmod 600 $TF_CLI_CONFIG_FILE
+        run: terraform init
 
       - name: Terraform import
         if: ${{ github.event.client_payload.environment }} == 'prod' || ${{ github.event.client_payload.environment }} == 'stag'
         shell: bash
         run: |
-          terraform init
           terraform import 'module.${{ github.event.client_payload.environment }}_ecr["${{ env.REPOSITORY_NAME }}"].aws_ecr_repository.repo' ${{ github.event.client_payload.repository_name }}
 
       - name: Commit withh new ECR
