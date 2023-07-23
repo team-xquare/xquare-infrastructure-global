@@ -1,25 +1,6 @@
 locals {
   name_prefix = "xquare"
   ecr_names = [
-    "application-be",
-    "attachment-be",
-    "authority-be",
-    "backoffice-be",
-    "contour-middleware-be",
-    "feed-be",
-    "meal-be",
-    "notification-be",
-    "pick-be",
-    "point-be",
-    "report-be",
-    "schedule-be",
-    "timetable-be",
-    "user-be",
-    "apply-fe",
-    "dormitory-admin-fe",
-    "feed-fe",
-    "school-meal-fe",
-    "xbridge-test-fe",
     # ECR_REPOSITORY_NAME
   ]
   region = "ap-northeast-2"
@@ -27,13 +8,15 @@ locals {
 
 locals {
   stag_ecr_names = {
-    for name in local.ecr_names : name => "${name}-stag"
+    for name in local.ecr_names :
+    name => name if slice(name, -5, -1) == "-stag"
   }
   stag_tag_prefix = "stag-"
   stag_tag_limit  = 5
 
   prod_ecr_names  = {
-    for name in local.ecr_names : name => "${name}-prod"
+    for name in local.ecr_names :
+    name => name if slice(name, -5, -1) == "-prod"
   }
   prod_tag_prefix = "v"
   prod_tag_limit  = 5
