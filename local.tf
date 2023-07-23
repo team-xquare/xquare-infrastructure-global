@@ -2,6 +2,7 @@ locals {
   name_prefix = "xquare"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "rlaequalsqls-be",
   ]
   region = "ap-northeast-2"
 }
