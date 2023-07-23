@@ -36,6 +36,8 @@ jobs:
           TF_CLI_CONFIG_FILE: "${GITHUB_WORKSPACE}/.terraform.d/credentials.tfrc.json"
         shell: bash
         run: |
+          mkdir -p "${GITHUB_WORKSPACE}/.terraform.d"
+          touch $TF_CLI_CONFIG_FILE
           credentials_json='{
             "credentials": {
               "app.terraform.io": {
