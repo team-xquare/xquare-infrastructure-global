@@ -50,6 +50,8 @@ jobs:
         with:
           commit_message: "🔀 :: ecr repository [${{ env.REPOSITORY_NAME }}] 추가"
           branch: main
+          file_pattern: 'local.tf'
+          push_options: '--force'
           commit_options: '--no-verify --signoff'
           repository: .
           commit_user_name: XQUARE GitOps Bot
