@@ -46,3 +46,7 @@ locals {
   cluster_version = "1.27"
   node_type       = "m5a.xlarge"
 }
+
+locals {
+  thanos_storage_name_prefix = "xquare-thanos"
+}
