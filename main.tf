@@ -42,9 +42,6 @@ module "eks" {
   create_cloudwatch_logs_group = false
 }
 
-module "thanos_storage" {
-  source        = "github.com/team-xquare/xquare-infrastructure-module.git//s3?ref=v0.0.8"
-
-  name_prefix   = local.thanos_storage_name_prefix
-  bucket_policy = data.aws_iam_policy_document.thanos_s3_policy.json
+resource "aws_s3_bucket" "thanos_storage" {
+  bucket   = local.thanos_storage_name
 }

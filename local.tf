@@ -48,5 +48,5 @@ locals {
 }
 
 locals {
-  thanos_storage_name_prefix = "xquare-thanos"
+  thanos_storage_name = "xquare-thanos-bucket"
 }
