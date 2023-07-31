@@ -3,9 +3,11 @@ variable "name_prefix" {
 }
 
 variable "fifo_queue" {
-  type = bool
+  type    = bool
+  default = true
 }
 
 variable "content_based_deduplication" {
-  type = bool
+  type    = bool
+  default = true
 }
