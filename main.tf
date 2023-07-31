@@ -1,5 +1,5 @@
 module "stag_ecr" {
-  source      = "github.com/team-xquare/xquare-infrastructure-module.git//ecr?ref=v0.0.7"
+  source      = "./modules/ecr"
 
   for_each    = local.stag_ecr_names
   name        = each.value
@@ -9,7 +9,7 @@ module "stag_ecr" {
 }
 
 module "prod_ecr" {
-  source      = "github.com/team-xquare/xquare-infrastructure-module.git//ecr?ref=v0.0.7"
+  source      = "./modules/ecr"
 
   for_each    = local.prod_ecr_names
   name        = each.value
@@ -19,7 +19,7 @@ module "prod_ecr" {
 }
 
 module "vpc" {
-  source          = "github.com/team-xquare/xquare-infrastructure-module.git//vpc?ref=v0.0.7"
+  source          = "./modules/vpc"
 
   vpc_cidr        = local.vpc_cidr
   azs             = local.azs
@@ -29,7 +29,7 @@ module "vpc" {
 }
 
 module "eks" {
-  source          = "github.com/team-xquare/xquare-infrastructure-module.git//eks-cluster?ref=v0.0.7"
+  source          = "./modules/eks-cluster"
 
   name_prefix     = local.name_prefix
   cluster_version = local.cluster_version
