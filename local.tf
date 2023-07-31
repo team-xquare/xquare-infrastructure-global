@@ -53,3 +53,8 @@ locals {
   stag_storage_name   = "xquare-stag-bucket"
   thanos_storage_name = "xquare-thanos-bucket"
 }
+
+locals {
+  fifo_queue = true
+  content_based_deduplication = true
+}
