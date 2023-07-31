@@ -49,5 +49,7 @@ locals {
 }
 
 locals {
+  prod_storage_name   = "xquare-prod-bucket"
+  stag_storage_name   = "xquare-stag-bucket"
   thanos_storage_name = "xquare-thanos-bucket"
 }
