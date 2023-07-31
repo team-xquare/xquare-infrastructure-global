@@ -1,25 +1,25 @@
 module "stag_ecr" {
-  source      = "./modules/ecr"
+  source = "./modules/ecr"
 
-  for_each    = local.stag_ecr_names
-  name        = each.value
+  for_each = local.stag_ecr_names
+  name     = each.value
 
   image_limit = local.stag_tag_limit
   tag_prefix  = local.stag_tag_prefix
 }
 
 module "prod_ecr" {
-  source      = "./modules/ecr"
+  source = "./modules/ecr"
 
-  for_each    = local.prod_ecr_names
-  name        = each.value
+  for_each = local.prod_ecr_names
+  name     = each.value
 
   image_limit = local.prod_tag_limit
   tag_prefix  = local.prod_tag_prefix
 }
 
 module "vpc" {
-  source          = "./modules/vpc"
+  source = "./modules/vpc"
 
   vpc_cidr        = local.vpc_cidr
   azs             = local.azs
@@ -29,7 +29,7 @@ module "vpc" {
 }
 
 module "eks" {
-  source          = "./modules/eks-cluster"
+  source = "./modules/eks-cluster"
 
   name_prefix     = local.name_prefix
   cluster_version = local.cluster_version
@@ -42,14 +42,22 @@ module "eks" {
   create_cloudwatch_logs_group = false
 }
 
+module "sqs" {
+  source = "./modules/sqs"
+
+  name_prefix                 = local.name_prefix
+  fifo_queue                  = true
+  content_based_deduplication = true
+}
+
 resource "aws_s3_bucket" "prod_storage" {
-  bucket   = local.prod_storage_name
+  bucket = local.prod_storage_name
 }
 
 resource "aws_s3_bucket" "stag_storage" {
-  bucket   = local.stag_storage_name
+  bucket = local.stag_storage_name
 }
 
 resource "aws_s3_bucket" "thanos_storage" {
-  bucket   = local.thanos_storage_name
+  bucket = local.thanos_storage_name
 }
