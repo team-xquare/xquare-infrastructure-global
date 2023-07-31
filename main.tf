@@ -45,9 +45,9 @@ module "eks" {
 module "sqs" {
   source = "./modules/sqs"
 
-  name_prefix                 = local.name_prefix
-  fifo_queue                  = true
-  content_based_deduplication = true
+  name_prefix = local.name_prefix
+  fifo_queue = local.fifo_queue
+  content_based_deduplication = local.content_based_deduplication
 }
 
 resource "aws_s3_bucket" "prod_storage" {
