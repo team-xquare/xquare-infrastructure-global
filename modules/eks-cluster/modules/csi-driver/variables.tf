@@ -1,0 +1,2 @@
+variable "oidc_provider" {
+}
