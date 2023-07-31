@@ -7,20 +7,5 @@ module "sqs" {
 
 resource "aws_sqs_queue_policy" "sqs_policy" {
   queue_url = module.sqs.queue_id
-
-  policy = <<POLICY
-  {
-    "Version": "2012-10-17",
-    "Id": "sqspolicy",
-    "Statement": [
-      {
-        "Sid": "First",
-        "Effect": "Allow",
-        "Principal": "*",
-        "Action": "sqs:SendMessage",
-        "Resource": "${module.sqs.queue_arn}"
-      }
-    ]
-  }
-  POLICY
+  policy    = data.aws_iam_policy_document.sqs_policy.json
 }
