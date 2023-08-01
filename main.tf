@@ -42,10 +42,14 @@ module "eks" {
   create_cloudwatch_logs_group = false
 }
 
-module "sqs" {
+module "notification_queue" {
   source = "./modules/sqs"
+  name = local.sqs_notification_queue_name
+}
 
-  name_prefix = local.name_prefix
+module "group_notification_queue" {
+  source = "./modules/sqs"
+  name = local.sqs_group_notification_queue_name
 }
 
 resource "aws_s3_bucket" "prod_storage" {

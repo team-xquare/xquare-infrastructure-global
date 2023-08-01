@@ -54,3 +54,8 @@ locals {
   stag_storage_name   = "xquare-stag-bucket"
   thanos_storage_name = "xquare-thanos-bucket"
 }
+
+locals {
+  sqs_notification_queue_name = "notification"
+  sqs_group_notification_queue_name = "group-notification"
+}

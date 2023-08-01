@@ -1,4 +1,4 @@
-variable "name_prefix" {
+variable "name" {
   type = string
 }
 
