@@ -4,8 +4,3 @@ module "sqs" {
   fifo_queue                  = var.fifo_queue
   content_based_deduplication = var.content_based_deduplication
 }
-
-resource "aws_sqs_queue_policy" "sqs_policy" {
-  queue_url = module.sqs.queue_id
-  policy    = data.aws_iam_policy_document.sqs_policy.json
-}
