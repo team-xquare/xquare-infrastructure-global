@@ -64,3 +64,9 @@ locals {
   sqs_notification_queue_name = "notification"
   sqs_group_notification_queue_name = "group-notification"
 }
+
+locals {
+  db_type = "db.t3.micro"
+  db_engine = "mysql"
+  db_storage_size = 20
+}
