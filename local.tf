@@ -2,6 +2,7 @@ locals {
   name_prefix = "xquare"
   ecr_names   = [
     # ECR_REPOSITORY_NAME
+    "apply-fe-prod",
     "feed-fe-prod",
     "school-meal-fe-prod",
     "oauth-be-prod",
