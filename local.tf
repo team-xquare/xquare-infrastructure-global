@@ -68,4 +68,5 @@ locals {
 locals {
   db_type = "db.t3.micro"
   db_engine = "mysql"
+  db_storage_size = 20
 }
