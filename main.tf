@@ -65,12 +65,13 @@ resource "aws_s3_bucket" "thanos_storage" {
 }
 
 resource "aws_db_instance" "xquare-db" {
-  identifier        = "${local.name_prefix}-db"
-  allocated_storage = local.db_storage_size
-  engine            = local.db_engine
-  instance_class    = local.db_type
-  availability_zone = "${data.aws_region.current.name}c"
-  username          = local.db_username
-  vpc_security_group_ids    = [local.db_security_group_id]
-  db_subnet_group_name      = local.db_subnet_group_name
+  identifier             = "${local.name_prefix}-db"
+  allocated_storage      = local.db_storage_size
+  engine                 = local.db_engine
+  instance_class         = local.db_type
+  availability_zone      = "${data.aws_region.current.name}c"
+  username               = local.db_username
+  password               = var.rds_master_password
+  vpc_security_group_ids = [local.db_security_group_id]
+  db_subnet_group_name   = local.db_subnet_group_name
 }
