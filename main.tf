@@ -44,12 +44,12 @@ module "eks" {
 
 module "notification_queue" {
   source = "./modules/sqs"
-  name = local.sqs_notification_queue_name
+  name   = local.sqs_notification_queue_name
 }
 
 module "group_notification_queue" {
   source = "./modules/sqs"
-  name = local.sqs_group_notification_queue_name
+  name   = local.sqs_group_notification_queue_name
 }
 
 resource "aws_s3_bucket" "prod_storage" {
@@ -65,9 +65,10 @@ resource "aws_s3_bucket" "thanos_storage" {
 }
 
 resource "aws_db_instance" "xquare-db" {
-  identifier                = "${local.name_prefix}-db"
-  allocated_storage         = local.db_storage_size
-  engine                    = local.db_engine
-  instance_class            = local.db_type
-  availability_zone         = "${data.aws_region.current.name}c"
+  identifier        = "${local.name_prefix}-db"
+  allocated_storage = local.db_storage_size
+  engine            = local.db_engine
+  instance_class    = local.db_type
+  availability_zone = "${data.aws_region.current.name}c"
+  username          = local.db_username
 }
