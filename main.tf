@@ -66,6 +66,7 @@ resource "aws_s3_bucket" "thanos_storage" {
 
 resource "aws_db_instance" "xquare-db" {
   identifier                = "${local.name_prefix}-db"
+  allocated_storage         = local.db_storage_size
   engine                    = local.db_engine
   instance_class            = local.db_type
   availability_zone         = "${data.aws_region.current.name}c"
