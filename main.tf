@@ -68,5 +68,5 @@ resource "aws_db_instance" "xquare-db" {
   identifier                = "${local.name_prefix}-db"
   engine                    = local.db_engine
   instance_class            = local.db_type
-  availability_zone         = "${data.aws_region.current}c"
+  availability_zone         = "${data.aws_region.current.name}c"
 }
