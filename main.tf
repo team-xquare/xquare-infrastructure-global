@@ -74,4 +74,5 @@ resource "aws_db_instance" "xquare-db" {
   password               = var.rds_master_password
   vpc_security_group_ids = [local.db_security_group_id]
   db_subnet_group_name   = local.db_subnet_group_name
+  publicly_accessible    = local.db_public_accessible
 }

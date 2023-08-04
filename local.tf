@@ -72,4 +72,5 @@ locals {
   db_username = "admin"
   db_security_group_id = "sg-0a33caeeab6bd2153"
   db_subnet_group_name = "default-vpc-00dba85fbdc1b606e"
+  db_public_accessible = true
 }
