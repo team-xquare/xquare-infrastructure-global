@@ -46,24 +46,49 @@ resource "aws_iam_policy" "fe_s3_policy" {
    policy      = data.aws_iam_policy_document.fe_s3_policy_document.json
 }
 
+locals {
+  fe_s3_folder = "fe"
+}
+
 data "aws_iam_policy_document" "fe_s3_policy_document" {
   statement {
+    effect = "Allow"
     actions   = ["s3:ListBucket"]
     resources = [aws_s3_bucket.prod_storage.arn]
     condition {
       test     = "StringEquals"
       variable = "s3:prefix"
       values = [
-        "fe/"
+        "",
+        "${local.fe_s3_folder}/"
+      ]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "s3:delimiter"
+      values = [
+        "/"
       ]
     }
   }
   statement {
+    effect = "Allow"
+    actions   = ["s3:ListBucket"]
+    resources = [aws_s3_bucket.prod_storage.arn]
+    condition {
+      test     = "StringLike"
+      variable = "s3:prefix"
+      values = [
+        "${local.fe_s3_folder}/*"
+      ]
+    }
+  }
+  statement {
+    effect = "Allow"
     actions   = ["s3:*"]
     resources = [
         "${aws_s3_bucket.prod_storage.arn}/fe/*",
     ]
-    effect = "Allow"
   }
 }
 
