@@ -52,6 +52,11 @@ locals {
 
 data "aws_iam_policy_document" "fe_s3_policy_document" {
   statement {
+    actions   = ["s3:ListAllMyBuckets"]
+    resources = ["arn:aws:s3:::*"]
+    effect = "Allow"
+  }
+  statement {
     effect = "Allow"
     actions   = ["s3:ListBucket"]
     resources = [aws_s3_bucket.prod_storage.arn]
