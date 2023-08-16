@@ -36,7 +36,7 @@ module "xquare_fe_s3_iam_account" {
   source      = "./modules/iam-user"
   name        = "xquare_fe_s3_iam"
   policy_arns = [
-    aws_iam_policy.s3_policy.arn
+    aws_iam_policy.fe_s3_policy.arn
   ] 
   create_iam_user_login_profile = true
 }

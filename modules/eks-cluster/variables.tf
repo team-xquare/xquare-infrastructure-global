@@ -10,5 +10,3 @@ variable "private_subnets" {
 }
 variable "instance_type" {
 }
-variable "create_cloudwatch_logs_group" {
-}
