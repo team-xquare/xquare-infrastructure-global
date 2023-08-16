@@ -30,6 +30,43 @@ data "aws_iam_policy_document" "s3_policy_document" {
   }
 }
 
+# fe S3 =======================================================
+
+module "xquare_fe_s3_iam_account" {
+  source      = "./modules/iam-user"
+  name        = "xquare_fe_s3_iam"
+  policy_arns = [
+    aws_iam_policy.s3_policy.arn
+  ] 
+  create_iam_user_login_profile = true
+}
+
+resource "aws_iam_policy" "fe_s3_policy" {
+   name        = "xquare-fe-s3-policy"
+   policy      = data.aws_iam_policy_document.fe_s3_policy_document.json
+}
+
+data "aws_iam_policy_document" "fe_s3_policy_document" {
+  statement {
+    actions   = ["s3:ListBucket"]
+    resources = [aws_s3_bucket.prod_storage.arn]
+    condition {
+      test     = "StringEquals"
+      variable = "s3:prefix"
+      values = [
+        "fe/"
+      ]
+    }
+  }
+  statement {
+    actions   = ["s3:*"]
+    resources = [
+        "${aws_s3_bucket.prod_storage.arn}/fe/*",
+    ]
+    effect = "Allow"
+  }
+}
+
 # SQS =========================================================
 
 module "xquare_sqs_iam_account" {
