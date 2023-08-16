@@ -24,6 +24,19 @@ resource "aws_ecr_lifecycle_policy" "repo-policy" {
         action = {
           type = "expire"
         }
+      },
+      {
+        rulePriority = 2
+        description  = "delete untagged image"
+        selection = {
+          tagStatus     = "untagged"
+          countType     = "sinceImagePushed"
+          countUnit     = "days"
+          countNumber   = 1
+        }
+        action = {
+          type = "expire"
+        }
       }
     ]
   })
