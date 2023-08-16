@@ -67,8 +67,3 @@ resource "aws_ec2_tag" "public_subnet_tag" {
   key         = "kubernetes.io/role/elb"
   value       = "1"
 }
-
-module "csi-driver" {
-  source        = "./modules/csi-driver"
-  oidc_provider = module.eks.oidc_provider
-}
