@@ -38,8 +38,6 @@ module "eks" {
   vpc_id          = module.vpc.vpc_id
   private_subnets = module.vpc.private_subnet_ids
   public_subnets  = module.vpc.public_subnet_ids
-
-  create_cloudwatch_logs_group = false
 }
 
 module "notification_queue" {
