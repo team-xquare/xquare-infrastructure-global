@@ -16,6 +16,10 @@ module "eks" {
   cluster_enabled_log_types = []
   create_cloudwatch_log_group = false
 
+  eks_managed_node_group_defaults = {
+    instance_types = [local.instance_type]
+    capacity_type  = local.capacity_type
+  }
   eks_managed_node_groups = {
     initial = {
       instance_types         = [local.instance_type]
