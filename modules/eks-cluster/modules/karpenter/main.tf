@@ -13,7 +13,7 @@ resource "helm_release" "karpenter" {
   create_namespace = true
 
   name  = "karpenter"
-  repository          = "https://team-xquare.github.io/k8s-resource "
+  repository          = "https://team-xquare.github.io/k8s-resource"
   chart               = "karpenter"
   version             = "v0.30.0"
 
