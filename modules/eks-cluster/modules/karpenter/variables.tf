@@ -6,7 +6,3 @@ variable "iam_role_arn" {
 }
 variable "cluster_endpoint" {
 }
-variable "repository_username" {
-}
-variable "repository_password" {
-}

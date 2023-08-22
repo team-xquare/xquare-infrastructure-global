@@ -13,9 +13,7 @@ resource "helm_release" "karpenter" {
   create_namespace = true
 
   name  = "karpenter"
-  repository          = "oci://public.ecr.aws/karpenter"
-  repository_username = var.repository_username
-  repository_password = var.repository_password
+  repository          = "https://team-xquare.github.io/k8s-resource "
   chart               = "karpenter"
   version             = "v0.30.0"
 
