@@ -10,3 +10,5 @@ variable "private_subnets" {
 }
 variable "instance_type" {
 }
+variable "capacity_type" {
+}
