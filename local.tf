@@ -63,6 +63,7 @@ locals {
 locals {
   cluster_version = "1.27"
   node_type       = "m5a.xlarge"
+  capacity_type   = "SPOT"
 }
 
 locals {
