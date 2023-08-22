@@ -15,7 +15,7 @@ resource "helm_release" "karpenter" {
   name  = "karpenter"
   repository          = "https://team-xquare.github.io/k8s-resource"
   chart               = "karpenter"
-  version             = "v0.30.0"
+  version             = "0.30.0"
 
   set {
     name  = "settings.aws.clusterName"
