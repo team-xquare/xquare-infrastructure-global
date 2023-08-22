@@ -37,6 +37,21 @@ module "eks" {
     }
   }
 
+  node_security_group_additional_rules = {
+    ingress_nodes_karpenter_port = {
+      description                   = "Cluster API to Node group for Karpenter webhook"
+      protocol                      = "tcp"
+      from_port                     = 8443
+      to_port                       = 8443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+  }
+
+  node_security_group_tags = {
+    "karpenter.sh/discovery" = local.cluster_name
+  }
+
   manage_aws_auth_configmap = true
 
   aws_auth_users = [
@@ -71,4 +86,19 @@ resource "aws_ec2_tag" "public_subnet_tag" {
   resource_id = local.private_subnets[count.index]
   key         = "kubernetes.io/role/elb"
   value       = "1"
+}
+
+resource "aws_ec2_tag" "private_subnet_karpenter_tag" {
+  count       = length(local.private_subnets)
+  resource_id = local.private_subnets[count.index]
+  key         = "karpenter.sh/discovery/${local.cluster_name}"
+  value       = local.cluster_name
+}
+
+module "karpenter" {
+  source                 = "./modules/karpenter"
+  cluster_name           = module.eks.cluster_name
+  irsa_oidc_provider_arn = module.eks.oidc_provider_arn
+  iam_role_arn           = module.eks.eks_managed_node_groups["initial"].iam_role_arn
+  cluster_endpoint       = module.eks.cluster_endpoint
 }
