@@ -7,7 +7,7 @@ module "karpenter" {
   create_iam_role                 = false
   iam_role_arn                    = var.iam_role_arn
 }
-
+ 
 resource "helm_release" "karpenter" {
   namespace = "karpenter"
   create_namespace = true
