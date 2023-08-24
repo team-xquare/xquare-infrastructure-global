@@ -94,3 +94,11 @@ resource "aws_ec2_tag" "private_subnet_karpenter_tag" {
   key         = "karpenter.sh/discovery/${local.cluster_name}"
   value       = local.cluster_name
 }
+
+module "karpenter" {
+  source                 = "./modules/karpenter"
+  cluster_name           = module.eks.cluster_name
+  irsa_oidc_provider_arn = module.eks.oidc_provider_arn
+  iam_role_arn           = module.eks.eks_managed_node_groups["initial"].iam_role_arn
+  cluster_endpoint       = module.eks.cluster_endpoint
+}
