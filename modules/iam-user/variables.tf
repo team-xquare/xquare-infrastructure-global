@@ -12,7 +12,7 @@ variable "create_iam_user_login_profile" {
 variable "create_iam_access_key" {
   description = "Whether to create IAM access key"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "policy_arns" {
