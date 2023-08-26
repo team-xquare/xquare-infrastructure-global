@@ -25,7 +25,7 @@ jobs:
       - name: Add ecr
         shell: bash
         run: |
-          location=$(grep -n "# ECR_REPOSITORY_NAME" local.tf | cut -d ":" -f 1)
+          location=$(grep -n "# ECR_REPOSITORY_NAME" ecr.tf | cut -d ":" -f 1)
           if [ -n "$location" ]; then
             sed -i "${location}s|.*|&\n    \"${{ github.event.client_payload.repository_name }}\",|" local.tf
           fi
