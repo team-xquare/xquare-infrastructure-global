@@ -9,7 +9,7 @@ provider "helm" {
 locals {
     xquare-repository      = "https://team-xquare.github.io/k8s-resource"
 
-    argocd-name = "argo-cd"
+    argocd-name = "argocd"
     argocd-verison = "4.8.3"
 
     aws-ebs-csi-driver-name = "aws-ebs-csi-driver"

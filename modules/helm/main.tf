@@ -5,6 +5,7 @@ resource "helm_release" "this" {
   chart      = var.chart
   version    = var.chart_version
 
+  replace           = var.replace
   cleanup_on_fail   = var.cleanup_on_fail
   create_namespace  = var.create_namespace
 }
