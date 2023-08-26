@@ -10,7 +10,7 @@ locals {
     xquare-repository      = "https://team-xquare.github.io/k8s-resource"
 
     argocd-name = "argo-cd"
-    argocd-verison = "v2.3.4"
+    argocd-verison = "4.8.3"
 
     aws-ebs-csi-driver-name = "aws-ebs-csi-driver"
     aws-ebs-csi-driver-version = "2.21.0"
@@ -25,7 +25,7 @@ locals {
     dex-version = "0.15.4"
 
     istio-name = "istio"
-    istio-version = "1.0.0"
+    istio-version = "1.0.1"
 
     karpenter-name = "karpenter"
     karpenter-version = "1.0.1"
@@ -37,10 +37,10 @@ locals {
     redis-version = "17.15.4"
 
     xquare-application-name = "xquare-application"
-    xquare-application-version = "1.0.0"
+    xquare-application-version = "1.0.1"
 
     xquare-certificate-name = "xquare-certificate"
-    xquare-certificate-version = "1.0.0"
+    xquare-certificate-version = "1.0.1"
 
     argocd-namespace       = "argocd"
     dex-namespace          = "dex"
@@ -142,7 +142,6 @@ module "redis" {
 module "xquare-application" {
   source     = "./modules/helm"
   name       = local.xquare-application-name
-  namespace  = null
   repository = local.xquare-repository
   chart      = local.xquare-application-name
   chart_version  = local.xquare-application-version
@@ -151,7 +150,6 @@ module "xquare-application" {
 module "xquare-certificate" {
   source     = "./modules/helm"
   name       = local.xquare-certificate-name
-  namespace  = null
   repository = local.xquare-repository
   chart      = local.xquare-certificate-name
   chart_version = local.xquare-certificate-version
