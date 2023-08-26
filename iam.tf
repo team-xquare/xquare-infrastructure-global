@@ -2,29 +2,29 @@
 # S3 =========================================================
 
 module "xquare_s3_iam_account" {
-  source      = "./modules/iam-user"
-  name        = "xquare_s3_iam"
+  source = "./modules/iam-user"
+  name   = "xquare_s3_iam"
   policy_arns = [
     aws_iam_policy.s3_policy.arn
-  ] 
+  ]
 }
 
 resource "aws_iam_policy" "s3_policy" {
-   name        = "xquare-s3-policy"
-   policy      = data.aws_iam_policy_document.s3_policy_document.json
+  name   = "xquare-s3-policy"
+  policy = data.aws_iam_policy_document.s3_policy_document.json
 }
 
 data "aws_iam_policy_document" "s3_policy_document" {
   statement {
     actions   = ["s3:ListAllMyBuckets"]
     resources = ["arn:aws:s3:::*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
   statement {
-    actions   = ["s3:*"]
+    actions = ["s3:*"]
     resources = [
-        aws_s3_bucket.prod_storage.arn,
-        aws_s3_bucket.stag_storage.arn
+      aws_s3_bucket.prod_storage.arn,
+      aws_s3_bucket.stag_storage.arn
     ]
     effect = "Allow"
   }
@@ -33,17 +33,17 @@ data "aws_iam_policy_document" "s3_policy_document" {
 # fe S3 =======================================================
 
 module "xquare_fe_s3_iam_account" {
-  source      = "./modules/iam-user"
-  name        = "xquare_fe_s3_iam"
+  source = "./modules/iam-user"
+  name   = "xquare_fe_s3_iam"
   policy_arns = [
     aws_iam_policy.fe_s3_policy.arn
-  ] 
+  ]
   create_iam_user_login_profile = true
 }
 
 resource "aws_iam_policy" "fe_s3_policy" {
-   name        = "xquare-fe-s3-policy"
-   policy      = data.aws_iam_policy_document.fe_s3_policy_document.json
+  name   = "xquare-fe-s3-policy"
+  policy = data.aws_iam_policy_document.fe_s3_policy_document.json
 }
 
 locals {
@@ -54,10 +54,10 @@ data "aws_iam_policy_document" "fe_s3_policy_document" {
   statement {
     actions   = ["s3:ListAllMyBuckets"]
     resources = ["arn:aws:s3:::*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
   statement {
-    effect = "Allow"
+    effect    = "Allow"
     actions   = ["s3:ListBucket"]
     resources = [aws_s3_bucket.prod_storage.arn]
     condition {
@@ -77,7 +77,7 @@ data "aws_iam_policy_document" "fe_s3_policy_document" {
     }
   }
   statement {
-    effect = "Allow"
+    effect    = "Allow"
     actions   = ["s3:ListBucket"]
     resources = [aws_s3_bucket.prod_storage.arn]
     condition {
@@ -89,10 +89,10 @@ data "aws_iam_policy_document" "fe_s3_policy_document" {
     }
   }
   statement {
-    effect = "Allow"
-    actions   = ["s3:*"]
+    effect  = "Allow"
+    actions = ["s3:*"]
     resources = [
-        "${aws_s3_bucket.prod_storage.arn}/fe/*",
+      "${aws_s3_bucket.prod_storage.arn}/fe/*",
     ]
   }
 }
@@ -100,11 +100,11 @@ data "aws_iam_policy_document" "fe_s3_policy_document" {
 # SQS =========================================================
 
 module "xquare_sqs_iam_account" {
-  source      = "./modules/iam-user"
-  name        = "xquare_sqs_iam"
+  source = "./modules/iam-user"
+  name   = "xquare_sqs_iam"
   policy_arns = [
     data.aws_iam_policy.sqs_policy.arn
-  ] 
+  ]
 }
 
 data "aws_iam_policy" "sqs_policy" {

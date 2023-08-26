@@ -1,2 +1,0 @@
-variable "oidc_provider" {
-}
