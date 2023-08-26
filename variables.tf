@@ -1,4 +1,4 @@
 variable "rds_master_password" {
-  type = string
+  type    = string
   default = "password"
 }
