@@ -9,13 +9,13 @@ module "karpenter" {
 }
  
 resource "helm_release" "karpenter" {
-  namespace = "karpenter"
+  namespace = var.namespace
   create_namespace = true
 
-  name  = "karpenter"
-  repository          = "https://team-xquare.github.io/k8s-resource"
-  chart               = "karpenter"
-  version             = "0.30.0"
+  name  = var.chart
+  repository          = var.repository
+  chart               = var.chart
+  version             = var.chart_version
 
   set {
     name  = "settings.aws.clusterName"
