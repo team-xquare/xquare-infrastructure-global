@@ -15,6 +15,10 @@ variable "chart" {
 variable "chart_version" {
     type = string
 }
+variable "replace" {
+    type = bool
+    default = true
+} 
 variable "cleanup_on_fail" {
     type = bool
     default = true
