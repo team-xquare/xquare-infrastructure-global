@@ -1,6 +1,6 @@
 locals {
   name_prefix = "xquare"
-  ecr_names   = [
+  ecr_names = [
     # ECR_REPOSITORY_NAME
     "point-be-prod",
     "dormitory-admin-fe-prod",
@@ -41,48 +41,46 @@ locals {
 
 locals {
   stag_ecr_names = toset([
-  for name in local.ecr_names : name if endswith(name, "-stag")
+    for name in local.ecr_names : name if endswith(name, "-stag")
   ])
   stag_tag_prefix = "stag-"
   stag_tag_limit  = 5
 
   prod_ecr_names = toset([
-  for name in local.ecr_names : name if endswith(name, "-prod")
+    for name in local.ecr_names : name if endswith(name, "-prod")
   ])
   prod_tag_prefix = "prod-"
   prod_tag_limit  = 5
 }
 
-locals {
-  azs             = ["${data.aws_region.current.name}a", "${data.aws_region.current.name}c"]
-  public_subnets  = ["10.0.0.0/20", "10.0.16.0/20"]
-  private_subnets = ["10.0.128.0/20", "10.0.144.0/20"]
-  vpc_cidr        = "10.0.0.0/16"
+module "stag_ecr" {
+  source = "./modules/ecr"
+
+  for_each = local.stag_ecr_names
+  name     = each.value
+
+  image_limit = local.stag_tag_limit
+  tag_prefix  = local.stag_tag_prefix
 }
 
-locals {
-  cluster_version = "1.27"
-  node_type       = "m5a.xlarge"
-  capacity_type   = "SPOT"
+module "prod_ecr" {
+  source = "./modules/ecr"
+
+  for_each = local.prod_ecr_names
+  name     = each.value
+
+  image_limit = local.prod_tag_limit
+  tag_prefix  = local.prod_tag_prefix
 }
 
-locals {
-  prod_storage_name   = "xquare-prod-bucket"
-  stag_storage_name   = "xquare-stag-bucket"
-  thanos_storage_name = "xquare-thanos-bucket"
+output "stag_ecr_url" {
+  value = [
+    for v in module.stag_ecr : v.ecr_repository_url
+  ]
 }
 
-locals {
-  sqs_notification_queue_name = "notification"
-  sqs_group_notification_queue_name = "group-notification"
-}
-
-locals {
-  db_type = "db.t3.micro"
-  db_engine = "mysql"
-  db_storage_size = 20
-  db_username = "admin"
-  db_security_group_id = "sg-0a33caeeab6bd2153"
-  db_subnet_group_name = "default-vpc-00dba85fbdc1b606e"
-  db_public_accessible = true
+output "prod_ecr_url" {
+  value = [
+    for v in module.prod_ecr : v.ecr_repository_url
+  ]
 }
