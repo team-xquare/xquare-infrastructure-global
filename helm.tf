@@ -25,7 +25,7 @@ locals {
     dex-version = "0.15.4"
 
     istio-name = "istio"
-    istio-version = "1.0.6"
+    istio-version = "1.0.7"
 
     karpenter-name = "karpenter"
     karpenter-version = "1.0.1"
