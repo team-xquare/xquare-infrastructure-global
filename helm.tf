@@ -10,7 +10,7 @@ locals {
     xquare-repository      = "https://team-xquare.github.io/k8s-resource"
 
     argocd-name = "argocd"
-    argocd-verison = "4.8.3"
+    argocd-verison = "4.8.4"
 
     aws-ebs-csi-driver-name = "aws-ebs-csi-driver"
     aws-ebs-csi-driver-version = "2.21.0"
