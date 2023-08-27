@@ -34,7 +34,7 @@ locals {
     prometheus-version = "48.3.1"
 
     redis-name = "redis"
-    redis-version = "17.15.4"
+    redis-version = "17.15.5"
 
     xquare-application-name = "xquare-application"
     xquare-application-version = "1.0.1"
