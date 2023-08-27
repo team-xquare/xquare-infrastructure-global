@@ -40,7 +40,7 @@ locals {
     xquare-application-version = "1.0.1"
 
     xquare-certificate-name = "xquare-certificate"
-    xquare-certificate-version = "1.0.1"
+    xquare-certificate-version = "1.0.2"
 
     argocd-namespace       = "argocd"
     dex-namespace          = "dex"
