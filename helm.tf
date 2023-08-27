@@ -25,7 +25,7 @@ locals {
     dex-version = "0.15.4"
 
     istio-name = "istio"
-    istio-version = "1.0.3"
+    istio-version = "1.0.6"
 
     karpenter-name = "karpenter"
     karpenter-version = "1.0.1"
@@ -40,7 +40,7 @@ locals {
     xquare-application-version = "1.0.1"
 
     xquare-certificate-name = "xquare-certificate"
-    xquare-certificate-version = "1.0.2"
+    xquare-certificate-version = "1.0.3"
 
     argocd-namespace       = "argocd"
     dex-namespace          = "dex"
