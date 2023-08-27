@@ -1,4 +1,4 @@
-name: Modify local.tf
+name: Modify ecr.tf
 
 on:
   repository_dispatch:
@@ -27,7 +27,7 @@ jobs:
         run: |
           location=$(grep -n "# ECR_REPOSITORY_NAME" ecr.tf | cut -d ":" -f 1)
           if [ -n "$location" ]; then
-            sed -i "${location}s|.*|&\n    \"${{ github.event.client_payload.repository_name }}\",|" local.tf
+            sed -i "${location}s|.*|&\n    \"${{ github.event.client_payload.repository_name }}\",|" ecr.tf
           fi
 
       - name: Set up Terraform
@@ -50,7 +50,7 @@ jobs:
         with:
           commit_message: "🔀 :: ecr repository [${{ github.event.client_payload.repository_name }}] 추가"
           branch: main
-          file_pattern: 'local.tf'
+          file_pattern: 'ecr.tf'
           push_options: '--force'
           commit_options: '--no-verify --signoff'
           repository: .
