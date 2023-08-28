@@ -22,7 +22,13 @@ locals {
     cert-manager-version = "v1.12.3"
 
     dex-name = "dex"
-    dex-version = "0.15.4"
+    dex-version = "0.15.5"
+
+    dex-k8s-authenticator-name = "dex-k8s-authenticator"
+    dex-k8s-authenticator-version = "1.4.0"
+
+    aws-node-termination-handler-name = "aws-node-termination-handler"
+    aws-node-termination-handler-version = "0.22.0"
 
     istio-name = "istio"
     istio-version = "1.0.10"
@@ -96,6 +102,15 @@ module "dex" {
   repository  = local.xquare-repository
   chart       = local.dex-name
   chart_version = local.dex-version
+}
+
+module "dex-k8s-authenticator" {
+  source     = "./modules/helm"
+  name  = local.dex-k8s-authenticator-name
+  namespace   = local.dex-namespace
+  repository  = local.xquare-repository
+  chart       = local.dex-k8s-authenticator-name
+  chart_version = local.dex-k8s-authenticator-version
 }
 
 module "istio" {
