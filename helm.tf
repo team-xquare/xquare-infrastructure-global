@@ -27,9 +27,6 @@ locals {
     dex-k8s-authenticator-name = "dex-k8s-authenticator"
     dex-k8s-authenticator-version = "1.4.0"
 
-    aws-node-termination-handler-name = "aws-node-termination-handler"
-    aws-node-termination-handler-version = "0.22.0"
-
     istio-name = "istio"
     istio-version = "1.0.10"
 
