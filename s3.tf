@@ -4,14 +4,16 @@ locals {
   thanos_storage_name = "xquare-thanos-bucket"
 }
 
-resource "aws_s3_bucket" "prod_storage" {
-  bucket = local.prod_storage_name
+module "prod_storage" {
+  source      = "./modules/s3"
+
+  bucket_name = local.prod_storage_name
+  is_public   = true
 }
 
-resource "aws_s3_bucket" "stag_storage" {
-  bucket = local.stag_storage_name
-}
+module "stag_storage" {
+  source      = "./modules/s3"
 
-resource "aws_s3_bucket" "thanos_storage" {
-  bucket = local.thanos_storage_name
+  bucket_name = local.stag_storage_name
+  is_public   = true
 }
