@@ -23,8 +23,8 @@ data "aws_iam_policy_document" "s3_policy_document" {
   statement {
     actions = ["s3:*"]
     resources = [
-      aws_s3_bucket.prod_storage.arn,
-      aws_s3_bucket.stag_storage.arn
+      module.prod_storage.arn,
+      module.stag_storage.arn,
     ]
     effect = "Allow"
   }
@@ -59,7 +59,7 @@ data "aws_iam_policy_document" "fe_s3_policy_document" {
   statement {
     effect    = "Allow"
     actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.prod_storage.arn]
+    resources = [module.prod_storage.arn]
     condition {
       test     = "StringEquals"
       variable = "s3:prefix"
@@ -79,7 +79,7 @@ data "aws_iam_policy_document" "fe_s3_policy_document" {
   statement {
     effect    = "Allow"
     actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.prod_storage.arn]
+    resources = [module.prod_storage.arn]
     condition {
       test     = "StringLike"
       variable = "s3:prefix"
@@ -92,7 +92,7 @@ data "aws_iam_policy_document" "fe_s3_policy_document" {
     effect  = "Allow"
     actions = ["s3:*"]
     resources = [
-      "${aws_s3_bucket.prod_storage.arn}/fe/*",
+      "${module.prod_storage.arn}/fe/*",
     ]
   }
 }
