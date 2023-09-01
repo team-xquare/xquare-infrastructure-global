@@ -31,7 +31,7 @@ locals {
     istio-version = "1.0.19"
 
     karpenter-name = "karpenter"
-    karpenter-version = "1.0.1"
+    karpenter-version = "1.0.2"
 
     prometheus-name = "kube-prometheus-stack"
     prometheus-version = "48.3.1"
@@ -125,7 +125,7 @@ module "istio" {
   chart_version = local.istio-version
 }
 
-/*module "karpenter" {
+module "karpenter" {
   source                 = "./modules/karpenter"
 
   namespace              = local.karpenter-namespace
@@ -137,7 +137,7 @@ module "istio" {
   irsa_oidc_provider_arn = module.eks.oidc_provider_arn
   iam_role_arn           = module.eks.iam_role_arn
   cluster_endpoint       = module.eks.cluster_endpoint
-}*/
+}
 
 module "prometheus" {
   source     = "./modules/helm"
