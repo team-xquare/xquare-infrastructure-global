@@ -27,9 +27,9 @@ module "eks" {
       create_launch_template = false
       launch_template_name   = ""
 
-      min_size     = 2
-      max_size     = 2
-      desired_size = 2
+      min_size     = 4
+      max_size     = 4
+      desired_size = 4
 
       iam_role_additional_policies = [
         "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
@@ -94,4 +94,3 @@ resource "aws_ec2_tag" "private_subnet_karpenter_tag" {
   key         = "karpenter.sh/discovery/${local.cluster_name}"
   value       = local.cluster_name
 }
-
