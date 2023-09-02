@@ -31,7 +31,7 @@ locals {
     istio-version = "1.0.19"
 
     karpenter-name = "karpenter"
-    karpenter-version = "1.0.2"
+    karpenter-version = "1.0.3"
 
     prometheus-name = "kube-prometheus-stack"
     prometheus-version = "48.3.1"
