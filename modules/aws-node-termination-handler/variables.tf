@@ -19,3 +19,6 @@ variable "chart-name" {
 variable "chart-version" {
     type = string
 }
+variable "vpc_zone_identifier" {
+    type = list(string)
+}
