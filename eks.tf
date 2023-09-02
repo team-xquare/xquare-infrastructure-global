@@ -15,6 +15,10 @@ module "eks" {
   vpc_id          = module.vpc.vpc_id
   private_subnets = module.vpc.private_subnet_ids
   public_subnets  = module.vpc.public_subnet_ids
+
+  nodegroup_min_size     = 3
+  nodegroup_max_size     = 5
+  nodegroup_desired_size = 6
 }
 
 output "cluster_id" {
