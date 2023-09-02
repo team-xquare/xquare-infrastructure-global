@@ -16,7 +16,7 @@ locals {
   aws-ebs-csi-driver-version = "2.21.0"
 
   aws-node-termination-handler-name    = "aws-node-termination-handler"
-  aws-node-termination-handler-version = "0.22.3"
+  aws-node-termination-handler-version = "0.22.4"
 
   cert-manager-name    = "cert-manager"
   cert-manager-version = "v1.12.3"
@@ -77,14 +77,12 @@ module "aws-ebs-csi-driver" {
 }
 
 module "aws-node-termination-handler" {
-  source = "./modules/aws-node-termination-handler"
-
-  vpc_zone_identifier = module.vpc.private_subnet_ids
-
+  source        = "./modules/helm"
+  name          = local.aws-node-termination-handler-name
   namespace     = local.spot-handler-namespace
   repository    = local.xquare-repository
-  chart-name    = local.aws-node-termination-handler-name
-  chart-version = local.aws-node-termination-handler-version
+  chart         = local.aws-node-termination-handler-name
+  chart_version = local.aws-node-termination-handler-version
 }
 
 module "cert-manager" {
