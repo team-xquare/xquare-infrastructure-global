@@ -13,27 +13,36 @@ module "eks" {
 
   enable_irsa = true
 
-  cluster_enabled_log_types = []
+  cluster_enabled_log_types   = []
   create_cloudwatch_log_group = false
 
-  eks_managed_node_group_defaults = {
-    instance_types = [local.instance_type]
-    capacity_type  = local.capacity_type
-  }
   eks_managed_node_groups = {
-    initial = {
-      instance_types         = [local.instance_type]
+    initial_large_nodes = {
+      instance_types         = local.instance_type[0]
       create_security_group  = false
       create_launch_template = false
       launch_template_name   = ""
+      capacity_type          = local.capacity_type[0]
 
-      min_size     = 2
-      max_size     = 2
-      desired_size = 2
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
 
-      iam_role_additional_policies = [
-        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-      ]
+      iam_role_additional_policies = [local.role_policy]
+    }
+
+    initial_xlarge_nodes = {
+      instance_types         = local.instance_type[1]
+      create_security_group  = false
+      create_launch_template = false
+      launch_template_name   = ""
+      capacity_type          = local.capacity_type[1]
+
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+
+      iam_role_additional_policies = [local.role_policy]
     }
   }
 
@@ -94,4 +103,3 @@ resource "aws_ec2_tag" "private_subnet_karpenter_tag" {
   key         = "karpenter.sh/discovery/${local.cluster_name}"
   value       = local.cluster_name
 }
-
