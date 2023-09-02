@@ -7,60 +7,60 @@ provider "helm" {
 }
 
 locals {
-    xquare-repository      = "https://team-xquare.github.io/k8s-resource"
+  xquare-repository = "https://team-xquare.github.io/k8s-resource"
 
-    argocd-name = "argocd"
-    argocd-verison = "4.8.4"
+  argocd-name    = "argocd"
+  argocd-verison = "4.8.4"
 
-    aws-ebs-csi-driver-name = "aws-ebs-csi-driver"
-    aws-ebs-csi-driver-version = "2.21.0"
+  aws-ebs-csi-driver-name    = "aws-ebs-csi-driver"
+  aws-ebs-csi-driver-version = "2.21.0"
 
-    aws-node-termination-handler-name = "aws-node-termination-handler"
-    aws-node-termination-handler-version = "0.22.2"
+  aws-node-termination-handler-name    = "aws-node-termination-handler"
+  aws-node-termination-handler-version = "0.22.2"
 
-    cert-manager-name = "cert-manager"
-    cert-manager-version = "v1.12.3"
+  cert-manager-name    = "cert-manager"
+  cert-manager-version = "v1.12.3"
 
-    dex-name = "dex"
-    dex-version = "0.15.5"
+  dex-name    = "dex"
+  dex-version = "0.15.5"
 
-    dex-k8s-authenticator-name = "dex-k8s-authenticator"
-    dex-k8s-authenticator-version = "1.4.2"
+  dex-k8s-authenticator-name    = "dex-k8s-authenticator"
+  dex-k8s-authenticator-version = "1.4.2"
 
-    istio-name = "istio"
-    istio-version = "1.0.19"
+  istio-name    = "istio"
+  istio-version = "1.0.19"
 
-    karpenter-name = "karpenter"
-    karpenter-version = "1.0.3"
+  karpenter-name    = "karpenter"
+  karpenter-version = "1.0.3"
 
-    prometheus-name = "kube-prometheus-stack"
-    prometheus-version = "48.3.1"
+  prometheus-name    = "kube-prometheus-stack"
+  prometheus-version = "48.3.1"
 
-    kube-oidc-proxy-name = "kube-oidc-proxy"
-    kube-oidc-proxy-version = "0.3.3"
+  kube-oidc-proxy-name    = "kube-oidc-proxy"
+  kube-oidc-proxy-version = "0.3.3"
 
-    xquare-application-name = "xquare-application"
-    xquare-application-version = "1.0.1"
+  xquare-application-name    = "xquare-application"
+  xquare-application-version = "1.0.1"
 
-    xquare-certificate-name = "xquare-certificate"
-    xquare-certificate-version = "1.0.3"
+  xquare-certificate-name    = "xquare-certificate"
+  xquare-certificate-version = "1.0.3"
 
-    xquare-role-name = "xquare-role"
-    xquare-role-version = "1.0.2"
+  xquare-role-name    = "xquare-role"
+  xquare-role-version = "1.0.2"
 
-    argocd-namespace       = "argocd"
-    dex-namespace          = "dex"
-    monitoring-namespace   = "monitoring"
-    kube-system-namespace  = "kube-system"
-    karpenter-namespace    = "karpenter"
-    spot-handler-namespace = "spot-handler"
-    cert-manager-namespace = "cert-manager"
-    istio-namespace        = "istio-system"
+  argocd-namespace       = "argocd"
+  dex-namespace          = "dex"
+  monitoring-namespace   = "monitoring"
+  kube-system-namespace  = "kube-system"
+  karpenter-namespace    = "karpenter"
+  spot-handler-namespace = "spot-handler"
+  cert-manager-namespace = "cert-manager"
+  istio-namespace        = "istio-system"
 }
 
 module "argocd" {
-  source     = "./modules/helm"
-  name  = local.argocd-name
+  source        = "./modules/helm"
+  name          = local.argocd-name
   namespace     = local.argocd-namespace
   repository    = local.xquare-repository
   chart         = local.argocd-name
@@ -68,8 +68,8 @@ module "argocd" {
 }
 
 module "aws-ebs-csi-driver" {
-  source     = "./modules/helm"
-  name  = local.aws-ebs-csi-driver-name
+  source        = "./modules/helm"
+  name          = local.aws-ebs-csi-driver-name
   namespace     = local.kube-system-namespace
   repository    = local.xquare-repository
   chart         = local.aws-ebs-csi-driver-name
@@ -77,57 +77,59 @@ module "aws-ebs-csi-driver" {
 }
 
 module "aws-node-termination-handler" {
-  source     = "./modules/helm"
-  name  = local.aws-node-termination-handler-name
+  source = "./modules/aws-node-termination-handler"
+
+  vpc_zone_identifier = module.vpc.private_subnet_ids
+
   namespace     = local.spot-handler-namespace
   repository    = local.xquare-repository
-  chart         = local.aws-node-termination-handler-name
-  chart_version = local.aws-node-termination-handler-version
+  chart-name    = local.aws-node-termination-handler-name
+  chart-version = local.aws-node-termination-handler-version
 }
 
 module "cert-manager" {
-  source     = "./modules/helm"
-  name       = local.cert-manager-name
-  namespace  = local.cert-manager-namespace
-  repository = local.xquare-repository
-  chart      = local.cert-manager-name
-  chart_version  = local.cert-manager-version
+  source        = "./modules/helm"
+  name          = local.cert-manager-name
+  namespace     = local.cert-manager-namespace
+  repository    = local.xquare-repository
+  chart         = local.cert-manager-name
+  chart_version = local.cert-manager-version
 }
 
 module "dex" {
-  source     = "./modules/helm"
-  name  = local.dex-name
-  namespace   = local.dex-namespace
-  repository  = local.xquare-repository
-  chart       = local.dex-name
+  source        = "./modules/helm"
+  name          = local.dex-name
+  namespace     = local.dex-namespace
+  repository    = local.xquare-repository
+  chart         = local.dex-name
   chart_version = local.dex-version
 }
 
 module "dex-k8s-authenticator" {
-  source     = "./modules/helm"
-  name  = local.dex-k8s-authenticator-name
-  namespace   = local.dex-namespace
-  repository  = local.xquare-repository
-  chart       = local.dex-k8s-authenticator-name
+  source        = "./modules/helm"
+  name          = local.dex-k8s-authenticator-name
+  namespace     = local.dex-namespace
+  repository    = local.xquare-repository
+  chart         = local.dex-k8s-authenticator-name
   chart_version = local.dex-k8s-authenticator-version
 }
 
 module "istio" {
-  source     = "./modules/helm"
-  name       = local.istio-name
-  namespace  = local.istio-namespace
-  repository = local.xquare-repository
-  chart      = local.istio-name
+  source        = "./modules/helm"
+  name          = local.istio-name
+  namespace     = local.istio-namespace
+  repository    = local.xquare-repository
+  chart         = local.istio-name
   chart_version = local.istio-version
 }
 
 module "karpenter" {
-  source                 = "./modules/karpenter"
+  source = "./modules/karpenter"
 
-  namespace              = local.karpenter-namespace
-  repository             = local.xquare-repository
-  chart                  = local.karpenter-name
-  chart_version          = local.karpenter-version
+  namespace     = local.karpenter-namespace
+  repository    = local.xquare-repository
+  chart         = local.karpenter-name
+  chart_version = local.karpenter-version
 
   cluster_name           = module.eks.cluster_name
   irsa_oidc_provider_arn = module.eks.oidc_provider_arn
@@ -136,34 +138,34 @@ module "karpenter" {
 }
 
 module "prometheus" {
-  source     = "./modules/helm"
-  name       = local.prometheus-name
-  namespace  = local.monitoring-namespace
-  repository = local.xquare-repository
-  chart      = local.prometheus-name
-  chart_version  = local.prometheus-version
+  source        = "./modules/helm"
+  name          = local.prometheus-name
+  namespace     = local.monitoring-namespace
+  repository    = local.xquare-repository
+  chart         = local.prometheus-name
+  chart_version = local.prometheus-version
 }
 
 module "xquare-application" {
-  source     = "./modules/helm"
-  name       = local.xquare-application-name
-  repository = local.xquare-repository
-  chart      = local.xquare-application-name
-  chart_version  = local.xquare-application-version
+  source        = "./modules/helm"
+  name          = local.xquare-application-name
+  repository    = local.xquare-repository
+  chart         = local.xquare-application-name
+  chart_version = local.xquare-application-version
 }
 
 module "xquare-certificate" {
-  source     = "./modules/helm"
-  name       = local.xquare-certificate-name
-  repository = local.xquare-repository
-  chart      = local.xquare-certificate-name
+  source        = "./modules/helm"
+  name          = local.xquare-certificate-name
+  repository    = local.xquare-repository
+  chart         = local.xquare-certificate-name
   chart_version = local.xquare-certificate-version
 }
 
 module "xquare-role" {
-  source     = "./modules/helm"
-  name       = local.xquare-role-name
-  repository = local.xquare-repository
-  chart      = local.xquare-role-name
+  source        = "./modules/helm"
+  name          = local.xquare-role-name
+  repository    = local.xquare-repository
+  chart         = local.xquare-role-name
   chart_version = local.xquare-role-version
 }
