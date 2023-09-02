@@ -6,25 +6,6 @@ locals {
   elasticcache_parameter_group_name = "default.redis7"
 }
 
-resource "aws_security_group" "elasticache_sg" {
-  name_prefix = local.elasticcache_name
-  vpc_id      = module.vpc.vpc_id
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_elasticache_subnet_group" "elasticache_subnet_group" {
   name       = "${local.elasticcache_name}-cache-subnet"
   subnet_ids = module.vpc.private_subnet_ids
@@ -39,5 +20,5 @@ resource "aws_elasticache_cluster" "xquare-cluster" {
   parameter_group_name = local.elasticcache_parameter_group_name
   port                 = 6379
   subnet_group_name    = aws_elasticache_subnet_group.elasticache_subnet_group.name
-  security_group_ids = [ aws_security_group.elasticache_sg.vpc_id ]
+  security_group_ids = [ local.db_security_group_id ]
 }
