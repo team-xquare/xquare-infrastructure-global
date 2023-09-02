@@ -1,8 +1,8 @@
 locals {
-  elasticcache_name = "xquare-redis"
-  elasticcache_engine = "redis"
-  elasticcache_engin_version = "7.0"
-  elasticcache_node_type = "cache.t2.micro"
+  elasticcache_name                 = "xquare-redis"
+  elasticcache_engine               = "redis"
+  elasticcache_engin_version        = "7.0"
+  elasticcache_node_type            = "cache.t2.micro"
   elasticcache_parameter_group_name = "default.redis7"
 }
 
@@ -20,7 +20,7 @@ resource "aws_security_group" "redis_sg" {
     from_port   = 6379
     to_port     = 6379
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -33,5 +33,5 @@ resource "aws_elasticache_cluster" "xquare-cluster" {
   parameter_group_name = local.elasticcache_parameter_group_name
   port                 = 6379
   subnet_group_name    = aws_elasticache_subnet_group.elasticache_subnet_group.name
-  security_group_ids = [ aws_security_group.redis_sg.id ]
+  security_group_ids   = [aws_security_group.redis_sg.id]
 }
