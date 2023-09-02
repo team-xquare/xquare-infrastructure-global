@@ -12,3 +12,10 @@ variable "instance_type" {
 }
 variable "capacity_type" {
 }
+
+variable "nodegroup_min_size" {
+}
+variable "nodegroup_max_size" {
+}
+variable "nodegroup_desired_size" {
+}
