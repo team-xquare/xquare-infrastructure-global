@@ -4,7 +4,7 @@ resource "aws_sqs_queue" "queue" {
   kms_master_key_id         = aws_kms_key.kms_key.id
 }
 
-resource "aws_sqs_queue_access_policy" "queue_access_policy" {
+resource "aws_iam_policy" "queue_access_policy" {
   queue_url = aws_sqs_queue.queue.id
 
   policy = jsonencode({
@@ -61,6 +61,9 @@ resource "aws_autoscaling_lifecycle_hook" "autoscaling_lifecycle_hook" {
 
 resource "aws_autoscaling_group" "asg" {
   name = var.default_name
+  max_size                  = 6
+  min_size                  = 3
+  health_check_grace_period = 300
 
   tags = [
     {
@@ -83,7 +86,6 @@ resource "aws_cloudwatch_event_rule" "k8s_asg_term_rule" {
 resource "aws_cloudwatch_event_target" "k8s_asg_term_target" {
   rule = aws_cloudwatch_event_rule.k8s_asg_term_rule.name
   arn  = aws_sqs_queue.queue.arn
-  id   = "1"
 }
 
 resource "aws_cloudwatch_event_rule" "k8s_spot_term_rule" {
@@ -98,7 +100,6 @@ resource "aws_cloudwatch_event_rule" "k8s_spot_term_rule" {
 resource "aws_cloudwatch_event_target" "k8s_spot_term_target" {
   rule = aws_cloudwatch_event_rule.k8s_spot_term_rule.name
   arn  = aws_sqs_queue.queue.arn
-  id   = "1"
 }
 
 resource "aws_cloudwatch_event_rule" "k8s_rebalance_rule" {
@@ -204,6 +205,6 @@ resource "helm_release" "aws_node_termination_handler" {
 
   set {
     name  = "serviceAccount.annotations.eks.amazonaws.com/role-arn"
-    value = eks_node_termination_handler_role.arn
+    value = aws_iam_role.eks_node_termination_handler_role.arn
   }
 }
