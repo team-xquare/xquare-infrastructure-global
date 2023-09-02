@@ -6,29 +6,12 @@ resource "aws_sqs_queue" "queue" {
   kms_master_key_id         = aws_kms_key.kms_key.id
 }
 
-resource "aws_iam_policy" "queue_access_policy" {
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Id      = "NTHQueuePolicy",
-    Statement = [
-      {
-        Effect    = "Allow",
-        Principal = {
-          Service = ["events.amazonaws.com", "sqs.amazonaws.com"]
-        },
-        Action    = "sqs:SendMessage",
-        Resource  = aws_sqs_queue.queue.arn
-      }
-    ],
-  })
-}
-
 resource "aws_sqs_queue_policy" "queue_policy" {
   queue_url = aws_sqs_queue.queue.url
-  policy    = aws_iam_policy_document.queue_access_policy.json
+  policy    = data.aws_iam_policy_document.queue_access_policy.json
 }
 
-resource "aws_iam_policy_document" "queue_access_policy" {
+data "aws_iam_policy_document" "queue_access_policy" {
   statement {
     actions   = ["sqs:SendMessage"]
     effect    = "Allow"
