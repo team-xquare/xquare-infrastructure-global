@@ -36,9 +36,6 @@ locals {
     prometheus-name = "kube-prometheus-stack"
     prometheus-version = "48.3.1"
 
-    redis-name = "redis"
-    redis-version = "17.15.6"
-
     kube-oidc-proxy-name = "kube-oidc-proxy"
     kube-oidc-proxy-version = "0.3.3"
 
@@ -59,7 +56,6 @@ locals {
     spot-handler-namespace = "spot-handler"
     cert-manager-namespace = "cert-manager"
     istio-namespace        = "istio-system"
-    redis-namespace        = "redis"
 }
 
 module "argocd" {
@@ -146,15 +142,6 @@ module "prometheus" {
   repository = local.xquare-repository
   chart      = local.prometheus-name
   chart_version  = local.prometheus-version
-}
-
-module "redis" {
-  source     = "./modules/helm"
-  name       = local.redis-name
-  namespace  = local.redis-namespace
-  repository = local.xquare-repository
-  chart      = local.redis-name
-  chart_version  = local.redis-version
 }
 
 module "xquare-application" {
