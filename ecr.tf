@@ -1,6 +1,6 @@
 locals {
   name_prefix = "xquare"
-  ecr_names = [
+  ecr_names   = [
     # ECR_REPOSITORY_NAME
     "point-be-prod",
     "dormitory-admin-fe-prod",
@@ -41,13 +41,13 @@ locals {
 
 locals {
   stag_ecr_names = toset([
-    for name in local.ecr_names : name if endswith(name, "-stag")
+  for name in local.ecr_names : name if endswith(name, "-stag")
   ])
   stag_tag_prefix = "stag-"
   stag_tag_limit  = 5
 
   prod_ecr_names = toset([
-    for name in local.ecr_names : name if endswith(name, "-prod")
+  for name in local.ecr_names : name if endswith(name, "-prod")
   ])
   prod_tag_prefix = "prod-"
   prod_tag_limit  = 5
@@ -75,12 +75,12 @@ module "prod_ecr" {
 
 output "stag_ecr_url" {
   value = [
-    for v in module.stag_ecr : v.ecr_repository_url
+  for v in module.stag_ecr : v.ecr_repository_url
   ]
 }
 
 output "prod_ecr_url" {
   value = [
-    for v in module.prod_ecr : v.ecr_repository_url
+  for v in module.prod_ecr : v.ecr_repository_url
   ]
 }
