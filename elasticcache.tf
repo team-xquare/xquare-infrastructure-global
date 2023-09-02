@@ -11,6 +11,19 @@ resource "aws_elasticache_subnet_group" "elasticache_subnet_group" {
   subnet_ids = module.vpc.private_subnet_ids
 }
 
+resource "aws_security_group" "redis_sg" {
+  name        = "redis-security-group"
+  description = "Security group for Redis on port 6379"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+}
+
 resource "aws_elasticache_cluster" "xquare-cluster" {
   cluster_id           = local.elasticcache_name
   engine               = local.elasticcache_engine
@@ -20,5 +33,5 @@ resource "aws_elasticache_cluster" "xquare-cluster" {
   parameter_group_name = local.elasticcache_parameter_group_name
   port                 = 6379
   subnet_group_name    = aws_elasticache_subnet_group.elasticache_subnet_group.name
-  security_group_ids = [ local.db_security_group_id ]
+  security_group_ids = [ aws_security_group.redis_sg.id ]
 }
