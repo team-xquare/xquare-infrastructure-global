@@ -18,14 +18,26 @@ resource "aws_iam_policy" "queue_access_policy" {
         },
         Action    = "sqs:SendMessage",
         Resource  = aws_sqs_queue.queue.arn
-      },
+      }
     ],
   })
 }
 
 resource "aws_sqs_queue_policy" "queue_policy" {
   queue_url = aws_sqs_queue.queue.url
-  policy    = aws_iam_policy.queue_access_policy.policy
+  policy    = aws_iam_policy_document.queue_access_policy.json
+}
+
+resource "aws_iam_policy_document" "queue_access_policy" {
+  statement {
+    actions   = ["sqs:SendMessage"]
+    effect    = "Allow"
+    resources = [aws_sqs_queue.queue.arn]
+    principals {
+      type        = "Service"
+      identifiers = ["events.amazonaws.com", "sqs.amazonaws.com"]
+    }
+  }
 }
 
 resource "aws_kms_key" "kms_key" {
