@@ -5,8 +5,6 @@ resource "aws_sqs_queue" "queue" {
 }
 
 resource "aws_iam_policy" "queue_access_policy" {
-  queue_url = aws_sqs_queue.queue.id
-
   policy = jsonencode({
     Version = "2012-10-17",
     Id      = "NTHQueuePolicy",
@@ -45,33 +43,8 @@ resource "aws_iam_policy_attachment" "queue_access_attachment" {
 }
 
 resource "aws_kms_key" "kms_key" {
-  description             = "Example KMS Key"
+  description             = "ASG KMS Key"
   deletion_window_in_days = 30
-}
-
-resource "aws_autoscaling_lifecycle_hook" "autoscaling_lifecycle_hook" {
-  name                 = "${var.default_name}-hook"
-  autoscaling_group_name = var.default_name
-  lifecycle_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
-  default_result      = "CONTINUE"
-  heartbeat_timeout   = 300
-  notification_target_arn = aws_sqs_queue.queue.arn
-  role_arn            = queue_access_role.arn
-}
-
-resource "aws_autoscaling_group" "asg" {
-  name = var.default_name
-  max_size                  = 6
-  min_size                  = 3
-  health_check_grace_period = 300
-
-  tags = [
-    {
-      key                 = "aws-node-termination-handler/managed"
-      value               = ""
-      propagate_at_launch = true
-    }
-  ]
 }
 
 resource "aws_cloudwatch_event_rule" "k8s_asg_term_rule" {
@@ -114,7 +87,6 @@ resource "aws_cloudwatch_event_rule" "k8s_rebalance_rule" {
 resource "aws_cloudwatch_event_target" "k8s_rebalance_target" {
   rule = aws_cloudwatch_event_rule.k8s_rebalance_rule.name
   arn  = aws_sqs_queue.queue.arn
-  id   = "1"
 }
 
 resource "aws_cloudwatch_event_rule" "k8s_instance_state_change_rule" {
@@ -129,7 +101,6 @@ resource "aws_cloudwatch_event_rule" "k8s_instance_state_change_rule" {
 resource "aws_cloudwatch_event_target" "k8s_instance_state_change_target" {
   rule = aws_cloudwatch_event_rule.k8s_instance_state_change_rule.name
   arn  = aws_sqs_queue.queue.arn
-  id   = "1"
 }
 
 resource "aws_cloudwatch_event_rule" "k8s_scheduled_change_rule" {
@@ -148,7 +119,6 @@ resource "aws_cloudwatch_event_rule" "k8s_scheduled_change_rule" {
 resource "aws_cloudwatch_event_target" "k8s_scheduled_change_target" {
   rule = aws_cloudwatch_event_rule.k8s_scheduled_change_rule.name
   arn  = aws_sqs_queue.queue.arn
-  id   = "1"
 }
 
 resource "aws_iam_policy" "eks_node_termination_handler_policy" {
@@ -200,7 +170,7 @@ resource "helm_release" "aws_node_termination_handler" {
 
   set {
     name  = "queueURL"
-    value = aws_sqs_queue.queue.arn
+    value = aws_sqs_queue.queue.url
   }
 
   set {
