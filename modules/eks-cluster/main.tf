@@ -9,7 +9,7 @@ module "eks" {
   cluster_endpoint_public_access  = true
 
   vpc_id     = local.vpc_id
-  subnet_ids = local.private_subnets
+  subnet_ids = local.public_subnets
 
   enable_irsa = true
 
@@ -74,9 +74,9 @@ resource "aws_ec2_tag" "private_subnet_tag" {
   value       = "1"
 }
 
-resource "aws_ec2_tag" "private_subnet_cluster_tag" {
-  count       = length(local.private_subnets)
-  resource_id = local.private_subnets[count.index]
+resource "aws_ec2_tag" "public_subnet_cluster_tag" {
+  count       = length(local.public_subnets)
+  resource_id = local.public_subnets[count.index]
   key         = "kubernetes.io/cluster/${local.cluster_name}"
   value       = "owned"
 }
