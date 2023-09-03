@@ -28,7 +28,7 @@ locals {
   dex-k8s-authenticator-version = "1.4.2"
 
   istio-name    = "istio"
-  istio-version = "1.0.19"
+  istio-version = "1.0.20"
 
   karpenter-name    = "karpenter"
   karpenter-version = "1.0.3"
