@@ -16,7 +16,7 @@ locals {
   aws-ebs-csi-driver-version = "2.21.0"
 
   aws-node-termination-handler-name    = "aws-node-termination-handler"
-  aws-node-termination-handler-version = "0.22.6"
+  aws-node-termination-handler-version = "0.22.8"
 
   cert-manager-name    = "cert-manager"
   cert-manager-version = "v1.12.3"
