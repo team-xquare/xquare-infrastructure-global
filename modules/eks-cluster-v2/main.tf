@@ -67,13 +67,6 @@ module "eks" {
   ]
 }
 
-resource "aws_ec2_tag" "public_subnet_tag_internal_elb" {
-  count       = length(local.public_subnets)
-  resource_id = local.public_subnets[count.index]
-  key         = "kubernetes.io/role/internal-elb"
-  value       = "1"
-}
-
 resource "aws_ec2_tag" "public_subnet_tag_elb" {
   count       = length(local.public_subnets)
   resource_id = local.public_subnets[count.index]
