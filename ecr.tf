@@ -1,6 +1,5 @@
 locals {
   name_prefix = "xquare"
-  v2_name_prefix = "xquare-v2"
   ecr_names = [
     # ECR_REPOSITORY_NAME
     "repo-be-prod",

@@ -24,21 +24,3 @@ module "eks" {
 output "cluster_id" {
   value = module.eks.cluster_id
 }
-
-
-module "eks_v2" {
-  source = "./modules/eks-cluster"
-
-  name_prefix     = local.v2_name_prefix
-  cluster_version = local.cluster_version
-  instance_type   = local.node_type
-  capacity_type   = local.capacity_type
-
-  vpc_id          = module.vpc.vpc_id
-  private_subnets = module.vpc.public_subnet_ids
-  public_subnets  = module.vpc.public_subnet_ids
-
-  nodegroup_min_size     = 3
-  nodegroup_max_size     = 6
-  nodegroup_desired_size = 5
-}
