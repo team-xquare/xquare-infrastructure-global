@@ -1,3 +1,4 @@
+/*
 provider "helm" {
   kubernetes {
     host                   = module.eks.cluster_endpoint
@@ -166,3 +167,4 @@ module "xquare-role" {
   chart         = local.xquare-role-name
   chart_version = local.xquare-role-version
 }
+*/

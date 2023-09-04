@@ -4,7 +4,7 @@ locals {
   capacity_type   = "SPOT"
 }
 
-module "eks" {
+m/*odule "eks" {
   source = "./modules/eks-cluster"
 
   name_prefix     = local.name_prefix
@@ -19,8 +19,8 @@ module "eks" {
   nodegroup_min_size     = 3
   nodegroup_max_size     = 6
   nodegroup_desired_size = 5
-}
-
+}*/
+/*
 output "cluster_id" {
   value = module.eks.cluster_id
-}
+}*/
