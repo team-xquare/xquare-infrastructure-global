@@ -4,7 +4,7 @@ locals {
   capacity_type   = "SPOT"
 }
 
-m/*odule "eks" {
+/*module "eks" {
   source = "./modules/eks-cluster"
 
   name_prefix     = local.name_prefix
