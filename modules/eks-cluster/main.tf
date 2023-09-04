@@ -74,23 +74,9 @@ resource "aws_ec2_tag" "private_subnet_tag" {
   value       = "1"
 }
 
-resource "aws_ec2_tag" "private_subnet_cluster_tag" {
-  count       = length(local.private_subnets)
-  resource_id = local.private_subnets[count.index]
-  key         = "kubernetes.io/cluster/${local.cluster_name}"
-  value       = "owned"
-}
-
 resource "aws_ec2_tag" "public_subnet_tag" {
   count       = length(local.public_subnets)
   resource_id = local.private_subnets[count.index]
   key         = "kubernetes.io/role/elb"
   value       = "1"
-}
-
-resource "aws_ec2_tag" "private_subnet_karpenter_tag" {
-  count       = length(local.private_subnets)
-  resource_id = local.private_subnets[count.index]
-  key         = "karpenter.sh/discovery/${local.cluster_name}"
-  value       = local.cluster_name
 }
