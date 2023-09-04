@@ -20,9 +20,4 @@ module "vpc" {
   igw_tags = {
     Name = "${var.name_prefix}-igw"
   }
-
-  private_subnet_tags = {
-    "karpenter.sh/discovery/${var.cluster_name}" = "${var.cluster_name}"
-    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
-  }
 }
