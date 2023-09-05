@@ -20,7 +20,7 @@ locals {
   aws-node-termination-handler-version = "0.22.8"
 
   cert-manager-name    = "cert-manager"
-  cert-manager-version = "v1.12.4"
+  cert-manager-version = "v1.12.5"
 
   dex-name    = "dex"
   dex-version = "0.15.5"
