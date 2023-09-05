@@ -25,7 +25,7 @@ output "cluster_id" {
   value = module.eks.cluster_id
 }
 
-/*module "eksv2" {
+module "eksv2" {
   source                 = "./modules/eks-cluster-v2"
 
   name_prefix     = local.name_prefix_v2
@@ -39,4 +39,4 @@ output "cluster_id" {
   nodegroup_min_size     = 3
   nodegroup_max_size     = 6
   nodegroup_desired_size = 5
-}*/
+}
