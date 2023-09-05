@@ -20,7 +20,7 @@ locals {
   aws-node-termination-handler-version = "0.22.8"
 
   cert-manager-name    = "cert-manager"
-  cert-manager-version = "v1.12.5"
+  cert-manager-version = "v1.12.6"
 
   dex-name    = "dex"
   dex-version = "0.15.5"
@@ -32,7 +32,7 @@ locals {
   istio-version = "1.0.22"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.8"
+  karpenter-version = "1.0.9"
 
   prometheus-name    = "kube-prometheus-stack"
   prometheus-version = "48.3.1"
