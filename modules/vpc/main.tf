@@ -20,4 +20,5 @@ module "vpc" {
   igw_tags = {
     Name = "${var.name_prefix}-igw"
   }
+  map_public_ip_on_launch = true
 }
