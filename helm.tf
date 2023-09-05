@@ -1,8 +1,8 @@
 provider "helm" {
   kubernetes {
-    host                   = module.eks.cluster_endpoint
-    cluster_ca_certificate = module.eks.cluster_ca_certificate
-    token                  = module.eks.cluster_auth_token
+    host                   = module.eksv2.cluster_endpoint
+    cluster_ca_certificate = module.eksv2.cluster_ca_certificate
+    token                  = module.eksv2.cluster_auth_token
   }
 }
 
@@ -129,10 +129,10 @@ module "karpenter" {
   chart         = local.karpenter-name
   chart_version = local.karpenter-version
 
-  cluster_name           = module.eks.cluster_name
-  irsa_oidc_provider_arn = module.eks.oidc_provider_arn
-  iam_role_arn           = module.eks.iam_role_arn
-  cluster_endpoint       = module.eks.cluster_endpoint
+  cluster_name           = module.eksv2.cluster_name
+  irsa_oidc_provider_arn = module.eksv2.oidc_provider_arn
+  iam_role_arn           = module.eksv2.iam_role_arn
+  cluster_endpoint       = module.eksv2.cluster_endpoint
 }
 
 module "prometheus" {
