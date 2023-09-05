@@ -20,7 +20,7 @@ locals {
   aws-node-termination-handler-version = "0.22.8"
 
   cert-manager-name    = "cert-manager"
-  cert-manager-version = "v1.12.3"
+  cert-manager-version = "v1.12.4"
 
   dex-name    = "dex"
   dex-version = "0.15.5"
@@ -29,7 +29,7 @@ locals {
   dex-k8s-authenticator-version = "1.4.2"
 
   istio-name    = "istio"
-  istio-version = "1.0.21"
+  istio-version = "1.0.22"
 
   karpenter-name    = "karpenter"
   karpenter-version = "1.0.8"
