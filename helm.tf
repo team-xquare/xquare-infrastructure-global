@@ -6,6 +6,15 @@ provider "helm" {
   }
 }
 
+provider "helm" {
+  alias = "v2"
+  kubernetes {
+    host                   = module.eksv2.cluster_endpoint
+    cluster_ca_certificate = module.eksv2.cluster_ca_certificate
+    token                  = module.eksv2.cluster_auth_token
+  }
+}
+
 locals {
   xquare-repository = "https://team-xquare.github.io/k8s-resource"
 
