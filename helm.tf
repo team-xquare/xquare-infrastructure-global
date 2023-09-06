@@ -29,7 +29,7 @@ locals {
   dex-k8s-authenticator-version = "1.4.2"
 
   istio-name    = "istio"
-  istio-version = "1.0.22"
+  istio-version = "1.0.24"
 
   karpenter-name    = "karpenter"
   karpenter-version = "1.0.9"
@@ -41,13 +41,7 @@ locals {
   kube-oidc-proxy-version = "0.3.3"
 
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.1"
-
-  xquare-certificate-name    = "xquare-certificate"
-  xquare-certificate-version = "1.0.3"
-
-  xquare-role-name    = "xquare-role"
-  xquare-role-version = "1.0.2"
+  xquare-application-version = "1.0.3"
 
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
@@ -160,20 +154,4 @@ module "xquare-application" {
   repository    = local.xquare-repository
   chart         = local.xquare-application-name
   chart_version = local.xquare-application-version
-}
-
-module "xquare-certificate" {
-  source        = "./modules/helm"
-  name          = local.xquare-certificate-name
-  repository    = local.xquare-repository
-  chart         = local.xquare-certificate-name
-  chart_version = local.xquare-certificate-version
-}
-
-module "xquare-role" {
-  source        = "./modules/helm"
-  name          = local.xquare-role-name
-  repository    = local.xquare-repository
-  chart         = local.xquare-role-name
-  chart_version = local.xquare-role-version
 }
