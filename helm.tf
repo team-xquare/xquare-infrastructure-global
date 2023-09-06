@@ -26,7 +26,7 @@ locals {
   dex-version = "0.15.5"
 
   dex-k8s-authenticator-name    = "dex-k8s-authenticator"
-  dex-k8s-authenticator-version = "1.4.2"
+  dex-k8s-authenticator-version = "1.4.4"
 
   istio-name    = "istio"
   istio-version = "1.0.24"
