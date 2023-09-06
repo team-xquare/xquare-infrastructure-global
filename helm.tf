@@ -11,10 +11,10 @@ locals {
   xquare-repository = "https://team-xquare.github.io/k8s-resource"
 
   argocd-name    = "argocd"
-  argocd-verison = "4.8.4"
+  argocd-verison = "4.8.5"
 
   aws-ebs-csi-driver-name    = "aws-ebs-csi-driver"
-  aws-ebs-csi-driver-version = "2.21.0"
+  aws-ebs-csi-driver-version = "2.21.1"
 
   aws-node-termination-handler-name    = "aws-node-termination-handler"
   aws-node-termination-handler-version = "0.22.8"
@@ -23,7 +23,7 @@ locals {
   cert-manager-version = "v1.12.6"
 
   dex-name    = "dex"
-  dex-version = "0.15.5"
+  dex-version = "0.15.7"
 
   dex-k8s-authenticator-name    = "dex-k8s-authenticator"
   dex-k8s-authenticator-version = "1.4.4"
@@ -32,16 +32,16 @@ locals {
   istio-version = "1.0.24"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.9"
+  karpenter-version = "1.0.10"
 
   prometheus-name    = "kube-prometheus-stack"
-  prometheus-version = "48.3.1"
+  prometheus-version = "48.3.2"
 
   kube-oidc-proxy-name    = "kube-oidc-proxy"
   kube-oidc-proxy-version = "0.3.3"
 
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.3"
+  xquare-application-version = "1.0.4"
 
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
