@@ -42,7 +42,7 @@ locals {
 
   xquare-application-name    = "xquare-application"
   xquare-application-version = "1.0.4"
-
+ 
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
   monitoring-namespace   = "monitoring"
