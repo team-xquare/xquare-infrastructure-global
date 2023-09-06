@@ -144,6 +144,15 @@ module "prometheus" {
   chart_version = local.prometheus-version
 }
 
+module "kube-oidc-proxy" {
+  source        = "./modules/helm"
+  name          = local.kube-oidc-proxy-name
+  namespace     = local.dex-namespace
+  repository    = local.xquare-repository
+  chart         = local.kube-oidc-proxy-name
+  chart_version = local.kube-oidc-proxy-version
+}
+
 module "xquare-application" {
   source        = "./modules/helm"
   name          = local.xquare-application-name
