@@ -147,6 +147,7 @@ module "prometheus" {
 module "xquare-application" {
   source        = "./modules/helm"
   name          = local.xquare-application-name
+  namespace     = local.argocd-namespace
   repository    = local.xquare-repository
   chart         = local.xquare-application-name
   chart_version = local.xquare-application-version
