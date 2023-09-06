@@ -32,7 +32,7 @@ locals {
   istio-version = "1.0.24"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.10"
+  karpenter-version = "1.0.11"
 
   prometheus-name    = "kube-prometheus-stack"
   prometheus-version = "48.3.2"
@@ -41,7 +41,7 @@ locals {
   kube-oidc-proxy-version = "0.3.3"
 
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.4"
+  xquare-application-version = "1.0.5"
  
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
@@ -115,6 +115,7 @@ module "istio" {
   chart         = local.istio-name
   chart_version = local.istio-version
 }
+
 module "karpenter" {
   source = "./modules/karpenter"
 
