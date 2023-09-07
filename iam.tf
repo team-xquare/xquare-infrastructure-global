@@ -33,17 +33,12 @@ data "aws_iam_policy_document" "s3_policy_document" {
 
 # thanos S3 =========================================================
 
-module "thanos_s3_iam_account" {
-  source = "./modules/iam-user"
-  name   = "thanos_s3_iam"
-  policy_arns = [
-    aws_iam_policy.thanos_s3_policy.arn
-  ]
-}
-
-resource "aws_iam_policy" "thanos_s3_policy" {
-  name   = "thanos-s3-policy"
-  policy = data.aws_iam_policy_document.s3_policy_document.json
+resource "aws_iam_role" "thanos_s3" {
+  name        = "thanos_s3"
+  description = "Thanos IAM role for service account"
+  path        = "/"
+  assume_role_policy    = data.aws_iam_policy_document.s3_policy_document.json
+  force_detach_policies = true
 }
 
 data "aws_iam_policy_document" "thanos_s3_policy_document" {
