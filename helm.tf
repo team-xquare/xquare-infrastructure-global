@@ -40,6 +40,9 @@ locals {
   kube-oidc-proxy-name    = "kube-oidc-proxy"
   kube-oidc-proxy-version = "0.3.3"
 
+  thanos-name = "thanos"
+  thanos-version = "1.0.0"
+
   xquare-application-name    = "xquare-application"
   xquare-application-version = "1.0.5"
  
@@ -146,6 +149,17 @@ module "kube-oidc-proxy" {
   repository    = local.xquare-repository
   chart         = local.kube-oidc-proxy-name
   chart_version = local.kube-oidc-proxy-version
+}
+
+module "thanos" {
+  source        = "./modules/thanos"
+  name          = local.thanos-name
+  namespace     = local.monitoring-namespace
+  repository    = local.xquare-repository
+  chart         = local.thanos-name
+  chart_version = local.thanos-version
+
+  s3_role_arn = aws_iam_role.thanos_s3.arn
 }
 
 module "xquare-application" {
