@@ -37,7 +37,7 @@ module "thanos_s3_iam_account" {
   source = "./modules/iam-user"
   name   = "thanos_s3_iam"
   policy_arns = [
-    aws_iam_policy.s3_policy.arn
+    aws_iam_policy.thanos_s3_policy.arn
   ]
 }
 
