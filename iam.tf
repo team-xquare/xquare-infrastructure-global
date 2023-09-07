@@ -30,6 +30,37 @@ data "aws_iam_policy_document" "s3_policy_document" {
   }
 }
 
+
+# thanos S3 =========================================================
+
+module "thanos_s3_iam_account" {
+  source = "./modules/iam-user"
+  name   = "xquare_s3_iam"
+  policy_arns = [
+    aws_iam_policy.s3_policy.arn
+  ]
+}
+
+resource "aws_iam_policy" "thanos_s3_policy" {
+  name   = "thanos-s3-policy"
+  policy = data.aws_iam_policy_document.s3_policy_document.json
+}
+
+data "aws_iam_policy_document" "thanos_s3_policy_document" {
+  statement {
+    actions   = ["s3:ListAllMyBuckets"]
+    resources = ["arn:aws:s3:::*"]
+    effect    = "Allow"
+  }
+  statement {
+    actions = ["s3:*"]
+    resources = [
+      module.thanos_storage.arn
+    ]
+    effect = "Allow"
+  }
+}
+
 # fe S3 =======================================================
 
 module "xquare_fe_s3_iam_account" {
