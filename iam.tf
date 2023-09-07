@@ -35,7 +35,7 @@ data "aws_iam_policy_document" "s3_policy_document" {
 
 module "thanos_s3_iam_account" {
   source = "./modules/iam-user"
-  name   = "xquare_s3_iam"
+  name   = "thanos_s3_iam"
   policy_arns = [
     aws_iam_policy.s3_policy.arn
   ]
