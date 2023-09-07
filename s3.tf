@@ -17,3 +17,10 @@ module "stag_storage" {
   bucket_name = local.stag_storage_name
   is_public   = true
 }
+
+module "thanos_storage" {
+  source = "./modules/s3"
+
+  bucket_name = local.thanos_storage_name
+  is_public   = false
+}
