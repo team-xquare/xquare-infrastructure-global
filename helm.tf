@@ -29,16 +29,16 @@ locals {
   dex-k8s-authenticator-version = "1.4.4"
 
   istio-name    = "istio"
-  istio-version = "1.0.24"
+  istio-version = "1.0.26"
 
   karpenter-name    = "karpenter"
   karpenter-version = "1.0.11"
 
-  prometheus-name    = "kube-prometheus-stack"
-  prometheus-version = "48.3.2"
-
   kube-oidc-proxy-name    = "kube-oidc-proxy"
   kube-oidc-proxy-version = "0.3.3"
+
+  prometheus-name    = "kube-prometheus-stack"
+  prometheus-version = "48.3.4"
 
   thanos-name = "thanos"
   thanos-version = "1.0.0"
