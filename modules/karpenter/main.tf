@@ -36,4 +36,6 @@ resource "helm_release" "karpenter" {
     name  = "settings.aws.defaultInstanceProfile"
     value = module.karpenter.instance_profile_name
   }
+
+  dependency_update = true
 }
