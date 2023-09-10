@@ -32,7 +32,7 @@ locals {
   istio-version = "1.0.26"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.14"
+  karpenter-version = "1.0.15"
 
   kube-oidc-proxy-name    = "kube-oidc-proxy"
   kube-oidc-proxy-version = "0.3.3"
