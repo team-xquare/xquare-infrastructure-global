@@ -18,22 +18,22 @@ resource "helm_release" "karpenter" {
   version             = var.chart_version
 
   set {
-    name  = "karpenter.settings.aws.clusterName"
+    name  = "settings.aws.clusterName"
     value = var.cluster_name
   }
 
   set {
-    name  = "karpenter.settings.aws.clusterEndpoint"
+    name  = "settings.aws.clusterEndpoint"
     value = var.cluster_endpoint
   }
 
   set {
-    name  = "karpenter.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value = module.karpenter.irsa_arn
   }
 
   set {
-    name  = "karpenter.settings.aws.defaultInstanceProfile"
+    name  = "settings.aws.defaultInstanceProfile"
     value = module.karpenter.instance_profile_name
   }
 }
