@@ -17,7 +17,7 @@ locals {
   aws-ebs-csi-driver-version = "2.21.1"
 
   aws-node-termination-handler-name    = "aws-node-termination-handler"
-  aws-node-termination-handler-version = "0.22.9"
+  aws-node-termination-handler-version = "0.22.10"
 
   cert-manager-name    = "cert-manager"
   cert-manager-version = "v1.12.6"
@@ -38,7 +38,7 @@ locals {
   kube-oidc-proxy-version = "0.3.3"
 
   prometheus-name    = "kube-prometheus-stack"
-  prometheus-version = "48.3.4"
+  prometheus-version = "48.3.7"
 
   thanos-name = "thanos"
   thanos-version = "1.0.0"
