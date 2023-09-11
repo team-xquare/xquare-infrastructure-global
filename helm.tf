@@ -44,7 +44,7 @@ locals {
   thanos-version = "1.0.0"
 
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.5"
+  xquare-application-version = "1.0.6"
  
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
@@ -74,15 +74,6 @@ module "aws-ebs-csi-driver" {
   chart_version = local.aws-ebs-csi-driver-version
 }
 
-module "aws-node-termination-handler" {
-  source        = "./modules/helm"
-  name          = local.aws-node-termination-handler-name
-  namespace     = local.spot-handler-namespace
-  repository    = local.xquare-repository
-  chart         = local.aws-node-termination-handler-name
-  chart_version = local.aws-node-termination-handler-version
-}
-
 module "cert-manager" {
   source        = "./modules/helm"
   name          = local.cert-manager-name
@@ -90,24 +81,6 @@ module "cert-manager" {
   repository    = local.xquare-repository
   chart         = local.cert-manager-name
   chart_version = local.cert-manager-version
-}
-
-module "dex" {
-  source        = "./modules/helm"
-  name          = local.dex-name
-  namespace     = local.dex-namespace
-  repository    = local.xquare-repository
-  chart         = local.dex-name
-  chart_version = local.dex-version
-}
-
-module "dex-k8s-authenticator" {
-  source        = "./modules/helm"
-  name          = local.dex-k8s-authenticator-name
-  namespace     = local.dex-namespace
-  repository    = local.xquare-repository
-  chart         = local.dex-k8s-authenticator-name
-  chart_version = local.dex-k8s-authenticator-version
 }
 
 module "istio" {
@@ -133,15 +106,6 @@ module "karpenter" {
   cluster_endpoint       = module.eksv2.cluster_endpoint
 }
 
-module "prometheus" {
-  source        = "./modules/helm"
-  name          = local.prometheus-name
-  namespace     = local.monitoring-namespace
-  repository    = local.xquare-repository
-  chart         = local.prometheus-name
-  chart_version = local.prometheus-version
-}
-
 module "kube-oidc-proxy" {
   source        = "./modules/helm"
   name          = local.kube-oidc-proxy-name
@@ -149,17 +113,6 @@ module "kube-oidc-proxy" {
   repository    = local.xquare-repository
   chart         = local.kube-oidc-proxy-name
   chart_version = local.kube-oidc-proxy-version
-}
-
-module "thanos" {
-  source        = "./modules/thanos"
-  name          = local.thanos-name
-  namespace     = local.monitoring-namespace
-  repository    = local.xquare-repository
-  chart         = local.thanos-name
-  chart_version = local.thanos-version
-
-  s3_role_arn = aws_iam_role.thanos_s3.arn
 }
 
 module "xquare-application" {
