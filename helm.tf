@@ -92,19 +92,6 @@ module "istio" {
   chart_version = local.istio-version
 }
 
-module "karpenter" {
-  source = "./modules/karpenter"
-
-  namespace     = local.karpenter-namespace
-  repository    = local.xquare-repository
-  chart         = local.karpenter-name
-  chart_version = local.karpenter-version
-
-  cluster_name           = module.eksv2.cluster_name
-  irsa_oidc_provider_arn = module.eksv2.oidc_provider_arn
-  iam_role_arn           = module.eksv2.iam_role_arn
-  cluster_endpoint       = module.eksv2.cluster_endpoint
-}
 
 module "kube-oidc-proxy" {
   source        = "./modules/helm"
