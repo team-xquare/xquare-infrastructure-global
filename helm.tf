@@ -44,7 +44,7 @@ locals {
   thanos-version = "1.0.0"
 
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.6"
+  xquare-application-version = "1.0.9"
  
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
