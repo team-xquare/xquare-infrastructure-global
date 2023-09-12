@@ -13,9 +13,6 @@ locals {
   argocd-name    = "argocd"
   argocd-verison = "4.8.5"
 
-  aws-ebs-csi-driver-name    = "aws-ebs-csi-driver"
-  aws-ebs-csi-driver-version = "2.21.1"
-
   aws-node-termination-handler-name    = "aws-node-termination-handler"
   aws-node-termination-handler-version = "0.22.10"
 
@@ -54,15 +51,6 @@ module "argocd" {
   repository    = local.xquare-repository
   chart         = local.argocd-name
   chart_version = local.argocd-verison
-}
-
-module "aws-ebs-csi-driver" {
-  source        = "./modules/helm"
-  name          = local.aws-ebs-csi-driver-name
-  namespace     = local.kube-system-namespace
-  repository    = local.xquare-repository
-  chart         = local.aws-ebs-csi-driver-name
-  chart_version = local.aws-ebs-csi-driver-version
 }
 
 module "cert-manager" {
