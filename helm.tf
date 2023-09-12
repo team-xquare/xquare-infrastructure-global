@@ -22,9 +22,6 @@ locals {
   cert-manager-name    = "cert-manager"
   cert-manager-version = "v1.12.6"
 
-  dex-name    = "dex"
-  dex-version = "0.15.7"
-
   dex-k8s-authenticator-name    = "dex-k8s-authenticator"
   dex-k8s-authenticator-version = "1.4.4"
 
@@ -37,14 +34,8 @@ locals {
   kube-oidc-proxy-name    = "kube-oidc-proxy"
   kube-oidc-proxy-version = "0.3.3"
 
-  prometheus-name    = "kube-prometheus-stack"
-  prometheus-version = "48.3.7"
-
-  thanos-name = "thanos"
-  thanos-version = "1.0.0"
-
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.9"
+  xquare-application-version = "1.0.10"
  
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
@@ -91,7 +82,6 @@ module "istio" {
   chart         = local.istio-name
   chart_version = local.istio-version
 }
-
 
 module "kube-oidc-proxy" {
   source        = "./modules/helm"
