@@ -12,7 +12,7 @@ resource "helm_release" "karpenter" {
   namespace = var.namespace
   create_namespace = true
 
-  name  = var.chart
+  name                = var.chart
   repository          = var.repository
   chart               = var.chart
   version             = var.chart_version
