@@ -16,7 +16,7 @@ module "eksv2" {
   public_subnets  = module.vpc.public_subnet_ids
 
   nodegroup_min_size     = 3
-  nodegroup_max_size     = 6
+  nodegroup_max_size     = 10
   nodegroup_desired_size = 5
 }
 
