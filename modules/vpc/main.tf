@@ -23,8 +23,8 @@ module "vpc" {
   map_public_ip_on_launch = true
 
   public_subnet_tags = {
-    "karpenter.sh/discovery"                    = var.cluster_name
-    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
-    "kubernetes.io/role/elb"                    = "1"
+    "karpenter.sh/discovery/${var.cluster_name}" = var.cluster_name
+    "kubernetes.io/cluster/${var.cluster_name}"  = "owned"
+    "kubernetes.io/role/elb"                     = "1"
   }
 }
