@@ -13,4 +13,5 @@ module "vpc" {
   private_subnets = local.private_subnets
   public_subnets  = local.public_subnets
   name_prefix     = local.name_prefix
+  cluster_name    = "${local.name_prefix_v2}-cluster"
 }
