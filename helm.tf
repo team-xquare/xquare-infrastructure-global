@@ -32,7 +32,7 @@ locals {
   istio-version = "1.0.26"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.18"
+  karpenter-version = "1.0.20"
 
   kube-oidc-proxy-name    = "kube-oidc-proxy"
   kube-oidc-proxy-version = "0.3.3"
@@ -109,4 +109,18 @@ module "xquare-application" {
   repository    = local.xquare-repository
   chart         = local.xquare-application-name
   chart_version = local.xquare-application-version
+}
+
+module "karpenter" {
+  source = "./modules/karpenter"
+
+  namespace     = local.karpenter-namespace
+  repository    = local.xquare-repository
+  chart         = local.karpenter-name
+  chart_version = local.karpenter-version
+
+  cluster_name           = module.eksv2.cluster_name
+  irsa_oidc_provider_arn = module.eksv2.oidc_provider_arn
+  iam_role_arn           = module.eksv2.iam_role_arn
+  cluster_endpoint       = module.eksv2.cluster_endpoint
 }
