@@ -1,3 +1,6 @@
+locals {
+  irsa_oidc_provider_url = replace(module.eksv2.oidc_provider_arn, "/^(.*provider/)/", "")
+}
 
 # S3 =========================================================
 
@@ -69,10 +72,6 @@ data "aws_iam_policy_document" "thanos_s3_policy_document" {
   }
 }
 
-locals {
-  irsa_oidc_provider_url = replace(module.eksv2.oidc_provider_arn, "/^(.*provider/)/", "")
-}
-
 data "aws_iam_policy_document" "assume_role" {
 
   statement {
@@ -89,6 +88,42 @@ data "aws_iam_policy_document" "assume_role" {
       variable = "${local.irsa_oidc_provider_url}:aud"
       values   = ["sts.amazonaws.com"]
     }
+  }
+}
+
+
+# loki S3 =========================================================
+
+resource "aws_iam_role" "loki_s3" {
+  name        = "loki_s3_role"
+  description = "loki IAM role for service account"
+  path        = "/"
+  assume_role_policy    = data.aws_iam_policy_document.assume_role.json
+  force_detach_policies = true
+}
+
+resource "aws_iam_role_policy_attachment" "loki_role_attachment" {
+  policy_arn = aws_iam_policy.loki_s3_policy.arn
+  role       = aws_iam_role.loki_s3.name
+}
+
+resource "aws_iam_policy" "loki_s3_policy" {
+  name   = "loki-s3-policy"
+  policy = data.aws_iam_policy_document.loki_s3_policy_document.json
+}
+
+data "aws_iam_policy_document" "loki_s3_policy_document" {
+  statement {
+    actions   = ["s3:ListAllMyBuckets"]
+    resources = ["arn:aws:s3:::*"]
+    effect    = "Allow"
+  }
+  statement {
+    actions = ["s3:*"]
+    resources = [
+      module.loki_storage.arn
+    ]
+    effect = "Allow"
   }
 }
 
