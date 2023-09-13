@@ -24,7 +24,9 @@ data "aws_iam_policy_document" "s3_policy_document" {
     actions = ["s3:*"]
     resources = [
       module.prod_storage.arn,
+      "${module.prod_storage.arn,}/*"
       module.stag_storage.arn,
+      "${module.stag_storage.arn}/*"
     ]
     effect = "Allow"
   }
@@ -60,7 +62,8 @@ data "aws_iam_policy_document" "thanos_s3_policy_document" {
   statement {
     actions = ["s3:*"]
     resources = [
-      module.thanos_storage.arn
+      module.thanos_storage.arn,
+      "${module.thanos_storage.arn}/*"
     ]
     effect = "Allow"
   }
