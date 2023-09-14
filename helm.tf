@@ -32,7 +32,7 @@ locals {
   kube-oidc-proxy-version = "0.3.3"
 
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.13"
+  xquare-application-version = "1.0.14"
  
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
