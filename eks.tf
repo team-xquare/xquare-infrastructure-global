@@ -18,8 +18,12 @@ module "eksv2" {
   nodegroup_min_size     = 3
   nodegroup_max_size     = 10
   nodegroup_desired_size = 5
-}
 
+  bootstrap_extra_args = "--use-max-pods false --kubelet-extra-args '--max-pods=110'"
+  pre_bootstrap_user_data = <<-EOT
+    export ENABLE_PREFIX_DELEGATION=true
+  EOT
+}
 
 output "cluster_id" {
   value = module.eksv2.cluster_id
