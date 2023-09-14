@@ -34,6 +34,10 @@ module "eks" {
       iam_role_additional_policies = [
         "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
       ]
+      extend_config = {
+        bootstrap_extra_args = var.bootstrap_extra_args
+        pre_bootstrap_user_data = var.pre_bootstrap_user_data
+      }
     }
   }
 
