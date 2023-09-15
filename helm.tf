@@ -6,6 +6,7 @@ provider "helm" {
   }
 }
 
+
 locals {
   xquare-repository = "https://team-xquare.github.io/k8s-resource"
 
@@ -16,16 +17,22 @@ locals {
   aws-node-termination-handler-version = "0.22.10"
 
   cert-manager-name    = "cert-manager"
-  cert-manager-version = "v1.12.9"
+  cert-manager-version = "v1.12.6"
+
+  dex-k8s-authenticator-name    = "dex-k8s-authenticator"
+  dex-k8s-authenticator-version = "1.4.4"
 
   istio-name    = "istio"
-  istio-version = "1.0.28"
+  istio-version = "1.0.27"
 
   karpenter-name    = "karpenter"
   karpenter-version = "1.0.23"
 
+  kube-oidc-proxy-name    = "kube-oidc-proxy"
+  kube-oidc-proxy-version = "0.3.3"
+
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.16"
+  xquare-application-version = "1.0.15"
  
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
@@ -62,6 +69,15 @@ module "istio" {
   repository    = local.xquare-repository
   chart         = local.istio-name
   chart_version = local.istio-version
+}
+
+module "kube-oidc-proxy" {
+  source        = "./modules/helm"
+  name          = local.kube-oidc-proxy-name
+  namespace     = local.dex-namespace
+  repository    = local.xquare-repository
+  chart         = local.kube-oidc-proxy-name
+  chart_version = local.kube-oidc-proxy-version
 }
 
 module "xquare-application" {
