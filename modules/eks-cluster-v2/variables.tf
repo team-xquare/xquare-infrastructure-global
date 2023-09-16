@@ -22,9 +22,18 @@ variable "bootstrap_extra_args" {
 variable "pre_bootstrap_user_data" {
 }
 
-variable "additional_auth_users" {
+variable "auth_users" {
   type = list(object({
     userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+  default = []
+}
+
+variable "auth_roles" {
+  type = list(object({
+    rolearn  = string
     username = string
     groups   = list(string)
   }))

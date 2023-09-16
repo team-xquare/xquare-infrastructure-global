@@ -64,8 +64,9 @@ module "eks" {
       username = local.current_username
       groups   = ["system:masters"]
     }],
-    var.additional_auth_users
+    var.auth_users
   )
+  aws_auth_roles = var.auth_roles
 
   aws_auth_accounts = [
     data.aws_caller_identity.current.account_id
