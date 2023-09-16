@@ -94,6 +94,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
   }
 }
 
+
 # loki S3 =========================================================
 
 resource "aws_iam_role" "loki_s3" {
@@ -207,7 +208,7 @@ module "xquare_sqs_iam_account" {
 }
 
 data "aws_iam_policy" "sqs_policy" {
-  arn = "${local.iam_role_policy_prefix}/AmazonSQSFullAccess"
+  arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
 }
 
 # Karpenter =========================================================
