@@ -10,19 +10,19 @@ locals {
   xquare-repository = "https://team-xquare.github.io/k8s-resource"
 
   argocd-name    = "argocd"
-  argocd-verison = "4.8.5"
+  argocd-verison = "4.8.7"
 
   aws-node-termination-handler-name    = "aws-node-termination-handler"
   aws-node-termination-handler-version = "0.22.10"
 
   cert-manager-name    = "cert-manager"
-  cert-manager-version = "v1.12.9"
+  cert-manager-version = "v1.12.11"
 
   istio-name    = "istio"
   istio-version = "1.0.28"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.23"
+  karpenter-version = "1.0.26"
 
   xquare-application-name    = "xquare-application"
   xquare-application-version = "1.0.16"
