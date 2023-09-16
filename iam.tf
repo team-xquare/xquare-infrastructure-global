@@ -1,5 +1,8 @@
+data "aws_partition" "current" {}
+
 locals {
   irsa_oidc_provider_url = replace(module.eksv2.oidc_provider_arn, "/^(.*provider/)/", "")
+  iam_role_policy_prefix = "arn:${data.aws_partition.current.partition}:iam::aws:policy"
 }
 
 # S3 =========================================================
@@ -42,7 +45,7 @@ resource "aws_iam_role" "thanos_s3" {
   name        = "thanos_s3_role"
   description = "Thanos IAM role for service account"
   path        = "/"
-  assume_role_policy    = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
   force_detach_policies = true
 }
 
@@ -72,7 +75,7 @@ data "aws_iam_policy_document" "thanos_s3_policy_document" {
   }
 }
 
-data "aws_iam_policy_document" "assume_role" {
+data "aws_iam_policy_document" "assume_role_policy" {
 
   statement {
     effect  = "Allow"
@@ -91,14 +94,13 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
-
 # loki S3 =========================================================
 
 resource "aws_iam_role" "loki_s3" {
   name        = "loki_s3_role"
   description = "loki IAM role for service account"
   path        = "/"
-  assume_role_policy    = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
   force_detach_policies = true
 }
 
@@ -205,5 +207,48 @@ module "xquare_sqs_iam_account" {
 }
 
 data "aws_iam_policy" "sqs_policy" {
-  arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
+  arn = "${local.iam_role_policy_prefix}/AmazonSQSFullAccess"
+}
+
+# Karpenter =========================================================
+
+resource "aws_iam_role" "xquare-karpenter" {
+  name        = "xquare-karpenter"
+  description = "xquare role for karpenter"
+  path        = "/"
+  assume_role_policy    = data.aws_iam_policy_document.ec2_assume_role_policy.json
+  force_detach_policies = true
+}
+
+data "aws_iam_policy_document" "ec2_assume_role_policy" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [module.eksv2.oidc_provider_arn]
+    }
+    
+    condition {
+      test     = "StringEquals"
+      variable = "${local.irsa_oidc_provider_url}:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+  }
+}
+
+locals {
+  karpenter-policy-prefixes = [
+    "${local.iam_role_policy_prefix}/AmazonEKSWorkerNodePolicy",
+    "${local.iam_role_policy_prefix}/AmazonEC2ContainerRegistryReadOnly",
+    "${local.iam_role_policy_prefix}/AmazonSSMManagedInstanceCore",
+    "${local.iam_role_policy_prefix}/AmazonEKS_CNI_Policy"
+  ]
+}
+
+resource "aws_iam_role_policy_attachment" "xquare-karpenter-policy-attachment" {
+  for_each = toset(local.karpenter-policy-prefixes)
+  policy_arn = each.value
+  role       = aws_iam_role.xquare-karpenter.name
 }

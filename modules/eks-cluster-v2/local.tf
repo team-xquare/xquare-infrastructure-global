@@ -5,6 +5,4 @@ locals {
   vpc_id           = var.vpc_id
   public_subnets   = var.public_subnets
   current_username = element(split("/", data.aws_caller_identity.current.arn), 1)
-  instance_type    = var.instance_type
-  capacity_type    = var.capacity_type
 }
