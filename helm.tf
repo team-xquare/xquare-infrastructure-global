@@ -10,7 +10,7 @@ locals {
   xquare-repository = "https://team-xquare.github.io/k8s-resource"
 
   argocd-name    = "argocd"
-  argocd-verison = "4.8.5"
+  argocd-verison = "4.8.6"
 
   aws-node-termination-handler-name    = "aws-node-termination-handler"
   aws-node-termination-handler-version = "0.22.10"
@@ -83,6 +83,6 @@ module "karpenter" {
 
   cluster_name           = module.eksv2.cluster_name
   irsa_oidc_provider_arn = module.eksv2.oidc_provider_arn
-  iam_role_arn           = module.eksv2.iam_role_arn
+  iam_role_arn           = aws_iam_role.xquare-karpenter.arn
   cluster_endpoint       = module.eksv2.cluster_endpoint
 }
