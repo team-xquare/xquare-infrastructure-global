@@ -4,7 +4,8 @@ module "karpenter" {
   cluster_name                    = var.cluster_name
   irsa_oidc_provider_arn          = var.irsa_oidc_provider_arn
   irsa_namespace_service_accounts = ["karpenter:karpenter"]
-  create_iam_role                 = true
+  create_iam_role                 = false
+  iam_role_arn                    = var.iam_role_arn
 }
  
 resource "helm_release" "karpenter" {
