@@ -19,10 +19,10 @@ locals {
   cert-manager-version = "v1.12.11"
 
   istio-name    = "istio"
-  istio-version = "1.0.28"
+  istio-version = "1.0.30"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.28"
+  karpenter-version = "1.0.30"
 
   xquare-application-name    = "xquare-application"
   xquare-application-version = "1.0.16"
