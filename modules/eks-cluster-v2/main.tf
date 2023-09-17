@@ -16,31 +16,6 @@ module "eks" {
   cluster_enabled_log_types = []
   create_cloudwatch_log_group = false
 
-  eks_managed_node_group_defaults = {
-    instance_types = [local.instance_type]
-    capacity_type  = local.capacity_type
-  }
-  eks_managed_node_groups = {
-    initial = {
-      instance_types         = [local.instance_type]
-      create_security_group  = false
-      create_launch_template = false
-      launch_template_name   = ""
-
-      min_size     = var.nodegroup_min_size
-      max_size     = var.nodegroup_max_size
-      desired_size = var.nodegroup_desired_size
-
-      iam_role_additional_policies = [
-        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-      ]
-      extend_config = {
-        bootstrap_extra_args = var.bootstrap_extra_args
-        pre_bootstrap_user_data = var.pre_bootstrap_user_data
-      }
-    }
-  }
-
   node_security_group_additional_rules = {
     ingress_nodes_karpenter_port = {
       description                   = "Cluster API to Node group for Karpenter webhook"
