@@ -16,7 +16,7 @@ locals {
   aws-node-termination-handler-version = "0.22.10"
 
   cert-manager-name    = "cert-manager"
-  cert-manager-version = "v1.12.12"
+  cert-manager-version = "v1.12.13"
 
   istio-name    = "istio"
   istio-version = "1.0.36"
