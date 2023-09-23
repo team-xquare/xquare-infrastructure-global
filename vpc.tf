@@ -15,3 +15,8 @@ module "vpc" {
   name_prefix     = local.name_prefix
   cluster_name    = "${local.name_prefix_v2}-cluster"
 }
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id       = module.vpc.vpc_id
+  service_name = "com.amazonaws.ap-northeast-2.s3"
+}
