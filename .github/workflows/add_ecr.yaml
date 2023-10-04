@@ -45,7 +45,7 @@ jobs:
         run: |
           terraform import 'module.${{ github.event.client_payload.environment }}_ecr["${{ github.event.client_payload.repository_name }}"].aws_ecr_repository.repo' ${{ github.event.client_payload.repository_name }}
 
-      - name: Commit withh new ECR
+      - name: Commit with new ECR
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "🔀 :: ecr repository [${{ github.event.client_payload.repository_name }}] 추가"
