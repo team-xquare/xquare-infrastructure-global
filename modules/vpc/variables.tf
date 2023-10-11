@@ -21,3 +21,9 @@ variable "private_subnets" {
 variable "cluster_name" {
   type = string
 }
+
+
+variable "public_subnet_tags_per_az" {
+  type        = map(map(string))
+  default     = {}
+}

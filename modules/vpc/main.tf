@@ -8,6 +8,7 @@ module "vpc" {
 
   public_subnets  = var.public_subnets
   private_subnets = var.private_subnets
+  public_subnet_tags_per_az = var.public_subnet_tags_per_az
 
   enable_nat_gateway     = true
   single_nat_gateway     = true
@@ -21,10 +22,4 @@ module "vpc" {
     Name = "${var.name_prefix}-igw"
   }
   map_public_ip_on_launch = true
-
-  public_subnet_tags = {
-    "karpenter.sh/discovery/${var.cluster_name}" = var.cluster_name
-    "kubernetes.io/cluster/${var.cluster_name}"  = "owned"
-    "kubernetes.io/role/elb"                     = "1"
-  }
 }
