@@ -12,6 +12,15 @@ module "vpc" {
   azs             = local.azs
   private_subnets = local.private_subnets
   public_subnets  = local.public_subnets
+  public_subnet_tags_per_az = {
+    "${local.region}a" = {
+      "karpenter.sh/discovery/${var.cluster_name}" = "xquare-v2-cluster"
+      "kubernetes.io/cluster/${var.cluster_name}"  = "owned"
+      "kubernetes.io/role/elb"                     = "1"
+    },
+    "${local.region}c" = {}
+  }
+
   name_prefix     = local.name_prefix
   cluster_name    = "${local.name_prefix_v2}-cluster"
 }
