@@ -34,10 +34,6 @@ locals {
     "server",
   ]
   repo_cname_record_names = [
-    "admin",
-    "mariadb",
-    "mongodb",
-    "server",
     "api",
     "teacher",
     "test",
