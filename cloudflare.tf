@@ -6,10 +6,10 @@ locals {
   a_record_type     = "A"
   cname_record_type = "CNAME"
 
-  xquare_design_domain_record_name  = "design"
-  xquare_mysql_domain_record_name   = "mysql"
-  xquare_redis_domain_record_name   = "redis"
-  xquare_server_record_names = [
+  xquare_design_domain_record_name = "design"
+  xquare_mysql_domain_record_name  = "mysql"
+  xquare_redis_domain_record_name  = "redis"
+  xquare_server_record_names       = [
     "admin",
     "argo-cd",
     "cloud-config",
@@ -47,7 +47,7 @@ locals {
   ]
 }
 
-resource "cloudflare_record" "xquare_cname_record" {
+resource "cloudflare_record" "xquare_server_record" {
   for_each = toset(local.xquare_server_record_names)
   name     = each.value
   proxied  = false
@@ -57,7 +57,7 @@ resource "cloudflare_record" "xquare_cname_record" {
   zone_id  = var.xquare_cloudflare_zone_id
 }
 
-resource "cloudflare_record" "pick_cname_record" {
+resource "cloudflare_record" "pick_server_record" {
   for_each = toset(local.pick_server_record_names)
   name     = each.value
   proxied  = false
@@ -67,7 +67,7 @@ resource "cloudflare_record" "pick_cname_record" {
   zone_id  = var.pick_cloudflare_zone_id
 }
 
-resource "cloudflare_record" "repo_cname_record" {
+resource "cloudflare_record" "repo_server_record" {
   for_each = toset(local.repo_server_record_names)
   name     = each.value
   proxied  = false
@@ -77,7 +77,7 @@ resource "cloudflare_record" "repo_cname_record" {
   zone_id  = var.repo_cloudflare_zone_id
 }
 
-resource "cloudflare_record" "repo_a_record" {
+resource "cloudflare_record" "repo_on_premise_record" {
   for_each = toset(local.repo_on_premise_record_names)
   name     = each.value
   proxied  = false
@@ -87,7 +87,7 @@ resource "cloudflare_record" "repo_a_record" {
   zone_id  = var.repo_cloudflare_zone_id
 }
 
-resource "cloudflare_record" "xquare_design_domain_record_name" {
+resource "cloudflare_record" "xquare_design_record" {
   name    = local.xquare_design_domain_record_name
   proxied = false
   ttl     = 1
@@ -96,7 +96,7 @@ resource "cloudflare_record" "xquare_design_domain_record_name" {
   zone_id = var.xquare_cloudflare_zone_id
 }
 
-resource "cloudflare_record" "xquare_mysql_domain" {
+resource "cloudflare_record" "xquare_mysql_record" {
   name    = local.xquare_mysql_domain_record_name
   proxied = false
   ttl     = 1
@@ -105,7 +105,7 @@ resource "cloudflare_record" "xquare_mysql_domain" {
   zone_id = var.xquare_cloudflare_zone_id
 }
 
-resource "cloudflare_record" "xquare_redis_domain" {
+resource "cloudflare_record" "xquare_redis_record" {
   name    = local.xquare_redis_domain_record_name
   proxied = false
   ttl     = 1
