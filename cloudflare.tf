@@ -1,9 +1,14 @@
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
+
 locals {
-  a_record_type             = "A"
-  cname_record_type         = "CNAME"
-  xquare_design_record_name = "design"
-  xquare_mysql_record_name  = "mysql"
-  xquare_redis_record_name  = "redis"
+  a_record_type     = "A"
+  cname_record_type = "CNAME"
+
+  xquare_design_record_name  = "design"
+  xquare_mysql_record_name   = "mysql"
+  xquare_redis_record_name   = "redis"
   xquare_server_record_names = [
     "admin",
     "argo-cd",
@@ -41,10 +46,6 @@ locals {
     "www",
   ]
   repo_resume = "resume"
-}
-
-provider "cloudflare" {
-  api_token = var.cloudflare_api_token
 }
 
 resource "cloudflare_record" "xquare_cname_record" {
