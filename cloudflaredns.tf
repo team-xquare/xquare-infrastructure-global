@@ -49,7 +49,6 @@ locals {
 
 provider "cloudflare" {
   api_token = var.cloudflare_api_token
-  email     = var.cloudflare_email
 }
 
 resource "cloudflare_record" "xquare_cname_record" {
