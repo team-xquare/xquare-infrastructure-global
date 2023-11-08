@@ -1,10 +1,10 @@
 locals {
-  a_recode_type             = "A"
-  cname_recode_type         = "CNAME"
+  a_record_type             = "A"
+  cname_record_type         = "CNAME"
   xquare_design             = "design"
   xquare_mysql              = "mysql"
   xquare_redis              = "redis"
-  xquare_cname_recode_names = [
+  xquare_cname_record_names = [
     "admin",
     "argo-cd",
     "cloud-config",
@@ -23,17 +23,17 @@ locals {
     "thanos-store",
     "thanos",
   ]
-  pick_cname_recode_names = [
+  pick_cname_record_names = [
     "admin",
     "teacher",
   ]
-  repo_a_recode_names = [
+  repo_a_record_names = [
     "admin",
     "mariadb",
     "mongodb",
     "server",
   ]
-  repo_cname_recode_names = [
+  repo_cname_record_names = [
     "admin",
     "mariadb",
     "mongodb",
@@ -52,41 +52,41 @@ provider "cloudflare" {
 }
 
 resource "cloudflare_record" "xquare_cname_record" {
-  for_each = toset(local.xquare_cname_recode_names)
+  for_each = toset(local.xquare_cname_record_names)
   name     = each.value
   proxied  = false
   ttl      = 1
-  type     = local.cname_recode_type
+  type     = local.cname_record_type
   value    = var.xquare_cname_value
   zone_id  = var.xquare_cloudflare_zone_id
 }
 
 resource "cloudflare_record" "pick_cname_record" {
-  for_each = toset(local.pick_cname_recode_names)
+  for_each = toset(local.pick_cname_record_names)
   name     = each.value
   proxied  = false
   ttl      = 1
-  type     = local.cname_recode_type
+  type     = local.cname_record_type
   value    = var.xquare_cname_value
   zone_id  = var.pick_cloudflare_zone_id
 }
 
 resource "cloudflare_record" "repo_cname_record" {
-  for_each = toset(local.repo_cname_recode_names)
+  for_each = toset(local.repo_cname_record_names)
   name     = each.value
   proxied  = false
   ttl      = 1
-  type     = local.cname_recode_type
+  type     = local.cname_record_type
   value    = var.xquare_cname_value
   zone_id  = var.repo_cloudflare_zone_id
 }
 
 resource "cloudflare_record" "repo_a_record" {
-  for_each = toset(local.repo_a_recode_names)
+  for_each = toset(local.repo_a_record_names)
   name     = each.value
   proxied  = false
   ttl      = 1
-  type     = local.a_recode_type
+  type     = local.a_record_type
   value    = var.repo_a_value
   zone_id  = var.repo_cloudflare_zone_id
 }
@@ -95,7 +95,7 @@ resource "cloudflare_record" "xquare_design" {
   name    = local.xquare_design
   proxied = false
   ttl     = 1
-  type    = local.cname_recode_type
+  type    = local.cname_record_type
   value   = var.xquare_design
   zone_id = var.xquare_cloudflare_zone_id
 }
@@ -104,7 +104,7 @@ resource "cloudflare_record" "xquare_mysql" {
   name    = local.xquare_mysql
   proxied = false
   ttl     = 1
-  type    = local.cname_recode_type
+  type    = local.cname_record_type
   value   = var.xquare_mysql
   zone_id = var.xquare_cloudflare_zone_id
 }
@@ -113,7 +113,7 @@ resource "cloudflare_record" "xquare_redis" {
   name    = local.xquare_redis
   proxied = false
   ttl     = 1
-  type    = local.cname_recode_type
+  type    = local.cname_record_type
   value   = var.xquare_redis
   zone_id = var.xquare_cloudflare_zone_id
 }
@@ -122,7 +122,7 @@ resource "cloudflare_record" "repo_resume" {
   name    = local.repo_resume
   proxied = false
   ttl     = 1
-  type    = local.cname_recode_type
+  type    = local.cname_record_type
   value   = var.repo_resume
   zone_id = var.repo_cloudflare_zone_id
 }
