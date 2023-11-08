@@ -10,22 +10,6 @@ variable "xquare_cloudflare_zone_id" {
   type = string
 }
 
-variable "xquare_cname_value" {
-  type = string
-}
-
-variable "xquare_design" {
-  type = string
-}
-
-variable "xquare_mysql" {
-  type = string
-}
-
-variable "xquare_redis" {
-  type = string
-}
-
 variable "pick_cloudflare_zone_id" {
   type = string
 }
@@ -34,10 +18,22 @@ variable "repo_cloudflare_zone_id" {
   type = string
 }
 
-variable "repo_a_value" {
+variable "xquare_server_domain" {
   type = string
 }
 
-variable "repo_resume" {
+variable "xquare_design_domain" {
+  type = string
+}
+
+variable "xquare_mysql_domain" {
+  type = string
+}
+
+variable "xquare_redis_domain" {
+  type = string
+}
+
+variable "repo_on_premise_ip" {
   type = string
 }
