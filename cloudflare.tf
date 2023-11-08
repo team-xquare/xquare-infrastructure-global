@@ -45,7 +45,6 @@ locals {
     "user",
     "www",
   ]
-  repo_resume = "resume"
 }
 
 resource "cloudflare_record" "xquare_cname_record" {
@@ -113,13 +112,4 @@ resource "cloudflare_record" "xquare_redis" {
   type    = local.cname_record_type
   value   = var.xquare_redis
   zone_id = var.xquare_cloudflare_zone_id
-}
-
-resource "cloudflare_record" "repo_resume" {
-  name    = local.repo_resume
-  proxied = false
-  ttl     = 1
-  type    = local.cname_record_type
-  value   = var.repo_resume
-  zone_id = var.repo_cloudflare_zone_id
 }
