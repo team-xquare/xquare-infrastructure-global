@@ -6,10 +6,10 @@ locals {
   a_record_type     = "A"
   cname_record_type = "CNAME"
 
-  xquare_design_domain_record_name = "design"
-  xquare_mysql_domain_record_name  = "mysql"
-  xquare_redis_domain_record_name  = "redis"
-  xquare_server_record_names       = [
+  xquare_design_record_name  = "design"
+  xquare_mysql_record_name   = "mysql"
+  xquare_redis_record_name   = "redis"
+  xquare_server_record_names = [
     "admin",
     "argo-cd",
     "cloud-config",
@@ -88,7 +88,7 @@ resource "cloudflare_record" "repo_on_premise_record" {
 }
 
 resource "cloudflare_record" "xquare_design_record" {
-  name    = local.xquare_design_domain_record_name
+  name    = local.xquare_design_record_name
   proxied = false
   ttl     = 1
   type    = local.cname_record_type
@@ -97,7 +97,7 @@ resource "cloudflare_record" "xquare_design_record" {
 }
 
 resource "cloudflare_record" "xquare_mysql_record" {
-  name    = local.xquare_mysql_domain_record_name
+  name    = local.xquare_mysql_record_name
   proxied = false
   ttl     = 1
   type    = local.cname_record_type
@@ -106,7 +106,7 @@ resource "cloudflare_record" "xquare_mysql_record" {
 }
 
 resource "cloudflare_record" "xquare_redis_record" {
-  name    = local.xquare_redis_domain_record_name
+  name    = local.xquare_redis_record_name
   proxied = false
   ttl     = 1
   type    = local.cname_record_type
