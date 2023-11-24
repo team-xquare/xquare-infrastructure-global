@@ -27,8 +27,8 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add helm.tf
-          git commit -m "Update ${CHART} version to ${VERSION}"
+          git commit -m "⚡️ :: Update ${CHART} version to ${VERSION}"
           git push origin ${{ steps.branch.outputs.branch_name }}
-          gh pr create --title "Update helm chart version" --body "Update helm chart version" --base main --head  ${{ steps.branch.outputs.branch_name }}
+          gh pr create --title "🔀 :: Update ${CHART} version to ${VERSION}" --body "Update helm chart version" --base main --head ${{ steps.branch.outputs.branch_name }}
         env:
           GH_TOKEN: ${{ secrets.GHP_TOKEN }}
