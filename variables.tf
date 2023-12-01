@@ -45,4 +45,5 @@ variable "xquare_redis_domain" {
 
 variable "repo_on_premise_ip" {
   type = string
+  default = ""
 }
