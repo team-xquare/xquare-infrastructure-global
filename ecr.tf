@@ -3,6 +3,7 @@ locals {
   name_prefix_v2 = "xquare-v2"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "entry-config-server-be-stag",
     "project-manager-front-fe-prod",
     "mukgen-be-stag",
     "xbridge-test-fe-prod",
