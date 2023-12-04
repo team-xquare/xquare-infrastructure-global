@@ -3,6 +3,7 @@ locals {
   name_prefix_v2 = "xquare-v2"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "svap-be-prod",
     "aster-be-stag",
     "aster-be-prod",
     "entry-config-server-be-stag",
