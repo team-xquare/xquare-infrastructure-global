@@ -1,0 +1,63 @@
+name: Modify cloudflare.tf
+
+on:
+  repository_dispatch:
+    types: [add_domain]
+
+jobs:
+  add_ecr:
+    env:
+      TF_IN_AUTOMATION: true
+      TF_CLOUD_ORGANIZATION: "xquare"
+      TF_WORKSPACE: "xquare-global"
+      CONFIG_DIRECTORY: "./"
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      RDS_MASTER_PASSWORD: ${{ secrets.RDS_MASTER_PASSWORD }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_XQUARE_ZONE_ID }}
+
+    if: ${{ github.event.client_payload.repository_name }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Add ecr
+        shell: bash
+        run: |
+          location=$(grep -n "# XQUARE_REPOSITORY_NAME" ecr.tf | cut -d ":" -f 1)
+          if [ -n "$location" ]; then
+            sed -i "${location}s|.*|&\n    \"${{ github.event.client_payload.domain }}\",|" cloudflare.tf
+          fi
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform init
+        shell: bash
+        run: terraform init
+
+      - name: Terraform import
+        shell: bash
+        run: |
+          terraform import -var 'cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}' \
+             cloudflare_record.xquare_server_record ${{ env.CLOUDFLARE_ZONE_ID }}
+
+      - name: Commit with new ECR
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "🔀 :: domain [${{ github.event.client_payload.domain }}] 추가"
+          branch: main
+          file_pattern: 'cloudflare.tf'
+          push_options: '--force'
+          commit_options: '--no-verify --signoff'
+          repository: .
+          commit_user_name: XQUARE GitOps Bot
+          commit_user_email: teamxquare@gmail.com
+          commit_author: XQUARE GitOps Bot <teamxquare@gmail.com>
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITOPS_DEPLOY_PRODUCTION_TOKEN }}
