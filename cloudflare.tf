@@ -28,6 +28,7 @@ locals {
     "stag-server",
     "thanos-store",
     "thanos",
+    "loki",
   ]
   pick_server_record_names = [
     "admin",
