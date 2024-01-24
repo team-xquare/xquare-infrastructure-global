@@ -17,7 +17,7 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_XQUARE_ZONE_ID }}
 
-    if: ${{ github.event.client_payload.repository_name }}
+    if: ${{ github.event.client_payload.domain }}
     runs-on: ubuntu-latest
 
     steps:
