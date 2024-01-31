@@ -35,6 +35,12 @@ locals {
   spot-handler-namespace = "spot-handler"
   cert-manager-namespace = "cert-manager"
   istio-namespace        = "istio-system"
+
+  // Datadog
+  datadog-name = "datadog"
+  datadog-version = "1.0.0"
+  datadog-namespace = "datadog"
+
 }
 
 module "argocd" {
@@ -85,4 +91,13 @@ module "karpenter" {
   irsa_oidc_provider_arn = module.eksv2.oidc_provider_arn
   iam_role_arn           = module.eksv2.iam_role_arn
   cluster_endpoint       = module.eksv2.cluster_endpoint
+}
+
+module "datadog" {
+  source = "./modules/helm"
+  name          = local.datadog-name
+  namespace     = local.datadog-namespace
+  repository    = local.xquare-repository
+  chart         = local.datadog-name
+  chart_version = local.datadog-version
 }
