@@ -38,7 +38,7 @@ locals {
 
   // Datadog
   datadog-name = "datadog-operator"
-  datadog-version = "1.0.4"
+  datadog-version = "1.0.5"
   datadog-namespace = "datadog"
 
 }
