@@ -37,7 +37,7 @@ locals {
   istio-namespace        = "istio-system"
 
   // Datadog
-  datadog-name = "datadog"
+  datadog-name = "datadog-operator"
   datadog-version = "1.0.1"
   datadog-namespace = "datadog"
 
