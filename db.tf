@@ -31,4 +31,15 @@ resource "aws_db_instance" "xquare-db" {
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   db_subnet_group_name   = local.db_subnet_group_name
   publicly_accessible    = local.db_public_accessible
+  parameter_group_name = aws_db_parameter_group.xquare-pg
+}
+
+resource "aws_db_parameter_group" "xquare-pg" {
+  name = "rds-max-connection"
+  family = "mysql8.0"
+
+  parameter {
+    name  = "max_connections"
+    value = "100000"
+  }
 }
