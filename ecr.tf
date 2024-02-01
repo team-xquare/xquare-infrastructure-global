@@ -3,6 +3,9 @@ locals {
   name_prefix_v2 = "xquare-v2"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "daedongyeojido-fe-prod",
+    "dashboard-tsdata-bridge-be-prod",
+    "test-deploy-be-stag",
     "maeumgagym-be-prod",
     "dms-be-stag",
     "daedong-be-prod",
