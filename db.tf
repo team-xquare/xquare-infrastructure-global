@@ -31,7 +31,7 @@ resource "aws_db_instance" "xquare-db" {
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   db_subnet_group_name   = local.db_subnet_group_name
   publicly_accessible    = local.db_public_accessible
-  parameter_group_name = aws_db_parameter_group.xquare-pg
+  parameter_group_name = aws_db_parameter_group.xquare-pg.name
 }
 
 resource "aws_db_parameter_group" "xquare-pg" {
