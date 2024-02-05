@@ -3,6 +3,7 @@ locals {
   name_prefix_v2 = "xquare-v2"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "chitchat-be-prod",
     "maeumgagym-admin-fe-stag",
     "merge-backend-be-prod",
     "merge-user-fe-prod",
