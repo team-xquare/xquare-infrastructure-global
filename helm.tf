@@ -41,6 +41,9 @@ locals {
   datadog-version = "1.0.6"
   datadog-namespace = "datadog"
 
+  vault-name = "vault"
+  vault-version = "1.0.0"
+  vault-namespace = "vault"
 }
 
 module "argocd" {
@@ -100,4 +103,13 @@ module "datadog" {
   repository    = local.xquare-repository
   chart         = local.datadog-name
   chart_version = local.datadog-version
+}
+
+module "vault" {
+  source = "./modules/helm"
+  name          = local.vault-name
+  namespace     = local.vault-namespace
+  repository    = local.xquare-repository
+  chart         = local.vault-name
+  chart_version = local.vault-version
 }
