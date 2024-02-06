@@ -42,7 +42,7 @@ locals {
   datadog-namespace = "datadog"
 
   vault-name = "vault"
-  vault-version = "1.0.2"
+  vault-version = "1.0.3"
   vault-namespace = "vault"
 }
 
