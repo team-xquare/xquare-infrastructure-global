@@ -104,12 +104,3 @@ module "karpenter" {
 #  chart         = local.datadog-name
 #  chart_version = local.datadog-version
 #}
-
-module "vault" {
-  source = "./modules/helm"
-  name          = local.vault-name
-  namespace     = local.vault-namespace
-  repository    = local.xquare-repository
-  chart         = local.vault-name
-  chart_version = local.vault-version
-}
