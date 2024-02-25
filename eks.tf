@@ -17,8 +17,8 @@ module "eksv2" {
   vpc_id          = module.vpc.vpc_id
   public_subnets  = module.vpc.public_subnet_ids
   nodegroup_min_size     = 1
-  nodegroup_max_size     = 2
-  nodegroup_desired_size = 2
+  nodegroup_max_size     = 3
+  nodegroup_desired_size = 3
 
   bootstrap_extra_args = "--use-max-pods false --kubelet-extra-args '--max-pods=110'"
   pre_bootstrap_user_data = <<-EOT
