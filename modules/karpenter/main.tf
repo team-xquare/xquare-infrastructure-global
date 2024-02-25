@@ -1,11 +1,11 @@
 module "karpenter" {
   source                          = "terraform-aws-modules/eks/aws//modules/karpenter"
-  version                         = "20.4.0"
+  version                         = "18.31.0"
   cluster_name                    = var.cluster_name
   irsa_oidc_provider_arn          = var.irsa_oidc_provider_arn
   irsa_namespace_service_accounts = ["karpenter:karpenter"]
   create_iam_role                 = false
-#  iam_role_arn                    = var.iam_role_arn
+  iam_role_arn                    = var.iam_role_arn
 }
  
 resource "helm_release" "karpenter" {
@@ -25,6 +25,11 @@ resource "helm_release" "karpenter" {
   set {
     name  = "karpenter.clusterEndpoint"
     value = var.cluster_endpoint
+  }
+
+  set {
+    name  = "karpenter.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = "arn:aws:iam::471407337433:role/KarpenterControllerRole-xquare-v2-cluster"
   }
 
   set {
