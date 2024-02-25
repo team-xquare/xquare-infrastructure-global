@@ -28,11 +28,6 @@ resource "helm_release" "karpenter" {
   }
 
   set {
-    name  = "karpenter.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.karpenter.irsa_arn
-  }
-
-  set {
     name  = "karpenter.aws.defaultInstanceProfile"
     value = module.karpenter.instance_profile_name
   }
