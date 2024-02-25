@@ -92,7 +92,7 @@ module "karpenter" {
 
   cluster_name           = module.eksv2.cluster_name
   irsa_oidc_provider_arn = module.eksv2.oidc_provider_arn
-  iam_role_arn           = module.eksv2.iam_role_arn
+  iam_role_arn           = "arn:aws:iam::471407337433:role/KarpenterControllerRole-xquare-v2-cluster"
   cluster_endpoint       = module.eksv2.cluster_endpoint
 }
 
