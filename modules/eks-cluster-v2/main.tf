@@ -11,7 +11,7 @@ module "eks" {
   vpc_id     = local.vpc_id
   subnet_ids = local.public_subnets
 
-  enable_irsa = true
+  enable_irsa = false
 
   cluster_enabled_log_types = []
   create_cloudwatch_log_group = false
