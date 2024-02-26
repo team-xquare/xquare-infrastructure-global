@@ -37,6 +37,16 @@ module "eksv2" {
       rolearn  = module.karpenter.irsa_arn
       username = "system:node:{{EC2PrivateDNSName}}"
       groups   = ["system:bootstrappers", "system:nodes"]
+    },
+    {
+      rolearn  = "KarpenterControllerRole-xquare-v2-cluster"
+      username = "system:node:{{EC2PrivateDNSName}}"
+      groups   = ["system:bootstrappers", "system:nodes"]
+    },
+    {
+      rolearn  = "KarpenterNodeRole-xquare-v2-cluster"
+      username = "system:node:{{EC2PrivateDNSName}}"
+      groups   = ["system:bootstrappers", "system:nodes"]
     }
   ]
 }
