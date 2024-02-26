@@ -25,7 +25,7 @@ locals {
   karpenter-version = "1.0.51"
 
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.33"
+  xquare-application-version = "1.0.34"
  
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
