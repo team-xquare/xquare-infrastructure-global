@@ -39,12 +39,12 @@ module "eksv2" {
       groups   = ["system:bootstrappers", "system:nodes"]
     },
     {
-      rolearn  = "KarpenterControllerRole-xquare-v2-cluster"
+      rolearn  = "arn:aws:iam::471407337433:role/KarpenterControllerRole-xquare-v2-cluster"
       username = "system:node:{{EC2PrivateDNSName}}"
       groups   = ["system:bootstrappers", "system:nodes"]
     },
     {
-      rolearn  = "KarpenterNodeRole-xquare-v2-cluster"
+      rolearn  = "arn:aws:iam::471407337433:role/KarpenterNodeRole-xquare-v2-cluster"
       username = "system:node:{{EC2PrivateDNSName}}"
       groups   = ["system:bootstrappers", "system:nodes"]
     }
