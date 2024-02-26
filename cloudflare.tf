@@ -29,6 +29,8 @@ locals {
     "thanos-store",
     "thanos",
     "loki",
+    "vault",
+    "kube-cost"
   ]
   pick_server_record_names = [
     "admin",
