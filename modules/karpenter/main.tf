@@ -18,12 +18,17 @@ resource "helm_release" "karpenter" {
   version    = var.chart_version
 
   set {
-    name  = "karpenter.clusterName"
+    name  = "karpenter.setings.clusterName"
     value = var.cluster_name
   }
 
   set {
-    name  = "karpenter.clusterEndpoint"
+    name  = "karpenter.setings.interruptionQueue"
+    value = var.cluster_name
+  }
+
+  set {
+    name  = "karpenter.settings.clusterEndpoint"
     value = var.cluster_endpoint
   }
 
@@ -33,7 +38,7 @@ resource "helm_release" "karpenter" {
   }
 
   set {
-    name  = "karpenter.aws.defaultInstanceProfile"
+    name  = "karpenter.settings.aws.defaultInstanceProfile"
     value = module.karpenter.instance_profile_name
   }
 
