@@ -48,6 +48,11 @@ resource "helm_release" "karpenter" {
   }
 
   set {
+    name  = "karpenter.aws.defaultInstanceProfile"
+    value = module.karpenter.instance_profile_name
+  }
+
+  set {
     name  = "karpenter.settings.aws.defaultInstanceProfile"
     value = module.karpenter.instance_profile_name
   }
