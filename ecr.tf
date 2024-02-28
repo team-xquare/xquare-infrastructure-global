@@ -3,7 +3,7 @@ locals {
   name_prefix_v2 = "xquare-v2"
   ecr_names = [
     # ECR_REPOSITORY_NAME
-    "xquare-event-listener",
+    "xquare-event-listener-prod",
     "xquare-backoffice-be-prod",
     "nudia-be-prod",
     "chitchat-be-prod",
