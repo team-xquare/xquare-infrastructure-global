@@ -58,6 +58,7 @@ module "eks_managed_node_group" {
   instance_types         = [local.instance_type]
 
   create_launch_template = false
+  use_custom_launch_template = true
 
   min_size     = var.nodegroup_min_size
   max_size     = var.nodegroup_max_size
