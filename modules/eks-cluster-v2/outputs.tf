@@ -15,7 +15,7 @@ output "oidc_provider_arn" {
 }
 
 output "iam_role_arn" {
-  value = module.eks_managed_node_group.iam_role_arn
+  value = module.eks.eks_managed_node_groups["initial"].iam_role_arn
 }
 
 output "cluster_endpoint" {
