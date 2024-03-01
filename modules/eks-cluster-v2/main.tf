@@ -62,7 +62,9 @@ module "eks_managed_node_group" {
   min_size     = var.nodegroup_min_size
   max_size     = var.nodegroup_max_size
   desired_size = var.nodegroup_desired_size
-  iam_role_additional_policies = {"arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"}
+  iam_role_additional_policies = {
+    additional = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  }
   bootstrap_extra_args = var.bootstrap_extra_args
   enable_bootstrap_user_data = var.pre_bootstrap_user_data
 
