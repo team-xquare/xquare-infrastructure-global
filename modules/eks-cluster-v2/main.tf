@@ -53,11 +53,11 @@ module "eks_managed_node_group" {
   name            = "initial"
   cluster_name    = local.cluster_name
   cluster_version = local.cluster_version
+  subnet_ids = local.public_subnets
 
   instance_types         = [local.instance_type]
 
   create_launch_template = false
-  launch_template_name   = ""
 
   min_size     = var.nodegroup_min_size
   max_size     = var.nodegroup_max_size
