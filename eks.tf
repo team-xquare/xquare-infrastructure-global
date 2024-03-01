@@ -1,7 +1,7 @@
 locals {
   cluster_version = "1.29"
-  node_type       = "t3a.large"
-  capacity_type   = "SPOT"
+  node_type       = "t3.medium"
+  capacity_type   = "ON_DEMAND"
 }
 
 data "aws_caller_identity" "current" {}
