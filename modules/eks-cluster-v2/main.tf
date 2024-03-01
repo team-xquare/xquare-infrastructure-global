@@ -66,7 +66,9 @@ module "eks_managed_node_group" {
     additional = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
   bootstrap_extra_args = var.bootstrap_extra_args
-  enable_bootstrap_user_data = var.pre_bootstrap_user_data
+
+  enable_bootstrap_user_data = true
+  pre_bootstrap_user_data = var.pre_bootstrap_user_data
 
   taints = {
     dedicated = {
