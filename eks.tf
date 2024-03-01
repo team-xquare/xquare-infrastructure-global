@@ -1,5 +1,5 @@
 locals {
-  cluster_version = "1.28"
+  cluster_version = "1.29"
   node_type       = "t3a.large"
   capacity_type   = "SPOT"
 }
