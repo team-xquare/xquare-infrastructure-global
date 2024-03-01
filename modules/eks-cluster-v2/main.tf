@@ -55,7 +55,7 @@ module "eks_managed_node_group" {
   cluster_version = local.cluster_version
 
   instance_types         = [local.instance_type]
-  create_security_group  = false
+
   create_launch_template = false
   launch_template_name   = ""
 
@@ -66,10 +66,8 @@ module "eks_managed_node_group" {
   iam_role_additional_policies = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   ]
-  extend_config = {
-    bootstrap_extra_args = var.bootstrap_extra_args
-    pre_bootstrap_user_data = var.pre_bootstrap_user_data
-  }
+  bootstrap_extra_args = var.bootstrap_extra_args
+  enable_bootstrap_user_data = var.pre_bootstrap_user_data
 
   taints = {
     dedicated = {
