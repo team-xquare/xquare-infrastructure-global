@@ -50,7 +50,7 @@ module "eks" {
 module "eks_managed_node_group" {
   source = "terraform-aws-modules/eks/aws//modules/eks-managed-node-group"
 
-  name            = "${local.cluster_name}-node-group"
+  name            = "initial"
   cluster_name    = local.cluster_name
   cluster_version = local.cluster_version
 
