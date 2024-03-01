@@ -22,10 +22,10 @@ locals {
   istio-version = "1.0.46"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.53"
+  karpenter-version = "1.0.55"
 
   xquare-application-name    = "xquare-application"
-  xquare-application-version = "1.0.44"
+  xquare-application-version = "1.0.46"
  
   argocd-namespace       = "argocd"
   dex-namespace          = "dex"
