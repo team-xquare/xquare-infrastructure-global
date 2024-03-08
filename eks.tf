@@ -1,6 +1,6 @@
 locals {
   cluster_version = "1.29"
-  node_type       = "i3en.xlarge"
+  node_type       = "i3en.large"
   capacity_type   = "SPOT"
 }
 
