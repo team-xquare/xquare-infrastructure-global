@@ -12,7 +12,7 @@ resource "aws_elasticache_subnet_group" "elasticache_subnet_group" {
 }
 
 resource "aws_security_group" "redis_sg" {
-  name        = local.elasticcache_parameter_group_name
+  name        = "redis-security-group"
   description = "Security group for Redis on port 6379"
   vpc_id      = module.vpc.vpc_id
 
