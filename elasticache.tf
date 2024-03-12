@@ -11,16 +11,6 @@ resource "aws_elasticache_subnet_group" "elasticache_subnet_group" {
   subnet_ids = module.vpc.private_subnet_ids
 }
 
-resource "aws_elasticache_parameter_group" "elasticache_parameter_group" {
-  name    = local.elasticcache_parameter_group_name
-  family  = "redis5.0"
-
-  parameter {
-    name  = "notify-keyspace-events"
-    value = "Ex"
-  }
-}
-
 resource "aws_security_group" "redis_sg" {
   name        = local.elasticcache_parameter_group_name
   description = "Security group for Redis on port 6379"
