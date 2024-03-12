@@ -22,7 +22,7 @@ locals {
   istio-version = "1.0.48"
 
   karpenter-name    = "karpenter"
-  karpenter-version = "1.0.57"
+  karpenter-version = "1.0.58"
 
   xquare-application-name    = "xquare-application"
   xquare-application-version = "1.0.46"
