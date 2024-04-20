@@ -3,6 +3,7 @@ locals {
   name_prefix_v2 = "xquare-v2"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "suno-api-be-prod",
     "pick-web-teacher-fe-prod",
     "devlib-be-prod",
     "new-pick-be-stag",
