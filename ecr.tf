@@ -3,6 +3,7 @@ locals {
   name_prefix_v2 = "xquare-v2"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "pick-core-be-stag",
     "scul-be-prod",
     "appjam-singtory-be-prod",
     "appjam-be-prod",
