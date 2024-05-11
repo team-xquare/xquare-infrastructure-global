@@ -11,7 +11,7 @@ module "eks" {
   vpc_id     = local.vpc_id
   subnet_ids = local.public_subnets
 
-  enable_irsa = false # TODO 원래 true
+  enable_irsa = true
 
   cluster_enabled_log_types = []
   create_cloudwatch_log_group = false
@@ -56,19 +56,19 @@ module "eks" {
     "karpenter.sh/discovery" = local.cluster_name
   }
 
-  manage_aws_auth_configmap = false
+  manage_aws_auth_configmap = true
 
-#  aws_auth_users = concat(
-#    [{
-#      userarn  = data.aws_caller_identity.current.arn
-#      username = local.current_username
-#      groups   = ["system:masters"]
-#    }],
-#    var.auth_users
-#  )
-#  aws_auth_roles = var.auth_roles
-#
-#  aws_auth_accounts = [
-#    data.aws_caller_identity.current.account_id
-#  ]
+ aws_auth_users = concat(
+   [{
+     userarn  = data.aws_caller_identity.current.arn
+     username = local.current_username
+     groups   = ["system:masters"]
+   }],
+   var.auth_users
+ )
+ aws_auth_roles = var.auth_roles
+
+ aws_auth_accounts = [
+   data.aws_caller_identity.current.account_id
+ ]
 }
