@@ -7,36 +7,36 @@ locals {
 
 # S3 =========================================================
 
-module "xquare_s3_iam_account" {
-  source = "./modules/iam-user"
-  name   = "xquare_s3_iam"
-  policy_arns = [
-    aws_iam_policy.s3_policy.arn
-  ]
-}
+#module "xquare_s3_iam_account" {
+#  source = "./modules/iam-user"
+#  name   = "xquare_s3_iam"
+#  policy_arns = [
+#    aws_iam_policy.s3_policy.arn
+#  ]
+#}
 
-resource "aws_iam_policy" "s3_policy" {
-  name   = "xquare-s3-policy"
-  policy = data.aws_iam_policy_document.s3_policy_document.json
-}
+#resource "aws_iam_policy" "s3_policy" {
+#  name   = "xquare-s3-policy"
+#  policy = data.aws_iam_policy_document.s3_policy_document.json
+#}
 
-data "aws_iam_policy_document" "s3_policy_document" {
-  statement {
-    actions   = ["s3:ListAllMyBuckets"]
-    resources = ["arn:aws:s3:::*"]
-    effect    = "Allow"
-  }
-  statement {
-    actions = ["s3:*"]
-    resources = [
-      module.prod_storage.arn,
-      "${module.prod_storage.arn}/*",
-      module.stag_storage.arn,
-      "${module.stag_storage.arn}/*"
-    ]
-    effect = "Allow"
-  }
-}
+#data "aws_iam_policy_document" "s3_policy_document" {
+#  statement {
+#    actions   = ["s3:ListAllMyBuckets"]
+#    resources = ["arn:aws:s3:::*"]
+#    effect    = "Allow"
+#  }
+#  statement {
+#    actions = ["s3:*"]
+#    resources = [
+#      module.prod_storage.arn,
+#      "${module.prod_storage.arn}/*",
+#      module.stag_storage.arn,
+#      "${module.stag_storage.arn}/*"
+#    ]
+#    effect = "Allow"
+#  }
+#}
 
 
 # thanos S3 =========================================================
@@ -132,70 +132,70 @@ data "aws_iam_policy_document" "loki_s3_policy_document" {
 
 # fe S3 =======================================================
 
-module "xquare_fe_s3_iam_account" {
-  source = "./modules/iam-user"
-  name   = "xquare_fe_s3_iam"
-  policy_arns = [
-    aws_iam_policy.fe_s3_policy.arn
-  ]
-  create_iam_user_login_profile = true
-}
+#module "xquare_fe_s3_iam_account" {
+#  source = "./modules/iam-user"
+#  name   = "xquare_fe_s3_iam"
+#  policy_arns = [
+#    aws_iam_policy.fe_s3_policy.arn
+#  ]
+#  create_iam_user_login_profile = true
+#}
 
-resource "aws_iam_policy" "fe_s3_policy" {
-  name   = "xquare-fe-s3-policy"
-  policy = data.aws_iam_policy_document.fe_s3_policy_document.json
-}
+#resource "aws_iam_policy" "fe_s3_policy" {
+#  name   = "xquare-fe-s3-policy"
+#  policy = data.aws_iam_policy_document.fe_s3_policy_document.json
+#}
 
 locals {
   fe_s3_folder = "fe"
 }
 
-data "aws_iam_policy_document" "fe_s3_policy_document" {
-  statement {
-    actions   = ["s3:ListAllMyBuckets"]
-    resources = ["arn:aws:s3:::*"]
-    effect    = "Allow"
-  }
-  statement {
-    effect    = "Allow"
-    actions   = ["s3:ListBucket"]
-    resources = [module.prod_storage.arn]
-    condition {
-      test     = "StringEquals"
-      variable = "s3:prefix"
-      values = [
-        "",
-        "${local.fe_s3_folder}/"
-      ]
-    }
-    condition {
-      test     = "StringEquals"
-      variable = "s3:delimiter"
-      values = [
-        "/"
-      ]
-    }
-  }
-  statement {
-    effect    = "Allow"
-    actions   = ["s3:ListBucket"]
-    resources = [module.prod_storage.arn]
-    condition {
-      test     = "StringLike"
-      variable = "s3:prefix"
-      values = [
-        "${local.fe_s3_folder}/*"
-      ]
-    }
-  }
-  statement {
-    effect  = "Allow"
-    actions = ["s3:*"]
-    resources = [
-      "${module.prod_storage.arn}/fe/*",
-    ]
-  }
-}
+#data "aws_iam_policy_document" "fe_s3_policy_document" {
+#  statement {
+#    actions   = ["s3:ListAllMyBuckets"]
+#    resources = ["arn:aws:s3:::*"]
+#    effect    = "Allow"
+#  }
+#  statement {
+#    effect    = "Allow"
+#    actions   = ["s3:ListBucket"]
+#    resources = [module.prod_storage.arn]
+#    condition {
+#      test     = "StringEquals"
+#      variable = "s3:prefix"
+#      values = [
+#        "",
+#        "${local.fe_s3_folder}/"
+#      ]
+#    }
+#    condition {
+#      test     = "StringEquals"
+#      variable = "s3:delimiter"
+#      values = [
+#        "/"
+#      ]
+#    }
+#  }
+#  statement {
+#    effect    = "Allow"
+#    actions   = ["s3:ListBucket"]
+#    resources = [module.prod_storage.arn]
+#    condition {
+#      test     = "StringLike"
+#      variable = "s3:prefix"
+#      values = [
+#        "${local.fe_s3_folder}/*"
+#      ]
+#    }
+#  }
+#  statement {
+#    effect  = "Allow"
+#    actions = ["s3:*"]
+#    resources = [
+#      "${module.prod_storage.arn}/fe/*",
+#    ]
+#  }
+#}
 
 # SQS =========================================================
 
