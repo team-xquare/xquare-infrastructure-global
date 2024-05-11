@@ -22,7 +22,7 @@ module "vpc" {
   }
 
   name_prefix     = local.name_prefix
-  cluster_name    = "${local.name_prefix_v2}-cluster"
+  cluster_name    = "${local.name_prefix_v3}-cluster"
 }
 
 resource "aws_vpc_endpoint" "s3" {
