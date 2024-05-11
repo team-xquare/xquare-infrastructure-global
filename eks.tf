@@ -9,7 +9,7 @@ data "aws_caller_identity" "current" {}
 module "eksv2" {
   source                 = "./modules/eks-cluster-v2"
 
-  name_prefix     = local.name_prefix_v2
+  name_prefix     = local.name_prefix_v3
   cluster_version = local.cluster_version
   instance_type   = local.node_type
   capacity_type   = local.capacity_type
