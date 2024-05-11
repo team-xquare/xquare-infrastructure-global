@@ -32,23 +32,23 @@ module "eksv2" {
       groups   = ["system:masters"]
     }
   ]
-  auth_roles = [
-    {
+#  auth_roles = [
+#    {
 #      rolearn  = module.karpenter.irsa_arn
-      username = "system:node:{{EC2PrivateDNSName}}"
-      groups   = ["system:bootstrappers", "system:nodes"]
-    },
-    {
-      rolearn  = "arn:aws:iam::786584124104:role/KarpenterControllerRole-xquare-v3-cluster"
-      username = "system:node:{{EC2PrivateDNSName}}"
-      groups   = ["system:bootstrappers", "system:nodes"]
-    },
-    {
-      rolearn  = "arn:aws:iam::786584124104:role/KarpenterNodeRole-xquare-v3-cluster"
-      username = "system:node:{{EC2PrivateDNSName}}"
-      groups   = ["system:bootstrappers", "system:nodes"]
-    }
-  ]
+#      username = "system:node:{{EC2PrivateDNSName}}"
+#      groups   = ["system:bootstrappers", "system:nodes"]
+#    },
+#    {
+#      rolearn  = "arn:aws:iam::786584124104:role/KarpenterControllerRole-xquare-v3-cluster"
+#      username = "system:node:{{EC2PrivateDNSName}}"
+#      groups   = ["system:bootstrappers", "system:nodes"]
+#    },
+#    {
+#      rolearn  = "arn:aws:iam::786584124104:role/KarpenterNodeRole-xquare-v3-cluster"
+#      username = "system:node:{{EC2PrivateDNSName}}"
+#      groups   = ["system:bootstrappers", "system:nodes"]
+#    }
+#  ]
 }
 
 output "cluster_id" {
