@@ -1,5 +1,5 @@
 locals {
-  name_prefix = "xquare"
+  name_prefix    = "xquare"
   name_prefix_v2 = "xquare-v2"
   name_prefix_v3 = "xquare-v3"
   ecr_names = [

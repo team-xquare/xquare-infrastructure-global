@@ -6,9 +6,9 @@ locals {
   a_record_type     = "A"
   cname_record_type = "CNAME"
 
-  xquare_design_record_name  = "design"
-  xquare_mysql_record_name   = "mysql"
-  xquare_redis_record_name   = "redis"
+  xquare_design_record_name = "design"
+  xquare_mysql_record_name  = "mysql"
+  xquare_redis_record_name  = "redis"
   xquare_server_record_names = [
     # XQUARE_REPOSITORY_NAME
     "admin",
