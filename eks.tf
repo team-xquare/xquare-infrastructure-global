@@ -34,7 +34,7 @@ module "eksv2" {
   ]
   auth_roles = [
     {
-      rolearn  = module.karpenter.irsa_arn
+#      rolearn  = module.karpenter.irsa_arn
       username = "system:node:{{EC2PrivateDNSName}}"
       groups   = ["system:bootstrappers", "system:nodes"]
     },
