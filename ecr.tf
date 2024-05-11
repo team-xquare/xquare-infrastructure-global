@@ -138,3 +138,4 @@ output "prod_ecr_url" {
     for v in module.prod_ecr : v.ecr_repository_url
   ]
 }
+
