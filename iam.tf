@@ -42,9 +42,9 @@ locals {
 # thanos S3 =========================================================
 
 resource "aws_iam_role" "thanos_s3" {
-  name        = "thanos_s3_role"
-  description = "Thanos IAM role for service account"
-  path        = "/"
+  name                  = "thanos_s3_role"
+  description           = "Thanos IAM role for service account"
+  path                  = "/"
   assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
   force_detach_policies = true
 }
@@ -85,7 +85,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
       type        = "Federated"
       identifiers = [module.eksv2.oidc_provider_arn]
     }
-    
+
     condition {
       test     = "StringEquals"
       variable = "${local.irsa_oidc_provider_url}:aud"
@@ -98,9 +98,9 @@ data "aws_iam_policy_document" "assume_role_policy" {
 # loki S3 =========================================================
 
 resource "aws_iam_role" "loki_s3" {
-  name        = "loki_s3_role"
-  description = "loki IAM role for service account"
-  path        = "/"
+  name                  = "loki_s3_role"
+  description           = "loki IAM role for service account"
+  path                  = "/"
   assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
   force_detach_policies = true
 }
@@ -214,9 +214,9 @@ data "aws_iam_policy" "sqs_policy" {
 # Karpenter =========================================================
 
 resource "aws_iam_role" "xquare-karpenter" {
-  name        = "xquare-karpenter"
-  description = "xquare role for karpenter"
-  path        = "/"
+  name                  = "xquare-karpenter"
+  description           = "xquare role for karpenter"
+  path                  = "/"
   assume_role_policy    = data.aws_iam_policy_document.ec2_assume_role_policy.json
   force_detach_policies = true
 }
@@ -230,7 +230,7 @@ data "aws_iam_policy_document" "ec2_assume_role_policy" {
       type        = "Federated"
       identifiers = [module.eksv2.oidc_provider_arn]
     }
-    
+
     condition {
       test     = "StringEquals"
       variable = "${local.irsa_oidc_provider_url}:aud"
@@ -249,7 +249,7 @@ locals {
 }
 
 resource "aws_iam_role_policy_attachment" "xquare-karpenter-policy-attachment" {
-  for_each = toset(local.karpenter-policy-prefixes)
+  for_each   = toset(local.karpenter-policy-prefixes)
   policy_arn = each.value
   role       = aws_iam_role.xquare-karpenter.name
 }

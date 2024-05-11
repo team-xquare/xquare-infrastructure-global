@@ -56,19 +56,19 @@ module "eks" {
     "karpenter.sh/discovery" = local.cluster_name
   }
 
-  manage_aws_auth_configmap = true
-
-  aws_auth_users = concat(
-    [{
-      userarn  = data.aws_caller_identity.current.arn
-      username = local.current_username
-      groups   = ["system:masters"]
-    }],
-    var.auth_users
-  )
-  aws_auth_roles = var.auth_roles
-
-  aws_auth_accounts = [
-    data.aws_caller_identity.current.account_id
-  ]
+#  manage_aws_auth_configmap = true
+#
+#  aws_auth_users = concat(
+#    [{
+#      userarn  = data.aws_caller_identity.current.arn
+#      username = local.current_username
+#      groups   = ["system:masters"]
+#    }],
+#    var.auth_users
+#  )
+#  aws_auth_roles = var.auth_roles
+#
+#  aws_auth_accounts = [
+#    data.aws_caller_identity.current.account_id
+#  ]
 }

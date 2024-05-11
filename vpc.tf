@@ -16,13 +16,13 @@ module "vpc" {
     "${local.region}a" = {
       "karpenter.sh/discovery/xquare-v2-cluster" = "xquare-v2-cluster"
       "kubernetes.io/cluster/xquare-v2-cluster"  = "owned"
-      "kubernetes.io/role/elb"                     = "1"
+      "kubernetes.io/role/elb"                   = "1"
     },
     "${local.region}c" = {}
   }
 
-  name_prefix     = local.name_prefix
-  cluster_name    = "${local.name_prefix_v3}-cluster"
+  name_prefix  = local.name_prefix
+  cluster_name = "${local.name_prefix_v3}-cluster"
 }
 
 resource "aws_vpc_endpoint" "s3" {
