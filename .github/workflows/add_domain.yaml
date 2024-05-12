@@ -28,7 +28,7 @@ jobs:
         shell: bash
         run: |
           echo ${{ github.event.client_payload.domain }}
-          location=$(grep -n "# XQUARE_REPOSITORY_NAME" ecr.tf | cut -d ":" -f 1)
+          location=$(grep -n "# DOMAIN_NAME" cloudflare.tf | cut -d ":" -f 1)
           if [ -n "$location" ]; then
             sed -i "${location}s|.*|&\n    \"${{ github.event.client_payload.domain }}\",|" cloudflare.tf
           fi

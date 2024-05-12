@@ -9,7 +9,7 @@ locals {
   xquare_mysql_record_name  = "mysql"
   xquare_redis_record_name  = "redis"
   xquare_server_record_names = [
-    # XQUARE_REPOSITORY_NAME
+    # DOMAIN_NAME
     "admin",
     "api-chitchat",
     "argo-cd",
