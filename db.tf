@@ -3,7 +3,7 @@ locals {
   db_engine            = "mysql"
   db_storage_size      = 20
   db_username          = "admin"
-  db_subnet_group_name = "default-vpc-00dba85fbdc1b606e"
+  db_subnet_group_name = "default-vpc-0a62e20d7071f05a1"
   db_public_accessible = true
 }
 
