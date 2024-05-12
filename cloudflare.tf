@@ -1,5 +1,5 @@
 provider "cloudflare" {
-  api_token = "khxIfj0FuiERtk9V4TNnllq6YTSgVwBZ1sjc2D-2"
+  api_token = var.cloudflare_api_token
 }
 
 locals {
