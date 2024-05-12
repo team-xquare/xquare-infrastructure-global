@@ -4,6 +4,7 @@ locals {
   name_prefix_v3 = "xquare-v3"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "envoy-middlware-be-prod",
     "scul-main-fe-prod",
     "xquare-infra-be-prod",
     "xquare-infra-fe-fe-prod",
