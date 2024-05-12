@@ -24,15 +24,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Add ecr
+      - name: Add Domain
         shell: bash
         run: |
           echo ${{ github.event.client_payload.domain }}
+          domain_name=$(echo "${{ github.event.client_payload.domain }}" | sed 's/\..*//')
           location=$(grep -n "# DOMAIN_NAME" cloudflare.tf | cut -d ":" -f 1)
           if [ -n "$location" ]; then
-            sed -i "${location}s|.*|&\n    \"${{ github.event.client_payload.domain }}\",|" cloudflare.tf
+            sed -i "${location}s|.*|&\n    \"$domain_name\",|" cloudflare.tf
           fi
-
+          
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -48,14 +49,15 @@ jobs:
       - name: Terraform import
         shell: bash
         run: |
-          json_result=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/${{ env.CLOUDFLARE_ZONE_ID }}/dns_records?type=CNAME&name=$record.xquare.app" \
-              -H "Authorization: Bearer {{ env.CLOUDFLARE_API_TOKEN }}")
+          json_result=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/${{ env.CLOUDFLARE_ZONE_ID }}/dns_records?type=CNAME&name=${{ github.event.client_payload.domain }}" \
+              -H "Authorization: Bearer ${{ env.CLOUDFLARE_API_TOKEN }}")
           id=$(echo "$json_result" | jq -r '.result[0].id')
-          
-          terraform import -var 'cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}' \
-             cloudflare_record.xquare_server_record[\"${{ github.event.client_payload.domain }}\"] ${{ env.CLOUDFLARE_ZONE_ID }}/$id
 
-      - name: Commit with new ECR
+          domain_name=$(echo "${{ github.event.client_payload.domain }}" | sed 's/\..*//')
+          terraform import -lock=false -var 'cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}' \
+             cloudflare_record.xquare_server_record[\"$domain_name\"] ${{ env.CLOUDFLARE_ZONE_ID }}/$id
+
+      - name: Commit with new Domain
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "🔀 :: domain [${{ github.event.client_payload.domain }}] 추가"
