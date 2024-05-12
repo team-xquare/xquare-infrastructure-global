@@ -146,3 +146,4 @@ resource "cloudflare_record" "xquare_redis_record" {
   value   = var.xquare_redis_domain
   zone_id = var.xquare_cloudflare_zone_id
 }
+
