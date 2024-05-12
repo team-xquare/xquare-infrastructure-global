@@ -10,7 +10,6 @@ locals {
   xquare_redis_record_name  = "redis"
   xquare_server_record_names = [
     # XQUARE_REPOSITORY_NAME
-    "test",
     "admin",
     "api-chitchat",
     "argo-cd",
