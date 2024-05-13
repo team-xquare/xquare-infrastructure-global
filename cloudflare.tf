@@ -10,10 +10,6 @@ locals {
   xquare_redis_record_name  = "redis"
   xquare_server_record_names = [
     # DOMAIN_NAME
-    "devlibdtdzzzxczxcnddddqwe",
-    "devlibzzz",
-    "devlibmmmjmmmm",
-    "devlibmmmjm.xquare.app",
     "admin",
     "api-chitchat",
     "argo-cd",
