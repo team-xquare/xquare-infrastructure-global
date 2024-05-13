@@ -33,29 +33,6 @@ jobs:
           if [ -n "$location" ]; then
             sed -i "${location}s|.*|&\n    \"$domain_name\",|" cloudflare.tf
           fi
-          
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-      - name: Terraform init
-        shell: bash
-        run: terraform init
-
-      - name: Install jq
-        uses: dcarbone/install-jq-action@v2.1.0
-            
-      - name: Terraform import
-        shell: bash
-        run: |
-          json_result=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/${{ env.CLOUDFLARE_ZONE_ID }}/dns_records?type=CNAME&name=${{ github.event.client_payload.domain }}" \
-              -H "Authorization: Bearer ${{ env.CLOUDFLARE_API_TOKEN }}")
-          id=$(echo "$json_result" | jq -r '.result[0].id')
-
-          domain_name=$(echo "${{ github.event.client_payload.domain }}" | sed 's/\..*//')
-          terraform import -lock=false -var 'cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}' \
-             cloudflare_record.xquare_server_record[\"$domain_name\"] ${{ env.CLOUDFLARE_ZONE_ID }}/$id
 
       - name: Commit with new Domain
         uses: stefanzweifel/git-auto-commit-action@v4
