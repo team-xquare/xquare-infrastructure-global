@@ -24,31 +24,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Add ecr
+      - name: Add Domain
         shell: bash
         run: |
           echo ${{ github.event.client_payload.domain }}
-          location=$(grep -n "# XQUARE_REPOSITORY_NAME" ecr.tf | cut -d ":" -f 1)
+          domain_name=$(echo "${{ github.event.client_payload.domain }}" | sed 's/\..*//')
+          location=$(grep -n "# DOMAIN_NAME" cloudflare.tf | cut -d ":" -f 1)
           if [ -n "$location" ]; then
-            sed -i "${location}s|.*|&\n    \"${{ github.event.client_payload.domain }}\",|" cloudflare.tf
+            sed -i "${location}s|.*|&\n    \"$domain_name\",|" cloudflare.tf
           fi
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-      - name: Terraform init
-        shell: bash
-        run: terraform init
-
-      - name: Terraform import
-        shell: bash
-        run: |
-          terraform import -var 'cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}' \
-             cloudflare_record.xquare_server_record ${{ env.CLOUDFLARE_ZONE_ID }}
-
-      - name: Commit with new ECR
+      - name: Commit with new Domain
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "🔀 :: domain [${{ github.event.client_payload.domain }}] 추가"
