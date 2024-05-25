@@ -22,6 +22,29 @@ module "spot_handler_function" {
   }
 }
 
+resource "aws_cloudwatch_event_rule" "spot_instance_interruption" {
+  name        = "spot-instance-interruption-warning"
+  description = "Triggers on EC2 Spot Instance Interruption Warnings"
+  event_pattern = jsonencode({
+    source = ["aws.ec2"],
+    "detail-type" = ["EC2 Spot Instance Interruption Warning"]
+  })
+}
+
+resource "aws_cloudwatch_event_target" "lambda_target" {
+  rule      = aws_cloudwatch_event_rule.spot_instance_interruption.name
+  target_id = "lambda-target"
+  arn       = module.spot_handler_function.this_lambda_function_arn
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_lambda" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = module.spot_handler_function.this_lambda_function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.spot_instance_interruption.arn
+}
+
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_role_with_ec2_permissions"
 
