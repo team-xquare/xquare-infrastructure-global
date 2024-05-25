@@ -14,7 +14,7 @@ module "lambda_function" {
 
   lambda_role = var.iam_role
 
-  environment_variables = {
+  environment_variables = merge({
     Serverless = "Terraform"
-  }
+  }, var.custom_environment_variables)
 }
