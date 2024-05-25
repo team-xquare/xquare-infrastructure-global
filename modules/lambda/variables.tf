@@ -18,6 +18,12 @@ variable "source_path" {
   type = string
 }
 
-variable "s3_bucket" {
-  type = string
+#variable "s3_bucket" {
+#  type = string
+#}
+
+variable "iam_role" {
+  description = "IAM Role for the Lambda function"
+  type        = string
+  default     = ""
 }

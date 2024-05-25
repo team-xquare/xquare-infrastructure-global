@@ -9,8 +9,10 @@ module "lambda_function" {
 
   source_path = var.source_path
 
-  store_on_s3 = true
-  s3_bucket   = var.s3_bucket
+#  store_on_s3 = true
+#  s3_bucket   = var.s3_bucket
+
+  lambda_role = var.iam_role
 
   environment_variables = {
     Serverless = "Terraform"
