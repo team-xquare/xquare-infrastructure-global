@@ -27,3 +27,9 @@ variable "iam_role" {
   type        = string
   default     = ""
 }
+
+variable "custom_environment_variables" {
+  description = "Custom environment variables for the Lambda function"
+  type        = map(string)
+  default     = {}
+}

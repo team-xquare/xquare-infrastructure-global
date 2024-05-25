@@ -47,3 +47,13 @@ variable "repo_on_premise_ip" {
   type    = string
   default = ""
 }
+
+variable "slack_hook_url" {
+  type = string
+  default = ""
+}
+
+variable "slack_channel" {
+  type = string
+  default = ""
+}

@@ -15,6 +15,11 @@ module "spot_handler_function" {
   source_path = local.spot_function_source_path
   runtime = local.spot_function_runtime
   iam_role = aws_iam_role.lambda_role.arn
+
+  custom_environment_variables = {
+    hookUrl = var.slack_hook_url
+    slackChannel = var.slack_channel
+  }
 }
 
 resource "aws_iam_role" "lambda_role" {
