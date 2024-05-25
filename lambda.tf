@@ -2,7 +2,7 @@ locals {
   spot_function_runtime = "python3.12"
   spot_function_name = "spot_termination_notification"
   spot_function_source_path = "spot-notification"
-  spot_function_handler = "lambda_function.lambda_handler"
+  spot_function_handler = "spot-notification-handler.lambda_handler"
   spot_function_description = "스팟 종료 알림 함수"
 }
 
