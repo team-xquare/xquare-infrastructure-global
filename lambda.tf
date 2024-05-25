@@ -1,5 +1,5 @@
 locals {
-  spot_function_runtime = "Python 3.7"
+  spot_function_runtime = "python3.7"
   spot_function_name = "spot_termination_notification"
   spot_function_source_path = "spot-notification"
   spot_function_handler = "lambda_function.lambda_handler"
