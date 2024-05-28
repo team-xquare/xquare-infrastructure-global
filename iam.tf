@@ -124,7 +124,8 @@ data "aws_iam_policy_document" "loki_s3_policy_document" {
   statement {
     actions = ["s3:*"]
     resources = [
-      module.loki_storage.arn
+      module.loki_storage.arn,
+      "${module.loki_storage.arn}/*"
     ]
     effect = "Allow"
   }
