@@ -10,6 +10,10 @@ locals {
   xquare_redis_record_name  = "redis"
   xquare_server_record_names = [
     # DOMAIN_NAME
+    "entry-auth-stag",
+    "entry-auth",
+    "entry-lts",
+    "entry-lts-stag",
     "admin",
     "api-chitchat",
     "argo-cd",
@@ -53,7 +57,6 @@ locals {
     "service",
     "singtory-api",
     "stag-server",
-    "xquare-infra",
     "thanos-store",
     "thanos",
     "tsdata.aliens-dms.com",
