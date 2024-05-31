@@ -57,7 +57,6 @@ locals {
     "service",
     "singtory-api",
     "stag-server",
-    "xquare-infra",
     "thanos-store",
     "thanos",
     "tsdata.aliens-dms.com",
