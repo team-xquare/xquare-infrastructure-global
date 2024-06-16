@@ -3,7 +3,7 @@ locals {
   stag_storage_name   = "xquare-stag-bucket"
   thanos_storage_name = "xquare-thanos"
   loki_storage_name   = "xquare-loki"
-  tempo_storage_name   = "tempo-loki"
+  tempo_storage_name   = "xquare-tempo"
 }
 
 #module "prod_storage" {
