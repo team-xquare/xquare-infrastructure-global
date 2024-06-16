@@ -3,6 +3,7 @@ locals {
   stag_storage_name   = "xquare-stag-bucket"
   thanos_storage_name = "xquare-thanos"
   loki_storage_name   = "xquare-loki"
+  tempo_storage_name   = "tempo-loki"
 }
 
 #module "prod_storage" {
@@ -30,5 +31,12 @@ module "loki_storage" {
   source = "./modules/s3"
 
   bucket_name = local.loki_storage_name
+  is_public   = false
+}
+
+module "tempo_storage" {
+  source = "./modules/s3"
+
+  bucket_name = local.tempo_storage_name
   is_public   = false
 }

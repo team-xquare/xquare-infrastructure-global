@@ -94,6 +94,41 @@ data "aws_iam_policy_document" "assume_role_policy" {
   }
 }
 
+# tempo S3 =========================================================
+
+resource "aws_iam_role" "tempo_s3" {
+  name                  = "tempo_s3_role"
+  description           = "tempo IAM role for service account"
+  path                  = "/"
+  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
+  force_detach_policies = true
+}
+
+resource "aws_iam_role_policy_attachment" "tempo_role_attachment" {
+  policy_arn = aws_iam_policy.tempo_s3_policy.arn
+  role       = aws_iam_role.tempo_s3.name
+}
+
+resource "aws_iam_policy" "tempo_s3_policy" {
+  name   = "tempo-s3-policy"
+  policy = data.aws_iam_policy_document.tempo_s3_policy_document.json
+}
+
+data "aws_iam_policy_document" "tempo_s3_policy_document" {
+  statement {
+    actions   = ["s3:PutObject", "s3:GetObject", "s3:ListBucket", "s3:DeleteObject", "s3:GetObjectTagging", "s3:PutObjectTagging"]
+    resources = ["arn:aws:s3:::*"]
+    effect    = "Allow"
+  }
+  statement {
+    actions = ["s3:*"]
+    resources = [
+      module.tempo_storage.arn,
+      "${module.tempo_storage.arn}/*"
+    ]
+    effect = "Allow"
+  }
+}
 
 # loki S3 =========================================================
 
