@@ -62,7 +62,8 @@ locals {
     "thanos",
     "tsdata.aliens-dms.com",
     "tsdata",
-    "vault"
+    "vault",
+    "grafana-tempo"
   ]
   pick_server_record_names = [
     "admin",
