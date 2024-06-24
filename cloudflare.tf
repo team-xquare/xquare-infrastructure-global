@@ -11,6 +11,7 @@ locals {
   xquare_server_record_names = [
     # DOMAIN_NAME
     "photohub-stag",
+    "photohub-stag",
     "photohub-backend-stag",
     "equus-feed-stag",
     "equus-stag",
