@@ -46,7 +46,7 @@ jobs:
         run: |
           terraform import -var 'cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}' \
             'module.${{ github.event.client_payload.environment }}_ecr["${{ github.event.client_payload.repository_name }}"].aws_ecr_repository.repo' \
-            ${{ github.event.client_payload.repository_name }} 
+            ${{ github.event.client_payload.repository_name }} -lock=false
 
       - name: Commit with new ECR
         uses: stefanzweifel/git-auto-commit-action@v4
