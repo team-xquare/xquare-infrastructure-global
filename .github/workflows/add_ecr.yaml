@@ -44,7 +44,7 @@ jobs:
         if: ${{ github.event.client_payload.environment }} == 'prod' || ${{ github.event.client_payload.environment }} == 'stag'
         shell: bash
         run: |
-          terraform import -lock=false -var 'cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}' \
+          terraform import -var 'cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}' \
             'module.${{ github.event.client_payload.environment }}_ecr["${{ github.event.client_payload.repository_name }}"].aws_ecr_repository.repo' \
             ${{ github.event.client_payload.repository_name }} 
 
