@@ -4,7 +4,6 @@ locals {
   name_prefix_v3 = "xquare-v3"
   ecr_names = [
     # ECR_REPOSITORY_NAME
-    "devlibtesttesttest-be-prod",
     "repo-user-fe-prod",
     "repo-admin-fe-prod",
     "repo-main-fe-prod",
@@ -15,7 +14,6 @@ locals {
     "xquare-infra-be-prod",
     "xquare-infra-fe-fe-prod",
     "kht-be-prod",
-    "mz-sangsic-be-prod",
     "pick-admin-fe-stag",
     "pick-teacher-fe-stag",
     "pick-core-be-prod",
@@ -25,7 +23,6 @@ locals {
     "appjam-be-prod",
     "suno-api-be-prod",
     "pick-web-teacher-fe-prod",
-    "devlib-be-prod",
     "new-pick-be-stag",
     "xquare-infra-frontend-fe-prod",
     "daedongyeojido-fe-fe-prod",
@@ -37,7 +34,6 @@ locals {
     "xquare-event-listener-prod",
     "xquare-backoffice-be-prod",
     "nudia-be-prod",
-    "chitchat-be-prod",
     "maeumgagym-admin-fe-stag",
     "merge-backend-be-prod",
     "merge-user-fe-prod",
