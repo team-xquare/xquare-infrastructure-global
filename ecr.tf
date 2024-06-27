@@ -4,6 +4,7 @@ locals {
   name_prefix_v3 = "xquare-v3"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "devlibtesttesttest-be-prod",
     "repo-user-fe-prod",
     "repo-admin-fe-prod",
     "repo-main-fe-prod",
