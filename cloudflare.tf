@@ -11,6 +11,7 @@ locals {
   xquare_server_record_names = [
     # DOMAIN_NAME
     "rlaisqls",
+    "rlaisqls",
     "auth",
     "entry-admission-admin-stag",
     "entry-admin-admission-stag",
