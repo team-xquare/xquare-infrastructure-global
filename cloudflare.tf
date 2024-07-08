@@ -12,6 +12,7 @@ locals {
     # DOMAIN_NAME
     "rlaisqls",
     "rlaisqls",
+    "rlaisqls",
     "auth",
     "entry-admission-admin-stag",
     "entry-admin-admission-stag",
