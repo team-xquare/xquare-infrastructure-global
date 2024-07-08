@@ -20,7 +20,7 @@ data "aws_subnet" "this" {
 
 data "aws_subnet" "public" {
   for_each = {
-    for id in data.aws_subnets.all.ids : id => id if data.aws_subnet.this[id].map_public_ip_on_launch
+    for id in data.aws_subnets.this.ids : id => id if data.aws_subnet.this[id].map_public_ip_on_launch
   }
   id = each.value
 }
