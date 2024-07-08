@@ -16,6 +16,7 @@ locals {
     "rlaisqls",
     "rlaisqls",
     "rlaisqls",
+    "rlaisqls",
     "auth",
     "entry-admission-admin-stag",
     "entry-admin-admission-stag",
