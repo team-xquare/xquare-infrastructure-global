@@ -8,7 +8,7 @@ locals {
 
 resource "aws_elasticache_subnet_group" "elasticache_subnet_group" {
   name       = "${local.elasticcache_name}-cache-subnet"
-  subnet_ids = module.vpc.private_subnet_ids
+  subnet_ids = module.vpc.public_subnet_ids
 }
 
 resource "aws_security_group" "redis_sg" {
