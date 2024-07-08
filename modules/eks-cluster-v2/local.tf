@@ -7,4 +7,9 @@ locals {
   current_username = element(split("/", data.aws_caller_identity.current.arn), 1)
   instance_type    = var.instance_type
   capacity_type    = var.capacity_type
+  az_subnets = [
+      for id, subnet in data.aws_subnet.this :
+      id
+      if subnet.availability_zone == "${local.region}a"
+  ]
 }
