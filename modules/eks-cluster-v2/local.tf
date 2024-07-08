@@ -8,7 +8,7 @@ locals {
   instance_type    = var.instance_type
   capacity_type    = var.capacity_type
   az_subnets = [
-      for id, subnet in data.aws_subnet.this :
+      for id, subnet in data.aws_subnet.public :
       id
       if subnet.availability_zone == "${local.region}a"
   ]

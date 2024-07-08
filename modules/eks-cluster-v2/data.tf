@@ -18,6 +18,13 @@ data "aws_subnet" "this" {
   id       = each.value
 }
 
+data "aws_subnet" "public" {
+  for_each = {
+    for id in data.aws_subnets.all.ids : id => id if data.aws_subnet.this[id].map_public_ip_on_launch
+  }
+  id = each.value
+}
+
 data "aws_caller_identity" "current" {}
 data "aws_partition" "current" {}
 data "aws_availability_zones" "available" {}
