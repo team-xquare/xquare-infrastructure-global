@@ -3,8 +3,35 @@ locals {
   db_engine            = "mysql"
   db_storage_size      = 20
   db_username          = "admin"
-  db_subnet_group_name = "default-vpc-0a62e20d7071f05a1"
+  db_subnet_group_name = "xquare_db_subnet_group"
   db_public_accessible = true
+
+  az_subnets = [
+        for id, subnet in data.aws_subnet.this :
+        id
+        if subnet.availability_zone == "${local.region}a"
+  ]
+}
+
+data "aws_subnets" "this" {
+  filter {
+    name   = "vpc-id"
+    values = [module.vpc.vpc_id]
+  }
+}
+
+data "aws_subnet" "this" {
+  for_each = toset(data.aws_subnets.this.ids)
+  id       = each.value
+}
+
+resource "aws_db_subnet_group" "xquare_db_subnet_group" {
+  name       = local.db_subnet_group_name
+  subnet_ids = local.az_subnets
+
+  tags = {
+    Name = local.db_subnet_group_name
+  }
 }
 
 resource "aws_security_group" "db_sg" {
@@ -25,7 +52,7 @@ resource "aws_db_instance" "xquare-db" {
   allocated_storage      = local.db_storage_size
   engine                 = local.db_engine
   instance_class         = local.db_type
-  availability_zone      = "${data.aws_region.current.name}c"
+  availability_zone      = "${data.aws_region.current.name}a"
   username               = local.db_username
   password               = var.rds_master_password
   vpc_security_group_ids = [aws_security_group.db_sg.id]
