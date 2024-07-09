@@ -83,7 +83,8 @@ locals {
     "tsdata",
     "vault",
     "grafana-tempo",
-    "gocd"
+    "gocd",
+    "equus-stag-kafka"
   ]
   pick_server_record_names = [
     "admin",
