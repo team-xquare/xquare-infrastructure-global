@@ -11,6 +11,7 @@ locals {
   xquare_server_record_names = [
     # DOMAIN_NAME
     "admin",
+    "admin",
     "apply",
     "auth",
     "demo",
