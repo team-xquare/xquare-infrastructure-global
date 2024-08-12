@@ -10,6 +10,7 @@ locals {
   xquare_redis_record_name  = "redis"
   xquare_server_record_names = [
     # DOMAIN_NAME
+    "maeumgagym-webview",
     "echo",
     "echo",
     "admin",
