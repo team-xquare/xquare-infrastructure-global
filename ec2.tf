@@ -10,6 +10,8 @@ resource "aws_spot_instance_request" "example" {
     Name = "TerraformSpotInstance"
   }
 
+  subnet_id = module.vpc.public_subnet_ids[0]
+
   user_data = <<-EOF
               #!/bin/bash
               sudo systemctl restart go-agent
