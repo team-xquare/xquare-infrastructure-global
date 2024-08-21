@@ -1,5 +1,5 @@
 resource "aws_spot_instance_request" "example" {
-  ami           = "ami-0af209700f3504393"
+  ami           = "ami-0d56a51b206a59c6a"
   instance_type = "t3a.large"  # 2 vCPU, 7 GiB Memory
 
   spot_price    = "0.0323"
