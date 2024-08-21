@@ -12,6 +12,7 @@ locals {
     # DOMAIN_NAME
     "admin",
     "admin",
+    "admin",
     "apply",
     "auth",
     "demo",
