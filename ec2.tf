@@ -2,7 +2,7 @@ resource "aws_spot_instance_request" "example" {
   ami           = "ami-0c103a76ad28beba7"
   instance_type = "t3a.large"  # 2 vCPU, 7 GiB Memory
 
-  spot_price    = "0.0323"
+  spot_price    = "0.037"
   spot_type     = "one-time"
   wait_for_fulfillment = true
 
