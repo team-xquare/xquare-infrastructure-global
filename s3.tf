@@ -4,6 +4,7 @@ locals {
   thanos_storage_name = "xquare-thanos"
   loki_storage_name   = "xquare-loki"
   tempo_storage_name   = "xquare-tempo"
+  cache_storage_name = "xquare-cache"
 }
 
 #module "prod_storage" {
@@ -39,4 +40,11 @@ module "tempo_storage" {
 
   bucket_name = local.tempo_storage_name
   is_public   = false
+}
+
+module "cache_storage" {
+  source = "./modules/s3"
+
+  bucket_name = local.cache_storage_name
+  is_public = false
 }
