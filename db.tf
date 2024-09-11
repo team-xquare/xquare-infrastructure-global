@@ -43,3 +43,49 @@ resource "aws_db_parameter_group" "xquare-pg" {
     value = "100000"
   }
 }
+
+// DocumentDB
+resource "aws_security_group" "docdb" {
+  name        = "docdb_security_group"
+  description = "Security group for DocumentDB"
+  vpc_id      =  module.vpc.vpc_id
+
+  ingress {
+    from_port   = 27017
+    to_port     = 27017
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_docdb_cluster" "docdb" {
+  cluster_identifier      = "xquare-docdb-cluster"
+  engine                  = "docdb"
+  master_username         = local.db_username
+  master_password         = var.docdb_master_password
+  backup_retention_period = 5
+  preferred_backup_window = "07:00-09:00"
+  skip_final_snapshot     = true
+
+  vpc_security_group_ids = [aws_security_group.docdb.id]
+  db_subnet_group_name   = aws_docdb_subnet_group.docdb.name
+}
+
+resource "aws_docdb_subnet_group" "docdb" {
+  name       = "xquare-docdb-subnet-group"
+  subnet_ids = module.vpc.public_subnet_ids
+}
+
+resource "aws_docdb_cluster_instance" "cluster_instances" {
+  count              = 1
+  identifier         = "xquare-docdb-${count.index}"
+  cluster_identifier = aws_docdb_cluster.docdb.id
+  instance_class     = "db.r6g.large"
+}
