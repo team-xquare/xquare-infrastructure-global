@@ -3,6 +3,11 @@ variable "rds_master_password" {
   default = ""
 }
 
+variable "docdb_master_password" {
+  type = string
+  default = ""
+}
+
 variable "cloudflare_api_token" {
   type    = string
   default = ""
