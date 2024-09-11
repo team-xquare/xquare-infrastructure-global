@@ -68,7 +68,7 @@ resource "aws_security_group" "docdb" {
 resource "aws_docdb_cluster" "docdb" {
   cluster_identifier      = "xquare-docdb-cluster"
   engine                  = "docdb"
-  master_username         = local.db_username
+  master_username         = "xquare-admin"
   master_password         = var.docdb_master_password
   backup_retention_period = 5
   preferred_backup_window = "07:00-09:00"
