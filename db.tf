@@ -65,6 +65,16 @@ resource "aws_security_group" "docdb" {
   }
 }
 
+resource "aws_docdb_cluster_parameter_group" "docdb_param_group" {
+  family = "docdb5.0"
+  name   = "xquare-docdb-param-group"
+
+  parameter {
+    name  = "tls"
+    value = "disabled"
+  }
+}
+
 resource "aws_docdb_cluster" "docdb" {
   cluster_identifier      = "xquare-docdb-cluster"
   engine                  = "docdb"
@@ -76,6 +86,8 @@ resource "aws_docdb_cluster" "docdb" {
 
   vpc_security_group_ids = [aws_security_group.docdb.id]
   db_subnet_group_name   = aws_docdb_subnet_group.docdb.name
+
+  db_cluster_parameter_group_name = aws_docdb_cluster_parameter_group.docdb_param_group.name
 }
 
 resource "aws_docdb_subnet_group" "docdb" {
