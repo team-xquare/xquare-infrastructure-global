@@ -44,6 +44,11 @@ resource "aws_db_parameter_group" "xquare-pg" {
   }
 }
 
+resource "aws_db_subnet_group" "xquare-sg" {
+  subnet_ids = [local.public_subnets]
+  name = "xquare-subnet-group"
+}
+
 // DocumentDB
 resource "aws_security_group" "docdb" {
   name        = "docdb_security_group"
