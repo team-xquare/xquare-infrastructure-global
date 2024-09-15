@@ -23,3 +23,9 @@ module "vpc" {
   }
   map_public_ip_on_launch = true
 }
+
+resource "aws_route" "private_to_igw" {
+  route_table_id = module.vpc.private_route_table_ids[0]
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = module.vpc.igw_id
+}
