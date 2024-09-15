@@ -25,7 +25,9 @@ module "vpc" {
 }
 
 resource "aws_route" "private_to_igw" {
-  route_table_id = module.vpc.private_route_table_ids[0]
+  count = module.vpc.private_route_table_ids
+
+  route_table_id = module.vpc.private_route_table_ids[count.index]
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = module.vpc.igw_id
 }
