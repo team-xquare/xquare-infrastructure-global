@@ -19,13 +19,13 @@ locals {
  cert-manager-version = "v1.12.14"
 
  istio-name    = "istio"
- istio-version = "1.0.47"
+ istio-version = "1.0.50"
 
  karpenter-name    = "karpenter"
- karpenter-version = "1.0.63"
+ karpenter-version = "1.0.64"
 
  xquare-application-name    = "xquare-application"
- xquare-application-version = "1.0.61"
+ xquare-application-version = "1.0.63"
 
  argocd-namespace       = "argocd"
  dex-namespace          = "dex"
