@@ -45,7 +45,7 @@ resource "aws_db_parameter_group" "xquare-pg" {
 }
 
 resource "aws_db_subnet_group" "xquare-sg" {
-  subnet_ids = [local.public_subnets]
+  subnet_ids = local.public_subnets
   name = "xquare-subnet-group"
 }
 
