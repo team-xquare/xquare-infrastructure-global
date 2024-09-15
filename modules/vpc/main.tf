@@ -6,8 +6,7 @@ module "vpc" {
   cidr = var.vpc_cidr
   azs  = var.azs
 
-  public_subnets  = var.public_subnets
-  private_subnets = var.private_subnets
+  public_subnets  = merge(var.public_subnets, var.private_subnets)
   public_subnet_tags_per_az = var.public_subnet_tags_per_az
 
   enable_nat_gateway     = false
