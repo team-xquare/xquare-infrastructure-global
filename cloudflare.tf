@@ -10,6 +10,8 @@ locals {
   xquare_redis_record_name  = "redis"
   xquare_server_record_names = [
     # DOMAIN_NAME
+    "symbols-client",
+    "symbols",
     "otel-trace-reciever",
     "turborepo-remote-cache",
     "admin",
@@ -20,15 +22,6 @@ locals {
     "demo",
     "entrydsm",
     "maeumgagym-docs",
-    "rlaisqls",
-    "rlaisqls",
-    "rlaisqls",
-    "rlaisqls",
-    "rlaisqls",
-    "rlaisqls",
-    "rlaisqls",
-    "rlaisqls",
-    "rlaisqls",
     "auth",
     "entry-admission-admin-stag",
     "entry-admin-admission-stag",
