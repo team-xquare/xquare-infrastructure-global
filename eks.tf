@@ -30,6 +30,16 @@ module "eksv2" {
       userarn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/xquare"
       username = "xquare-admin"
       groups   = ["system:masters"]
+    },
+    {
+      userarn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/eunchan"
+      username = "eunchan"
+      groups   = ["system:masters"]
+    },
+    {
+      userarn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/injun"
+      username = "injun"
+      groups   = ["system:masters"]
     }
   ]
     auth_roles = [
