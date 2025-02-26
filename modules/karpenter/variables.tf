@@ -1,5 +1,4 @@
 variable "cluster_name" {
-    default = "xquare-v3-cluster"
 }
 variable "irsa_oidc_provider_arn" {
 }
