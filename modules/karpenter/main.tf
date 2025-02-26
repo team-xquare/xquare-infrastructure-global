@@ -29,15 +29,15 @@ resource "helm_release" "karpenter" {
   chart      = var.chart
   version    = var.chart_version
 
-  # set {
-  #   name  = "karpenter.settings.clusterName"
-  #   value = var.cluster_name
-  # }
-  #
-  # set {
-  #   name  = "karpenter.settings.interruptionQueue"
-  #   value = var.cluster_name
-  # }
+  set {
+    name  = "karpenter.clusterName"
+    value = var.cluster_name
+  }
+
+  set {
+    name  = "karpenter.interruptionQueue"
+    value = var.cluster_name
+  }
 
   set {
     name  = "karpenter.settings.clusterEndpoint"
