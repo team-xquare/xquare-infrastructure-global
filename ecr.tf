@@ -4,6 +4,7 @@ locals {
   name_prefix_v3 = "xquare-v3"
   ecr_names = [
     # ECR_REPOSITORY_NAME
+    "trading-helper-be-prod",
     "sillok-fe-fe-prod",
     "eeats-be-prod",
     "equus-user-be-prod",
