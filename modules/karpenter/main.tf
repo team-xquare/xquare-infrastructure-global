@@ -12,7 +12,7 @@ module "karpenter" {
   enable_irsa             = true
   create_instance_profile = true
   iam_role_use_name_prefix = false
-  
+
   iam_role_name          = "KarpenterIRSA-${var.cluster_name}"
   iam_role_description   = "Karpenter IAM role for service account"
   iam_policy_name        = "KarpenterIRSA-${var.cluster_name}"
@@ -46,11 +46,17 @@ resource "helm_release" "karpenter" {
 
   set {
     name  = "karpenter.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = "arn:aws:iam::786584124104:role/KarpenterControllerRole-xquare-v3-cluster"
+    value = module.karpenter.iam_role_arn
   }
 
   set {
     name  = "karpenter.aws.defaultInstanceProfile"
     value = module.karpenter.instance_profile_name
   }
+
+  set {
+    name  = "karpenter.settings.aws.defaultInstanceProfile"
+    value = module.karpenter.instance_profile_name
+  }
 }
+
