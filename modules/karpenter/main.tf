@@ -46,7 +46,7 @@ resource "helm_release" "karpenter" {
 
   set {
     name  = "karpenter.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.karpenter.iam_role_arn
+    value = "arn:aws:iam::786584124104:role/KarpenterControllerRole-xquare-v3-cluster"
   }
 
   set {
