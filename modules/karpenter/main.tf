@@ -56,5 +56,4 @@ resource "helm_release" "karpenter" {
     name  = "karpenter.settings.aws.defaultInstanceProfile"
     value = module.karpenter.instance_profile_name
   }
-
 }
