@@ -1,3 +1,3 @@
 output "irsa_arn" {
-  value = module.karpenter.iam_role_arn
+  value = module.karpenter.irsa_arn
 }
