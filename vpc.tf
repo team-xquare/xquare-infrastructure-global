@@ -1,7 +1,7 @@
 locals {
   azs             = ["${data.aws_region.current.name}a", "${data.aws_region.current.name}c"]
-  public_subnets  = ["10.0.0.0/20", "10.0.16.0/20"]
-  private_subnets = ["10.0.128.0/20", "10.0.144.0/20"]
+  public_subnets  = ["10.0.0.0/24", "10.0.16.0/24"]
+  private_subnets = ["10.0.128.0/24", "10.0.144.0/24"]
   vpc_cidr        = "10.0.0.0/16"
 }
 
