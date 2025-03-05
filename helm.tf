@@ -96,11 +96,11 @@ module "karpenter" {
  cluster_endpoint       = module.eksv2.cluster_endpoint
 }
 
-#module "datadog" {
-#  source = "./modules/helm"
-#  name          = local.datadog-name
-#  namespace     = local.datadog-namespace
-#  repository    = local.xquare-repository
-#  chart         = local.datadog-name
-#  chart_version = local.datadog-version
-#}
+module "datadog" {
+ source = "./modules/helm"
+ name          = local.datadog-name
+ namespace     = local.datadog-namespace
+ repository    = local.xquare-repository
+ chart         = local.datadog-name
+ chart_version = local.datadog-version
+}
