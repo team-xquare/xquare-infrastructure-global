@@ -18,7 +18,11 @@ module "vpc" {
       "kubernetes.io/cluster/xquare-v3-cluster"  = "owned"
       "kubernetes.io/role/elb"                   = "1"
     },
-    "${local.region}c" = {}
+    "${local.region}c" = {
+      "karpenter.sh/discovery/xquare-v3-cluster" = "xquare-v3-cluster"
+      "kubernetes.io/cluster/xquare-v3-cluster"  = "owned"
+      "kubernetes.io/role/elb"                   = "1"
+    }
   }
 
   name_prefix  = local.name_prefix
