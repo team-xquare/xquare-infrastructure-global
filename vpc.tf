@@ -17,11 +17,13 @@ module "vpc" {
       "karpenter.sh/discovery/xquare-v3-cluster" = "xquare-v3-cluster"
       "kubernetes.io/cluster/xquare-v3-cluster"  = "owned"
       "kubernetes.io/role/elb"                   = "1"
+      "kubernetes.io/role/internal-elb" : "1"
     },
     "${local.region}c" = {
       "karpenter.sh/discovery/xquare-v3-cluster" = "xquare-v3-cluster"
       "kubernetes.io/cluster/xquare-v3-cluster"  = "owned"
       "kubernetes.io/role/elb"                   = "1"
+      "kubernetes.io/role/internal-elb" : "1"
     }
   }
 
