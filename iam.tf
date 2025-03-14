@@ -313,7 +313,7 @@ data "aws_iam_policy_document" "vault_assume_role_policy" {
     condition {
       test     = "StringEquals"
       variable = "${local.irsa_oidc_provider_url}:sub"
-      values   = ["system:serviceaccount:vault:vault-server"]
+      values   = ["system:serviceaccount:vault:vault"]
     }
   }
 }
