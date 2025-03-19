@@ -10,7 +10,7 @@ locals {
  xquare-repository = "https://team-xquare.github.io/k8s-resource"
 
  argocd-name    = "argocd"
- argocd-verison = "4.8.20"
+ argocd-verison = "4.8.21"
 
  aws-node-termination-handler-name    = "aws-node-termination-handler"
  aws-node-termination-handler-version = "0.22.10"
