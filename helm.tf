@@ -10,7 +10,7 @@ locals {
  xquare-repository = "https://team-xquare.github.io/k8s-resource"
 
  argocd-name    = "argocd"
- argocd-verison = "4.8.20"
+ argocd-verison = "4.8.21"
 
  aws-node-termination-handler-name    = "aws-node-termination-handler"
  aws-node-termination-handler-version = "0.22.10"
@@ -19,13 +19,13 @@ locals {
  cert-manager-version = "v1.12.14"
 
  istio-name    = "istio"
- istio-version = "1.0.50"
+ istio-version = "1.1.0"
 
  karpenter-name    = "karpenter"
  karpenter-version = "1.0.66"
 
  xquare-application-name    = "xquare-application"
- xquare-application-version = "1.0.65"
+ xquare-application-version = "1.1.14"
 
  argocd-namespace       = "argocd"
  dex-namespace          = "dex"
@@ -37,8 +37,8 @@ locals {
  istio-namespace        = "istio-system"
 
  // Datadog
- datadog-name = "datadog-operator"
- datadog-version = "2.0.1"
+ datadog-name = "datadog"
+ datadog-version = "2.0.2"
  datadog-namespace = "monitoring"
 
  vault-name = "vault"
