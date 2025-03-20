@@ -289,3 +289,70 @@ resource "aws_iam_role_policy_attachment" "xquare-karpenter-policy-attachment" {
   policy_arn = each.value
   role       = aws_iam_role.xquare-karpenter.name
 }
+
+# Vault Auto-Unseal KMS 설정 =========================================================
+
+resource "aws_iam_role" "vault_kms_role" {
+  name                  = "vault-kms-role"
+  description           = "Vault IAM role for KMS auto-unseal"
+  path                  = "/"
+  assume_role_policy    = data.aws_iam_policy_document.vault_assume_role_policy.json
+  force_detach_policies = true
+}
+
+data "aws_iam_policy_document" "vault_assume_role_policy" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [module.eksv2.oidc_provider_arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${local.irsa_oidc_provider_url}:sub"
+      values   = ["system:serviceaccount:vault:vault"]
+    }
+  }
+}
+
+resource "aws_iam_policy" "vault_kms_policy" {
+  name   = "vault-kms-policy"
+  policy = data.aws_iam_policy_document.vault_kms_policy_document.json
+}
+
+data "aws_iam_policy_document" "vault_kms_policy_document" {
+  statement {
+    actions = [
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:DescribeKey"
+    ]
+    resources = [
+      aws_kms_key.vault_unseal_key.arn
+    ]
+    effect = "Allow"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "vault_kms_role_attachment" {
+  policy_arn = aws_iam_policy.vault_kms_policy.arn
+  role       = aws_iam_role.vault_kms_role.name
+}
+
+resource "aws_kms_key" "vault_unseal_key" {
+  description             = "KMS Key for Vault Auto-Unseal"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+  
+  tags = {
+    Name = "vault-auto-unseal-key"
+  }
+}
+
+resource "aws_kms_alias" "vault_unseal_key_alias" {
+  name          = "alias/vault-auto-unseal-key"
+  target_key_id = aws_kms_key.vault_unseal_key.key_id
+}
