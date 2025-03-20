@@ -166,6 +166,65 @@ data "aws_iam_policy_document" "loki_s3_policy_document" {
   }
 }
 
+# Kaniko ECR =========================================================
+
+data "aws_iam_policy_document" "kaniko_assume_role_policy" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [module.eksv2.oidc_provider_arn]
+    }
+
+    condition {
+      test     = "StringLike"
+      variable = "${local.irsa_oidc_provider_url}:sub"
+      values   = ["system:serviceaccount:*:kaniko-sa"]
+    }
+  }
+}
+
+resource "aws_iam_role" "kaniko_ecr_push" {
+  name                  = "kaniko-ecr-push-role"
+  description           = "IAM role for Kaniko to push images to ECR"
+  path                  = "/"
+  assume_role_policy    = data.aws_iam_policy_document.kaniko_assume_role_policy.json
+  force_detach_policies = true
+}
+
+resource "aws_iam_policy" "kaniko_ecr_policy" {
+  name   = "kaniko-ecr-policy"
+  policy = data.aws_iam_policy_document.kaniko_ecr_policy_document.json
+}
+
+data "aws_iam_policy_document" "kaniko_ecr_policy_document" {
+  statement {
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetRepositoryPolicy",
+      "ecr:DescribeRepositories",
+      "ecr:ListImages",
+      "ecr:DescribeImages",
+      "ecr:BatchGetImage",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:PutImage"
+    ]
+    resources = ["*"]
+    effect    = "Allow"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "kaniko_ecr_policy_attachment" {
+  policy_arn = aws_iam_policy.kaniko_ecr_policy.arn
+  role       = aws_iam_role.kaniko_ecr_push.name
+}
+
 # fe S3 =======================================================
 
 #module "xquare_fe_s3_iam_account" {
