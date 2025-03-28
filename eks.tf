@@ -20,7 +20,7 @@ module "eksv2" {
   nodegroup_max_size     = 3
   nodegroup_desired_size = 1
 
-  bootstrap_extra_args    = "--use-max-pods false --kubelet-extra-args '--max-pods=110'"
+  bootstrap_extra_args    = "--use-max-pods false --kubelet-extra-args '--max-pods=110' --register-with-taints=xquare/server=true:NoSchedule"
   pre_bootstrap_user_data = <<-EOT
     export ENABLE_PREFIX_DELEGATION=true
   EOT
