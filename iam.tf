@@ -415,3 +415,45 @@ resource "aws_kms_alias" "vault_unseal_key_alias" {
   name          = "alias/vault-auto-unseal-key"
   target_key_id = aws_kms_key.vault_unseal_key.key_id
 }
+
+# OpenCost IAM Role =========================================================
+
+resource "aws_iam_role" "opencost_role" {
+  name                  = "opencost-role"
+  description           = "OpenCost IAM role"
+  path                  = "/"
+  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
+  force_detach_policies = true
+}
+
+resource "aws_iam_policy" "opencost_policy" {
+  name   = "opencost-policy"
+  policy = data.aws_iam_policy_document.opencost_policy_document.json
+}
+
+data "aws_iam_policy_document" "opencost_policy_document" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ce:GetCostAndUsage",
+      "ce:GetDimensionValues",
+      "ce:GetTags",
+      "ce:GetCostCategories",
+      "ce:GetCostForecast",
+      "ce:GetRightsizingRecommendation",
+      "ce:GetReservationUtilization",
+      "ce:GetReservationPurchaseRecommendation",
+      "ce:GetSavingsPlanUtilization",
+      "ce:GetSavingsPlansCoverage",
+      "ec2:DescribeInstances",
+      "ec2:DescribeRegions",
+      "sts:GetCallerIdentity"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "opencost_role_attachment" {
+  policy_arn = aws_iam_policy.opencost_policy.arn
+  role       = aws_iam_role.opencost_role.name
+}
