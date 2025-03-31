@@ -5,6 +5,7 @@ locals {
   loki_storage_name   = "xquare-loki"
   tempo_storage_name   = "xquare-tempo"
   cache_storage_name = "xquare-cache"
+  xquare-billing = "xquare-billing"
 }
 
 #module "prod_storage" {
@@ -46,5 +47,12 @@ module "cache_storage" {
   source = "./modules/s3"
 
   bucket_name = local.cache_storage_name
+  is_public = false
+}
+
+module "xquare-billing" {
+  source = "./modules/s3"
+
+  bucket_name = local.xquare-billing
   is_public = false
 }
