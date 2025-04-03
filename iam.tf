@@ -457,3 +457,50 @@ resource "aws_iam_role_policy_attachment" "opencost_role_attachment" {
   policy_arn = aws_iam_policy.opencost_policy.arn
   role       = aws_iam_role.opencost_role.name
 }
+
+# ACK ECR Controller =========================================================
+
+resource "aws_iam_role" "ack_ecr_controller" {
+  name                  = "xquare-ack-ecr-role"
+  description           = "ACK ECR Controller IAM role for service account"
+  path                  = "/"
+  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
+  force_detach_policies = true
+}
+
+resource "aws_iam_policy" "ack_ecr_policy" {
+  name   = "ack-ecr-policy"
+  policy = data.aws_iam_policy_document.ack_ecr_policy_document.json
+}
+
+data "aws_iam_policy_document" "ack_ecr_policy_document" {
+  statement {
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetRepositoryPolicy",
+      "ecr:DescribeRepositories",
+      "ecr:ListImages",
+      "ecr:DescribeImages",
+      "ecr:BatchGetImage",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:PutImage",
+      "ecr:CreateRepository",
+      "ecr:DeleteRepository",
+      "ecr:PutLifecyclePolicy",
+      "ecr:PutImageTagMutability",
+      "ecr:TagResource",
+      "ecr:UntagResource"
+    ]
+    resources = ["*"]
+    effect    = "Allow"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "ack_ecr_policy_attachment" {
+  policy_arn = aws_iam_policy.ack_ecr_policy.arn
+  role       = aws_iam_role.ack_ecr_controller.name
+}
