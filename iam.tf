@@ -476,25 +476,7 @@ resource "aws_iam_policy" "ack_ecr_policy" {
 data "aws_iam_policy_document" "ack_ecr_policy_document" {
   statement {
     actions = [
-      "ecr:GetAuthorizationToken",
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:GetRepositoryPolicy",
-      "ecr:DescribeRepositories",
-      "ecr:ListImages",
-      "ecr:DescribeImages",
-      "ecr:BatchGetImage",
-      "ecr:InitiateLayerUpload",
-      "ecr:UploadLayerPart",
-      "ecr:CompleteLayerUpload",
-      "ecr:PutImage",
-      "ecr:CreateRepository",
-      "ecr:DeleteRepository",
-      "ecr:PutLifecyclePolicy",
-      "ecr:GetLifecyclePolicy",
-      "ecr:PutImageTagMutability",
-      "ecr:TagResource",
-      "ecr:UntagResource"
+      "ecr:*",
     ]
     resources = ["*"]
     effect    = "Allow"
