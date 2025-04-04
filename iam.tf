@@ -475,9 +475,7 @@ resource "aws_iam_policy" "ack_ecr_policy" {
 
 data "aws_iam_policy_document" "ack_ecr_policy_document" {
   statement {
-    actions = [
-      "ecr:*",
-    ]
+    actions = ["ecr:*"]
     resources = ["*"]
     effect    = "Allow"
   }
