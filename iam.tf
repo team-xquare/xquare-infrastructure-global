@@ -491,6 +491,7 @@ data "aws_iam_policy_document" "ack_ecr_policy_document" {
       "ecr:CreateRepository",
       "ecr:DeleteRepository",
       "ecr:PutLifecyclePolicy",
+      "ecr:GetLifecyclePolicy",
       "ecr:PutImageTagMutability",
       "ecr:TagResource",
       "ecr:UntagResource"
