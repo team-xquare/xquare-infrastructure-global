@@ -19,7 +19,7 @@ locals {
  cert-manager-version = "2.0.0"
 
  istio-name    = "istio"
- istio-version = "1.1.0"
+ istio-version = "1.2.0"
 
  karpenter-name    = "karpenter"
  karpenter-version = "1.0.66"
