@@ -38,7 +38,7 @@ locals {
 
  // Datadog
  datadog-name = "datadog"
- datadog-version = "2.3.2"
+ datadog-version = "2.3.3"
  datadog-namespace = "monitoring"
 
  vault-name = "vault"
