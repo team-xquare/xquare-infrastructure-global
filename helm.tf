@@ -16,16 +16,16 @@ locals {
  aws-node-termination-handler-version = "0.22.10"
 
  cert-manager-name    = "cert-manager"
- cert-manager-version = "v1.12.15"
+ cert-manager-version = "2.0.0"
 
  istio-name    = "istio"
- istio-version = "1.1.0"
+ istio-version = "1.2.0"
 
  karpenter-name    = "karpenter"
  karpenter-version = "1.0.66"
 
  xquare-application-name    = "xquare-application"
- xquare-application-version = "1.1.21"
+ xquare-application-version = "1.1.33"
 
  argocd-namespace       = "argocd"
  dex-namespace          = "dex"
@@ -38,7 +38,7 @@ locals {
 
  // Datadog
  datadog-name = "datadog"
- datadog-version = "2.3.1"
+ datadog-version = "2.3.28"
  datadog-namespace = "monitoring"
 
  vault-name = "vault"
