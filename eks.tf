@@ -1,6 +1,6 @@
 locals {
   cluster_version = "1.32"
-  node_type       = "r5a.large"
+  node_type       = "m6gd.large"
   capacity_type   = "SPOT"
 }
 
