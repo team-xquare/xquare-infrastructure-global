@@ -1,6 +1,6 @@
 locals {
   cluster_version = "1.32"
-  node_type       = "m6g.large"
+  node_type       = "is4gen.medium"
   capacity_type   = "SPOT"
 }
 
