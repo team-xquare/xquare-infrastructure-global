@@ -1,10 +1,10 @@
-provider "helm" {
- kubernetes {
-   host                   = module.eksv2.cluster_endpoint
-   cluster_ca_certificate = module.eksv2.cluster_ca_certificate
-   token                  = module.eksv2.cluster_auth_token
- }
-}
+# provider "helm" {
+# kubernetes {
+#   host                   = module.eksv2.cluster_endpoint
+#   cluster_ca_certificate = module.eksv2.cluster_ca_certificate
+#   token                  = module.eksv2.cluster_auth_token
+# }
+# }
 
 locals {
  xquare-repository = "https://team-xquare.github.io/k8s-resource"
@@ -46,61 +46,61 @@ locals {
  vault-namespace = "vault"
 }
 
-module "argocd" {
- source        = "./modules/helm"
- name          = local.argocd-name
- namespace     = local.argocd-namespace
- repository    = local.xquare-repository
- chart         = local.argocd-name
- chart_version = local.argocd-verison
-}
+# module "argocd" {
+#  source        = "./modules/helm"
+#  name          = local.argocd-name
+#  namespace     = local.argocd-namespace
+#  repository    = local.xquare-repository
+#  chart         = local.argocd-name
+#  chart_version = local.argocd-verison
+# }
 
-module "cert-manager" {
- source        = "./modules/helm"
- name          = local.cert-manager-name
- namespace     = local.cert-manager-namespace
- repository    = local.xquare-repository
- chart         = local.cert-manager-name
- chart_version = local.cert-manager-version
-}
+# module "cert-manager" {
+#  source        = "./modules/helm"
+#  name          = local.cert-manager-name
+#  namespace     = local.cert-manager-namespace
+#  repository    = local.xquare-repository
+#  chart         = local.cert-manager-name
+#  chart_version = local.cert-manager-version
+# }
 
-module "istio" {
- source        = "./modules/helm"
- name          = local.istio-name
- namespace     = local.istio-namespace
- repository    = local.xquare-repository
- chart         = local.istio-name
- chart_version = local.istio-version
-}
+# module "istio" {
+#  source        = "./modules/helm"
+#  name          = local.istio-name
+#  namespace     = local.istio-namespace
+#  repository    = local.xquare-repository
+#  chart         = local.istio-name
+#  chart_version = local.istio-version
+# }
 
-module "xquare-application" {
- source        = "./modules/helm"
- name          = local.xquare-application-name
- namespace     = local.argocd-namespace
- repository    = local.xquare-repository
- chart         = local.xquare-application-name
- chart_version = local.xquare-application-version
-}
+# module "xquare-application" {
+#  source        = "./modules/helm"
+#  name          = local.xquare-application-name
+#  namespace     = local.argocd-namespace
+#  repository    = local.xquare-repository
+#  chart         = local.xquare-application-name
+#  chart_version = local.xquare-application-version
+# }
 
-module "karpenter" {
- source = "./modules/karpenter"
+# module "karpenter" {
+#  source = "./modules/karpenter"
+#
+#  namespace     = local.karpenter-namespace
+#  repository    = local.xquare-repository
+#  chart         = local.karpenter-name
+#  chart_version = local.karpenter-version
+#
+#  cluster_name           = module.eksv2.cluster_name
+#  irsa_oidc_provider_arn = module.eksv2.oidc_provider_arn
+#  iam_role_arn           = module.eksv2.iam_role_arn
+#  cluster_endpoint       = module.eksv2.cluster_endpoint
+# }
 
- namespace     = local.karpenter-namespace
- repository    = local.xquare-repository
- chart         = local.karpenter-name
- chart_version = local.karpenter-version
-
- cluster_name           = module.eksv2.cluster_name
- irsa_oidc_provider_arn = module.eksv2.oidc_provider_arn
- iam_role_arn           = module.eksv2.iam_role_arn
- cluster_endpoint       = module.eksv2.cluster_endpoint
-}
-
-module "datadog" {
- source = "./modules/helm"
- name          = local.datadog-name
- namespace     = local.datadog-namespace
- repository    = local.xquare-repository
- chart         = local.datadog-name
- chart_version = local.datadog-version
-}
+# module "datadog" {
+#  source = "./modules/helm"
+#  name          = local.datadog-name
+#  namespace     = local.datadog-namespace
+#  repository    = local.xquare-repository
+#  chart         = local.datadog-name
+#  chart_version = local.datadog-version
+# }
