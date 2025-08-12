@@ -308,46 +308,46 @@ data "aws_iam_policy" "sqs_policy" {
 
 # Karpenter =========================================================
 
-resource "aws_iam_role" "xquare-karpenter" {
-  name                  = "xquare-karpenter"
-  description           = "xquare role for karpenter"
-  path                  = "/"
-  assume_role_policy    = data.aws_iam_policy_document.ec2_assume_role_policy.json
-  force_detach_policies = true
-}
+# resource "aws_iam_role" "xquare-karpenter" {
+#   name                  = "xquare-karpenter"
+#   description           = "xquare role for karpenter"
+#   path                  = "/"
+#   assume_role_policy    = data.aws_iam_policy_document.ec2_assume_role_policy.json
+#   force_detach_policies = true
+# }
 
-data "aws_iam_policy_document" "ec2_assume_role_policy" {
-  statement {
-    effect  = "Allow"
-    actions = ["sts:AssumeRoleWithWebIdentity"]
+# data "aws_iam_policy_document" "ec2_assume_role_policy" {
+#   statement {
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRoleWithWebIdentity"]
+#
+#     principals {
+#       type        = "Federated"
+#       identifiers = [module.eksv2.oidc_provider_arn]
+#     }
+#
+#     condition {
+#       test     = "StringEquals"
+#       variable = "${local.irsa_oidc_provider_url}:aud"
+#       values   = ["sts.amazonaws.com"]
+#     }
+#   }
+# }
 
-    principals {
-      type        = "Federated"
-      identifiers = [module.eksv2.oidc_provider_arn]
-    }
+# locals {
+#   karpenter-policy-prefixes = [
+#     "${local.iam_role_policy_prefix}/AmazonEKSWorkerNodePolicy",
+#     "${local.iam_role_policy_prefix}/AmazonEC2ContainerRegistryReadOnly",
+#     "${local.iam_role_policy_prefix}/AmazonSSMManagedInstanceCore",
+#     "${local.iam_role_policy_prefix}/AmazonEKS_CNI_Policy"
+#   ]
+# }
 
-    condition {
-      test     = "StringEquals"
-      variable = "${local.irsa_oidc_provider_url}:aud"
-      values   = ["sts.amazonaws.com"]
-    }
-  }
-}
-
-locals {
-  karpenter-policy-prefixes = [
-    "${local.iam_role_policy_prefix}/AmazonEKSWorkerNodePolicy",
-    "${local.iam_role_policy_prefix}/AmazonEC2ContainerRegistryReadOnly",
-    "${local.iam_role_policy_prefix}/AmazonSSMManagedInstanceCore",
-    "${local.iam_role_policy_prefix}/AmazonEKS_CNI_Policy"
-  ]
-}
-
-resource "aws_iam_role_policy_attachment" "xquare-karpenter-policy-attachment" {
-  for_each   = toset(local.karpenter-policy-prefixes)
-  policy_arn = each.value
-  role       = aws_iam_role.xquare-karpenter.name
-}
+# resource "aws_iam_role_policy_attachment" "xquare-karpenter-policy-attachment" {
+#   for_each   = toset(local.karpenter-policy-prefixes)
+#   policy_arn = each.value
+#   role       = aws_iam_role.xquare-karpenter.name
+# }
 
 # Vault Auto-Unseal KMS 설정 =========================================================
 
