@@ -1,9 +1,9 @@
 data "aws_partition" "current" {}
 
-locals {
-  irsa_oidc_provider_url = replace(module.eksv2.oidc_provider_arn, "/^(.*provider/)/", "")
-  iam_role_policy_prefix = "arn:${data.aws_partition.current.partition}:iam::aws:policy"
-}
+# locals {
+#   irsa_oidc_provider_url = replace(module.eksv2.oidc_provider_arn, "/^(.*provider/)/", "")
+#   iam_role_policy_prefix = "arn:${data.aws_partition.current.partition}:iam::aws:policy"
+# }
 
 # S3 =========================================================
 
@@ -41,189 +41,189 @@ locals {
 
 # thanos S3 =========================================================
 
-resource "aws_iam_role" "thanos_s3" {
-  name                  = "thanos_s3_role"
-  description           = "Thanos IAM role for service account"
-  path                  = "/"
-  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
-  force_detach_policies = true
-}
+# resource "aws_iam_role" "thanos_s3" {
+#   name                  = "thanos_s3_role"
+#   description           = "Thanos IAM role for service account"
+#   path                  = "/"
+#   assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
+#   force_detach_policies = true
+# }
 
-resource "aws_iam_role_policy_attachment" "thanos_role_attachment" {
-  policy_arn = aws_iam_policy.thanos_s3_policy.arn
-  role       = aws_iam_role.thanos_s3.name
-}
+# resource "aws_iam_role_policy_attachment" "thanos_role_attachment" {
+#   policy_arn = aws_iam_policy.thanos_s3_policy.arn
+#   role       = aws_iam_role.thanos_s3.name
+# }
 
-resource "aws_iam_policy" "thanos_s3_policy" {
-  name   = "thanos-s3-policy"
-  policy = data.aws_iam_policy_document.thanos_s3_policy_document.json
-}
+# resource "aws_iam_policy" "thanos_s3_policy" {
+#   name   = "thanos-s3-policy"
+#   policy = data.aws_iam_policy_document.thanos_s3_policy_document.json
+# }
 
-data "aws_iam_policy_document" "thanos_s3_policy_document" {
-  statement {
-    actions   = ["s3:ListAllMyBuckets"]
-    resources = ["arn:aws:s3:::*"]
-    effect    = "Allow"
-  }
-  statement {
-    actions = ["s3:*"]
-    resources = [
-      module.thanos_storage.arn,
-      "${module.thanos_storage.arn}/*"
-    ]
-    effect = "Allow"
-  }
-}
+# data "aws_iam_policy_document" "thanos_s3_policy_document" {
+#   statement {
+#     actions   = ["s3:ListAllMyBuckets"]
+#     resources = ["arn:aws:s3:::*"]
+#     effect    = "Allow"
+#   }
+#   statement {
+#     actions = ["s3:*"]
+#     resources = [
+#       module.thanos_storage.arn,
+#       "${module.thanos_storage.arn}/*"
+#     ]
+#     effect = "Allow"
+#   }
+# }
 
-data "aws_iam_policy_document" "assume_role_policy" {
-
-  statement {
-    effect  = "Allow"
-    actions = ["sts:AssumeRoleWithWebIdentity"]
-
-    principals {
-      type        = "Federated"
-      identifiers = [module.eksv2.oidc_provider_arn]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "${local.irsa_oidc_provider_url}:aud"
-      values   = ["sts.amazonaws.com"]
-    }
-  }
-}
+# data "aws_iam_policy_document" "assume_role_policy" {
+#
+#   statement {
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRoleWithWebIdentity"]
+#
+#     principals {
+#       type        = "Federated"
+#       identifiers = [module.eksv2.oidc_provider_arn]
+#     }
+#
+#     condition {
+#       test     = "StringEquals"
+#       variable = "${local.irsa_oidc_provider_url}:aud"
+#       values   = ["sts.amazonaws.com"]
+#     }
+#   }
+# }
 
 # tempo S3 =========================================================
 
-resource "aws_iam_role" "tempo_s3" {
-  name                  = "tempo_s3_role"
-  description           = "tempo IAM role for service account"
-  path                  = "/"
-  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
-  force_detach_policies = true
-}
+# resource "aws_iam_role" "tempo_s3" {
+#   name                  = "tempo_s3_role"
+#   description           = "tempo IAM role for service account"
+#   path                  = "/"
+#   assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
+#   force_detach_policies = true
+# }
 
-resource "aws_iam_role_policy_attachment" "tempo_role_attachment" {
-  policy_arn = aws_iam_policy.tempo_s3_policy.arn
-  role       = aws_iam_role.tempo_s3.name
-}
+# resource "aws_iam_role_policy_attachment" "tempo_role_attachment" {
+#   policy_arn = aws_iam_policy.tempo_s3_policy.arn
+#   role       = aws_iam_role.tempo_s3.name
+# }
 
-resource "aws_iam_policy" "tempo_s3_policy" {
-  name   = "tempo-s3-policy"
-  policy = data.aws_iam_policy_document.tempo_s3_policy_document.json
-}
+# resource "aws_iam_policy" "tempo_s3_policy" {
+#   name   = "tempo-s3-policy"
+#   policy = data.aws_iam_policy_document.tempo_s3_policy_document.json
+# }
 
-data "aws_iam_policy_document" "tempo_s3_policy_document" {
-  statement {
-    actions   = ["s3:PutObject", "s3:GetObject", "s3:ListBucket", "s3:DeleteObject", "s3:GetObjectTagging", "s3:PutObjectTagging"]
-    resources = ["arn:aws:s3:::*"]
-    effect    = "Allow"
-  }
-  statement {
-    actions = ["s3:*"]
-    resources = [
-      module.tempo_storage.arn,
-      "${module.tempo_storage.arn}/*"
-    ]
-    effect = "Allow"
-  }
-}
+# data "aws_iam_policy_document" "tempo_s3_policy_document" {
+#   statement {
+#     actions   = ["s3:PutObject", "s3:GetObject", "s3:ListBucket", "s3:DeleteObject", "s3:GetObjectTagging", "s3:PutObjectTagging"]
+#     resources = ["arn:aws:s3:::*"]
+#     effect    = "Allow"
+#   }
+#   statement {
+#     actions = ["s3:*"]
+#     resources = [
+#       module.tempo_storage.arn,
+#       "${module.tempo_storage.arn}/*"
+#     ]
+#     effect = "Allow"
+#   }
+# }
 
 # loki S3 =========================================================
 
-resource "aws_iam_role" "loki_s3" {
-  name                  = "loki_s3_role"
-  description           = "loki IAM role for service account"
-  path                  = "/"
-  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
-  force_detach_policies = true
-}
+# resource "aws_iam_role" "loki_s3" {
+#   name                  = "loki_s3_role"
+#   description           = "loki IAM role for service account"
+#   path                  = "/"
+#   assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
+#   force_detach_policies = true
+# }
 
-resource "aws_iam_role_policy_attachment" "loki_role_attachment" {
-  policy_arn = aws_iam_policy.loki_s3_policy.arn
-  role       = aws_iam_role.loki_s3.name
-}
+# resource "aws_iam_role_policy_attachment" "loki_role_attachment" {
+#   policy_arn = aws_iam_policy.loki_s3_policy.arn
+#   role       = aws_iam_role.loki_s3.name
+# }
 
-resource "aws_iam_policy" "loki_s3_policy" {
-  name   = "loki-s3-policy"
-  policy = data.aws_iam_policy_document.loki_s3_policy_document.json
-}
+# resource "aws_iam_policy" "loki_s3_policy" {
+#   name   = "loki-s3-policy"
+#   policy = data.aws_iam_policy_document.loki_s3_policy_document.json
+# }
 
-data "aws_iam_policy_document" "loki_s3_policy_document" {
-  statement {
-    actions   = ["s3:ListAllMyBuckets"]
-    resources = ["arn:aws:s3:::*"]
-    effect    = "Allow"
-  }
-  statement {
-    actions = ["s3:*"]
-    resources = [
-      module.loki_storage.arn,
-      "${module.loki_storage.arn}/*"
-    ]
-    effect = "Allow"
-  }
-}
+# data "aws_iam_policy_document" "loki_s3_policy_document" {
+#   statement {
+#     actions   = ["s3:ListAllMyBuckets"]
+#     resources = ["arn:aws:s3:::*"]
+#     effect    = "Allow"
+#   }
+#   statement {
+#     actions = ["s3:*"]
+#     resources = [
+#       module.loki_storage.arn,
+#       "${module.loki_storage.arn}/*"
+#     ]
+#     effect = "Allow"
+#   }
+# }
 
 # Kaniko ECR =========================================================
 
-data "aws_iam_policy_document" "kaniko_assume_role_policy" {
-  statement {
-    effect  = "Allow"
-    actions = ["sts:AssumeRoleWithWebIdentity"]
+# data "aws_iam_policy_document" "kaniko_assume_role_policy" {
+#   statement {
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRoleWithWebIdentity"]
+#
+#     principals {
+#       type        = "Federated"
+#       identifiers = [module.eksv2.oidc_provider_arn]
+#     }
+#
+#     condition {
+#       test     = "StringLike"
+#       variable = "${local.irsa_oidc_provider_url}:sub"
+#       values   = ["system:serviceaccount:*:kaniko-sa"]
+#     }
+#   }
+# }
 
-    principals {
-      type        = "Federated"
-      identifiers = [module.eksv2.oidc_provider_arn]
-    }
+# resource "aws_iam_role" "kaniko_ecr_push" {
+#   name                  = "kaniko-ecr-push-role"
+#   description           = "IAM role for Kaniko to push images to ECR"
+#   path                  = "/"
+#   assume_role_policy    = data.aws_iam_policy_document.kaniko_assume_role_policy.json
+#   force_detach_policies = true
+# }
 
-    condition {
-      test     = "StringLike"
-      variable = "${local.irsa_oidc_provider_url}:sub"
-      values   = ["system:serviceaccount:*:kaniko-sa"]
-    }
-  }
-}
+# resource "aws_iam_policy" "kaniko_ecr_policy" {
+#   name   = "kaniko-ecr-policy"
+#   policy = data.aws_iam_policy_document.kaniko_ecr_policy_document.json
+# }
 
-resource "aws_iam_role" "kaniko_ecr_push" {
-  name                  = "kaniko-ecr-push-role"
-  description           = "IAM role for Kaniko to push images to ECR"
-  path                  = "/"
-  assume_role_policy    = data.aws_iam_policy_document.kaniko_assume_role_policy.json
-  force_detach_policies = true
-}
+# data "aws_iam_policy_document" "kaniko_ecr_policy_document" {
+#   statement {
+#     actions = [
+#       "ecr:GetAuthorizationToken",
+#       "ecr:BatchCheckLayerAvailability",
+#       "ecr:GetDownloadUrlForLayer",
+#       "ecr:GetRepositoryPolicy",
+#       "ecr:DescribeRepositories",
+#       "ecr:ListImages",
+#       "ecr:DescribeImages",
+#       "ecr:BatchGetImage",
+#       "ecr:InitiateLayerUpload",
+#       "ecr:UploadLayerPart",
+#       "ecr:CompleteLayerUpload",
+#       "ecr:PutImage"
+#     ]
+#     resources = ["*"]
+#     effect    = "Allow"
+#   }
+# }
 
-resource "aws_iam_policy" "kaniko_ecr_policy" {
-  name   = "kaniko-ecr-policy"
-  policy = data.aws_iam_policy_document.kaniko_ecr_policy_document.json
-}
-
-data "aws_iam_policy_document" "kaniko_ecr_policy_document" {
-  statement {
-    actions = [
-      "ecr:GetAuthorizationToken",
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:GetRepositoryPolicy",
-      "ecr:DescribeRepositories",
-      "ecr:ListImages",
-      "ecr:DescribeImages",
-      "ecr:BatchGetImage",
-      "ecr:InitiateLayerUpload",
-      "ecr:UploadLayerPart",
-      "ecr:CompleteLayerUpload",
-      "ecr:PutImage"
-    ]
-    resources = ["*"]
-    effect    = "Allow"
-  }
-}
-
-resource "aws_iam_role_policy_attachment" "kaniko_ecr_policy_attachment" {
-  policy_arn = aws_iam_policy.kaniko_ecr_policy.arn
-  role       = aws_iam_role.kaniko_ecr_push.name
-}
+# resource "aws_iam_role_policy_attachment" "kaniko_ecr_policy_attachment" {
+#   policy_arn = aws_iam_policy.kaniko_ecr_policy.arn
+#   role       = aws_iam_role.kaniko_ecr_push.name
+# }
 
 # fe S3 =======================================================
 
@@ -351,137 +351,137 @@ resource "aws_iam_role_policy_attachment" "xquare-karpenter-policy-attachment" {
 
 # Vault Auto-Unseal KMS 설정 =========================================================
 
-resource "aws_iam_role" "vault_kms_role" {
-  name                  = "vault-kms-role"
-  description           = "Vault IAM role for KMS auto-unseal"
-  path                  = "/"
-  assume_role_policy    = data.aws_iam_policy_document.vault_assume_role_policy.json
-  force_detach_policies = true
-}
+# resource "aws_iam_role" "vault_kms_role" {
+#   name                  = "vault-kms-role"
+#   description           = "Vault IAM role for KMS auto-unseal"
+#   path                  = "/"
+#   assume_role_policy    = data.aws_iam_policy_document.vault_assume_role_policy.json
+#   force_detach_policies = true
+# }
 
-data "aws_iam_policy_document" "vault_assume_role_policy" {
-  statement {
-    effect  = "Allow"
-    actions = ["sts:AssumeRoleWithWebIdentity"]
+# data "aws_iam_policy_document" "vault_assume_role_policy" {
+#   statement {
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRoleWithWebIdentity"]
+#
+#     principals {
+#       type        = "Federated"
+#       identifiers = [module.eksv2.oidc_provider_arn]
+#     }
+#
+#     condition {
+#       test     = "StringEquals"
+#       variable = "${local.irsa_oidc_provider_url}:sub"
+#       values   = ["system:serviceaccount:vault:vault"]
+#     }
+#   }
+# }
 
-    principals {
-      type        = "Federated"
-      identifiers = [module.eksv2.oidc_provider_arn]
-    }
+# resource "aws_iam_policy" "vault_kms_policy" {
+#   name   = "vault-kms-policy"
+#   policy = data.aws_iam_policy_document.vault_kms_policy_document.json
+# }
 
-    condition {
-      test     = "StringEquals"
-      variable = "${local.irsa_oidc_provider_url}:sub"
-      values   = ["system:serviceaccount:vault:vault"]
-    }
-  }
-}
+# data "aws_iam_policy_document" "vault_kms_policy_document" {
+#   statement {
+#     actions = [
+#       "kms:Encrypt",
+#       "kms:Decrypt",
+#       "kms:DescribeKey"
+#     ]
+#     resources = [
+#       aws_kms_key.vault_unseal_key.arn
+#     ]
+#     effect = "Allow"
+#   }
+# }
 
-resource "aws_iam_policy" "vault_kms_policy" {
-  name   = "vault-kms-policy"
-  policy = data.aws_iam_policy_document.vault_kms_policy_document.json
-}
+# resource "aws_iam_role_policy_attachment" "vault_kms_role_attachment" {
+#   policy_arn = aws_iam_policy.vault_kms_policy.arn
+#   role       = aws_iam_role.vault_kms_role.name
+# }
 
-data "aws_iam_policy_document" "vault_kms_policy_document" {
-  statement {
-    actions = [
-      "kms:Encrypt",
-      "kms:Decrypt",
-      "kms:DescribeKey"
-    ]
-    resources = [
-      aws_kms_key.vault_unseal_key.arn
-    ]
-    effect = "Allow"
-  }
-}
+# resource "aws_kms_key" "vault_unseal_key" {
+#   description             = "KMS Key for Vault Auto-Unseal"
+#   deletion_window_in_days = 10
+#   enable_key_rotation     = true
+#   
+#   tags = {
+#     Name = "vault-auto-unseal-key"
+#   }
+# }
 
-resource "aws_iam_role_policy_attachment" "vault_kms_role_attachment" {
-  policy_arn = aws_iam_policy.vault_kms_policy.arn
-  role       = aws_iam_role.vault_kms_role.name
-}
-
-resource "aws_kms_key" "vault_unseal_key" {
-  description             = "KMS Key for Vault Auto-Unseal"
-  deletion_window_in_days = 10
-  enable_key_rotation     = true
-  
-  tags = {
-    Name = "vault-auto-unseal-key"
-  }
-}
-
-resource "aws_kms_alias" "vault_unseal_key_alias" {
-  name          = "alias/vault-auto-unseal-key"
-  target_key_id = aws_kms_key.vault_unseal_key.key_id
-}
+# resource "aws_kms_alias" "vault_unseal_key_alias" {
+#   name          = "alias/vault-auto-unseal-key"
+#   target_key_id = aws_kms_key.vault_unseal_key.key_id
+# }
 
 # OpenCost IAM Role =========================================================
 
-resource "aws_iam_role" "opencost_role" {
-  name                  = "opencost-role"
-  description           = "OpenCost IAM role"
-  path                  = "/"
-  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
-  force_detach_policies = true
-}
+# resource "aws_iam_role" "opencost_role" {
+#   name                  = "opencost-role"
+#   description           = "OpenCost IAM role"
+#   path                  = "/"
+#   assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
+#   force_detach_policies = true
+# }
 
-resource "aws_iam_policy" "opencost_policy" {
-  name   = "opencost-policy"
-  policy = data.aws_iam_policy_document.opencost_policy_document.json
-}
+# resource "aws_iam_policy" "opencost_policy" {
+#   name   = "opencost-policy"
+#   policy = data.aws_iam_policy_document.opencost_policy_document.json
+# }
 
-data "aws_iam_policy_document" "opencost_policy_document" {
-  statement {
-    effect = "Allow"
-    actions = [
-      "ce:GetCostAndUsage",
-      "ce:GetDimensionValues",
-      "ce:GetTags",
-      "ce:GetCostCategories",
-      "ce:GetCostForecast",
-      "ce:GetRightsizingRecommendation",
-      "ce:GetReservationUtilization",
-      "ce:GetReservationPurchaseRecommendation",
-      "ce:GetSavingsPlanUtilization",
-      "ce:GetSavingsPlansCoverage",
-      "ec2:DescribeInstances",
-      "ec2:DescribeRegions",
-      "sts:GetCallerIdentity"
-    ]
-    resources = ["*"]
-  }
-}
+# data "aws_iam_policy_document" "opencost_policy_document" {
+#   statement {
+#     effect = "Allow"
+#     actions = [
+#       "ce:GetCostAndUsage",
+#       "ce:GetDimensionValues",
+#       "ce:GetTags",
+#       "ce:GetCostCategories",
+#       "ce:GetCostForecast",
+#       "ce:GetRightsizingRecommendation",
+#       "ce:GetReservationUtilization",
+#       "ce:GetReservationPurchaseRecommendation",
+#       "ce:GetSavingsPlanUtilization",
+#       "ce:GetSavingsPlansCoverage",
+#       "ec2:DescribeInstances",
+#       "ec2:DescribeRegions",
+#       "sts:GetCallerIdentity"
+#     ]
+#     resources = ["*"]
+#   }
+# }
 
-resource "aws_iam_role_policy_attachment" "opencost_role_attachment" {
-  policy_arn = aws_iam_policy.opencost_policy.arn
-  role       = aws_iam_role.opencost_role.name
-}
+# resource "aws_iam_role_policy_attachment" "opencost_role_attachment" {
+#   policy_arn = aws_iam_policy.opencost_policy.arn
+#   role       = aws_iam_role.opencost_role.name
+# }
 
 # ACK ECR Controller =========================================================
 
-resource "aws_iam_role" "ack_ecr_controller" {
-  name                  = "xquare-ack-ecr-role"
-  description           = "ACK ECR Controller IAM role for service account"
-  path                  = "/"
-  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
-  force_detach_policies = true
-}
+# resource "aws_iam_role" "ack_ecr_controller" {
+#   name                  = "xquare-ack-ecr-role"
+#   description           = "ACK ECR Controller IAM role for service account"
+#   path                  = "/"
+#   assume_role_policy    = data.aws_iam_policy_document.assume_role_policy.json
+#   force_detach_policies = true
+# }
 
-resource "aws_iam_policy" "ack_ecr_policy" {
-  name   = "ack-ecr-policy"
-  policy = data.aws_iam_policy_document.ack_ecr_policy_document.json
-}
+# resource "aws_iam_policy" "ack_ecr_policy" {
+#   name   = "ack-ecr-policy"
+#   policy = data.aws_iam_policy_document.ack_ecr_policy_document.json
+# }
 
-data "aws_iam_policy_document" "ack_ecr_policy_document" {
-  statement {
-    actions = ["ecr:*"]
-    resources = ["*"]
-    effect    = "Allow"
-  }
-}
+# data "aws_iam_policy_document" "ack_ecr_policy_document" {
+#   statement {
+#     actions = ["ecr:*"]
+#     resources = ["*"]
+#     effect    = "Allow"
+#   }
+# }
 
-resource "aws_iam_role_policy_attachment" "ack_ecr_policy_attachment" {
-  policy_arn = aws_iam_policy.ack_ecr_policy.arn
-  role       = aws_iam_role.ack_ecr_controller.name
-}
+# resource "aws_iam_role_policy_attachment" "ack_ecr_policy_attachment" {
+#   policy_arn = aws_iam_policy.ack_ecr_policy.arn
+#   role       = aws_iam_role.ack_ecr_controller.name
+# }
